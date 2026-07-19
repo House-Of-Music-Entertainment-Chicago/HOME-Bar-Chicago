@@ -1,26 +1,183 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------
+   HOME BAR CHICAGO — DESIGN TOKENS
+   Dark, gritty sports-bar aesthetic: near-black base, burnt-orange
+   accent, torn-paper/brick texture cues, bold condensed headlines.
+------------------------------------------------------------------- */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core surfaces */
+  --background: #0a0a0a; /* main dark bg */
+  --background-alt: #141414; /* slightly lifted panel/card bg */
+  --surface: #1a1a1a; /* card / module surface */
+  --surface-border: #2b2b2b; /* subtle hairline borders on dark surfaces */
+
+  /* Text */
+  --foreground: #f5f5f4; /* primary text on dark */
+  --foreground-muted: #a3a3a3; /* secondary/body copy */
+  --foreground-inverted: #0a0a0a; /* text on light/orange surfaces */
+
+  /* Brand accent — the burnt orange CTA/highlight color */
+  --accent: #e8531e;
+  --accent-hover: #ff6a2e;
+  --accent-foreground: #ffffff;
+
+  --lime: #8e9f2d;
+  --olive: #7f922a;
+  --deep-cyan: #0b4c57;
+
+  /* Secondary accent — brick red, used for texture/section backdrops */
+  --brick: #7a2e1d;
+  --brick-dark: #4a1c12;
+
+  /* Card border (the thin orange outline around lineup/event cards) */
+  --card-border: var(--accent);
+
+  /* Paper / torn-paper texture accent (menu card in Food & Drink page) */
+  --paper: #e8dcc4;
+  --paper-foreground: #241a12;
+
+  /* Radii & misc */
+  --radius-card: 0.5rem;
+  --radius-pill: 999px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* Optional: respect system light mode preference but this brand is
+   inherently dark-themed, so we keep it dark by default and only
+   lighten slightly if the user forces light mode. Remove this block
+   entirely if the site should always be dark regardless of system. */
+/* @media (prefers-color-scheme: light) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #f5f5f4;
   }
+} */
+
+@theme inline {
+  /* Map CSS vars into Tailwind's theme so you get utilities like
+     bg-background, text-foreground, bg-accent, border-card-border, etc. */
+  --color-background: var(--background);
+  --color-background-alt: var(--background-alt);
+  --color-surface: var(--surface);
+  --color-surface-border: var(--surface-border);
+
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-inverted: var(--foreground-inverted);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /*Brand colors*/
+  --color-lime: var(--lime);
+  --color-olive: var(--olive);
+  --color-deep-cyan: var(--deep-cyan);
+
+  --color-brick: var(--brick);
+  --color-brick-dark: var(--brick-dark);
+
+  --color-card-border: var(--card-border);
+
+  --color-paper: var(--paper);
+  --color-paper-foreground: var(--paper-foreground);
+
+  --radius-card: var(--radius-card);
+  --radius-pill: var(--radius-pill);
+
+  /* Fonts — pair a bold condensed display face for headlines with a
+     clean sans for body copy. Load these via next/font in layout.tsx
+     (see notes below) and they'll plug in here automatically. */
+
+  /* --font-sans: var(--font-inter), Arial, Helvetica, sans-serif;
+  --font-display: var(--font-anton), "Arial Narrow", Arial, sans-serif; */
+
+  --font-heading: var(--font-bebas);
+  --font-body: var(--font-montserrat);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+/* Utility layer additions specific to this brand */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+
+  /* Torn-paper edge effect for section dividers, e.g. between hero
+     and "Weekly Happenings" */
+  .torn-edge {
+    position: relative;
+  }
+  .torn-edge::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 24px;
+    background: var(--color-background);
+    clip-path: polygon(
+      0% 0%,
+      4% 60%,
+      8% 10%,
+      12% 70%,
+      16% 20%,
+      20% 80%,
+      24% 30%,
+      28% 90%,
+      32% 40%,
+      36% 100%,
+      40% 50%,
+      44% 10%,
+      48% 70%,
+      52% 20%,
+      56% 80%,
+      60% 30%,
+      64% 90%,
+      68% 40%,
+      72% 100%,
+      76% 50%,
+      80% 10%,
+      84% 70%,
+      88% 20%,
+      92% 80%,
+      96% 30%,
+      100% 0%,
+      100% 100%,
+      0% 100%
+    );
+  }
+
+  /* Card style matching the orange-bordered event/lineup cards */
+  .card-outlined {
+    background: var(--color-surface);
+    border: 2px solid var(--color-card-border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+  }
+
+  /* Pill CTA button, e.g. "VIEW TODAY'S LINEUP" */
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-accent);
+    color: var(--color-accent-foreground);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-pill);
+    transition: background-color 0.2s ease;
+  }
+  .btn-cta:hover {
+    background: var(--color-accent-hover);
+  }
 }
