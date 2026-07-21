@@ -35,7 +35,7 @@ export default function EventCard({ image, alt = "", bgImage, bgAlt = "" }) {
           src={image}
           alt={alt}
           fill
-          sizes="(min-width: 1280px) 50vw, 100vw"
+          sizes="(min-width: 1024px) 50vw, 100vw"
           className="object-cover"
         />
       </div>

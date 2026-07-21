@@ -59,7 +59,7 @@ export default function MenuHighlights() {
                 src={item.src}
                 alt={item.label}
                 fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/90 to-transparent px-2 py-3">

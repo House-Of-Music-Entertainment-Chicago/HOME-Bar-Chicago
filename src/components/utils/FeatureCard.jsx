@@ -26,7 +26,7 @@ export default function FeatureCard({ image, alt, Icon, title, description }) {
         src={image}
         alt={alt}
         fill
-        sizes="(max-width: 640px) 50vw, 25vw"
+        sizes="(min-width: 1024px) 50vw, 100vw"
         className="object-cover transition-transform duration-300 group-hover:scale-105"
       />
 

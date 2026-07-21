@@ -57,7 +57,7 @@ export default function PlacesToPlaySection() {
                     src={place.image}
                     alt={place.alt}
                     fill
-                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                    sizes="(min-width: 1024px) 50vw, 100vw"
                     className="object-cover"
                   />
                 ) : (
