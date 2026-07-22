@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Utensils, Sandwich, Pizza, Soup, IceCreamCone } from "lucide-react";
 import Subheading from "@/components/utils/SubHeadingText";
@@ -5,33 +7,16 @@ import Title from "@/components/utils/TitleText";
 import Text from "@/components/utils/BodyText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
-import ImagePlaceholder from "@/components/utils/ImagePlaceholder";
 import PennantTag from "@/components/utils/PennantTag";
 import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
-// NOTE: swap the inline PennantTagStub below for your real PennantTag
-// component — it's stubbed here just to keep this file runnable on its own.
 
-// function PennantTagStub({ label }) {
-//   return (
-//     <div
-//       className="bg-olive px-4 py-1.5 font-heading text-xs font-bold uppercase tracking-wide text-white sm:text-sm"
-//       style={{
-//         clipPath: "polygon(0 0, 100% 0, 92% 50%, 100% 100%, 0 100%, 6% 50%)",
-//       }}
-//     >
-//       {label}
-//     </div>
-//   );
-// }
-
-/* ------------------------------------------------------------------
-   MENU DATA — transcribed in full from the official printed menu.
-   A few items carry a small icon in the source menu (next to Nachos,
-   Guacamole, the tater tot basket, HOME Signature Tacos, etc.) whose
-   meaning isn't clear from the scan alone — looked like a dietary or
-   "customer favorite" marker. Flag it for the client before this
-   goes live; I didn't guess at what it means.
-------------------------------------------------------------------- */
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  reducedVariants,
+  groupVariants,
+  itemVariants,
+  headerVariants,
+} from "@/data/animation-variants";
 
 const APPETIZERS = [
   {
@@ -346,6 +331,9 @@ function MenuCategoryCard({
   columns = 1,
   notes,
 }) {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   const notesList = notes ? (Array.isArray(notes) ? notes : [notes]) : null;
 
   return (
@@ -355,14 +343,17 @@ function MenuCategoryCard({
           negative margins (no padding/margin of its own), then faded
           to the card's background color on its left side so it
           blends into the area behind the tag instead of a hard edge. */}
-      <div className="relative -mx-6 -mt-6 mb-4 h-20 sm:h-24">
+      <motion.div
+        variants={v(headerVariants)}
+        className="relative -mx-6 -mt-6 mb-4 h-20 sm:h-24"
+      >
         <div className="relative z-10 flex justify-between h-full items-center gap-1">
           <PennantTag ribbonImage={ribbonLime}>{title}</PennantTag>
           <span className="mx-5 hidden sm:flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-olive bg-background text-olive">
             <Icon className="h-4 w-4" />
           </span>
         </div>
-      </div>
+      </motion.div>
 
       <ul className={COLUMN_CLASS[columns] ?? COLUMN_CLASS[1]}>
         {items.map((item) => (
@@ -403,6 +394,9 @@ function MenuCategoryCard({
 }
 
 export default function FoodMenuSection() {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="relative bg-background">
       <Image
@@ -416,68 +410,79 @@ export default function FoodMenuSection() {
       />
 
       <Container className="relative">
-        <div className="mb-10 text-center">
-          <Subheading>Food Menu</Subheading>
-          <DividerFlourish className="mx-auto mt-2 w-24" />
-        </div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={v(groupVariants)}
+          className="relative"
+        >
+          <motion.div
+            variants={v(headerVariants)}
+            className="mb-10 text-center"
+          >
+            <Subheading>Food Menu</Subheading>
+            <DividerFlourish className="mx-auto mt-2 w-24" />
+          </motion.div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          <div className="flex flex-col gap-8">
-            <MenuCategoryCard
-              title="Appetizers"
-              icon={Utensils}
-              items={APPETIZERS}
-              thumbnail
-              columns={3}
-            />
-            <MenuCategoryCard
-              title="Sandwiches & Entrées"
-              icon={Sandwich}
-              items={SANDWICHES}
-              thumbnail
-              columns={3}
-              notes={{
-                title: "A note on sides",
-                body: "All burgers and sandwiches are served with fries, sweet potato fries, or coleslaw. Substitute any bun to gluten free $2.",
-              }}
-            />
-          </div>
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <div className="flex flex-col gap-8">
+              <MenuCategoryCard
+                title="Appetizers"
+                icon={Utensils}
+                items={APPETIZERS}
+                thumbnail
+                columns={3}
+              />
+              <MenuCategoryCard
+                title="Sandwiches & Entrées"
+                icon={Sandwich}
+                items={SANDWICHES}
+                thumbnail
+                columns={3}
+                notes={{
+                  title: "A note on sides",
+                  body: "All burgers and sandwiches are served with fries, sweet potato fries, or coleslaw. Substitute any bun to gluten free $2.",
+                }}
+              />
+            </div>
 
-          <div className="flex flex-col gap-8">
-            <MenuCategoryCard
-              title="Pizza"
-              icon={Pizza}
-              items={PIZZA}
-              thumbnail
-              notes={[
-                {
-                  title: "Gluten free available",
-                  body: "Substitute any crust to gluten free $2.",
-                },
-                {
-                  title: "Additional toppings — $2 each",
-                  body: "Sausage, pepperoni, bacon, mushrooms, green peppers, tomatoes, onions, olives, jalapeños, banana peppers, giardiniera.",
-                },
-              ]}
-            />
-            <MenuCategoryCard
-              title="Soups & Salads"
-              icon={Soup}
-              items={SOUPS_SALADS}
-              thumbnail
-              notes={{
-                title: "Note",
-                body: "All salads can be made into a wrap.",
-              }}
-            />
-            <MenuCategoryCard
-              title="Desserts"
-              icon={IceCreamCone}
-              items={DESSERTS}
-              thumbnail
-            />
+            <div className="flex flex-col gap-8">
+              <MenuCategoryCard
+                title="Pizza"
+                icon={Pizza}
+                items={PIZZA}
+                thumbnail
+                notes={[
+                  {
+                    title: "Gluten free available",
+                    body: "Substitute any crust to gluten free $2.",
+                  },
+                  {
+                    title: "Additional toppings — $2 each",
+                    body: "Sausage, pepperoni, bacon, mushrooms, green peppers, tomatoes, onions, olives, jalapeños, banana peppers, giardiniera.",
+                  },
+                ]}
+              />
+              <MenuCategoryCard
+                title="Soups & Salads"
+                icon={Soup}
+                items={SOUPS_SALADS}
+                thumbnail
+                notes={{
+                  title: "Note",
+                  body: "All salads can be made into a wrap.",
+                }}
+              />
+              <MenuCategoryCard
+                title="Desserts"
+                icon={IceCreamCone}
+                items={DESSERTS}
+                thumbnail
+              />
+            </div>
           </div>
-        </div>
+        </motion.div>
       </Container>
     </section>
   );

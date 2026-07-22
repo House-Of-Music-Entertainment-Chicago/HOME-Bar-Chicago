@@ -1,11 +1,18 @@
+"use client";
+
 import Image from "next/image";
 import Container from "@/components/utils/Container";
 import Title from "@/components/utils/TitleText";
-import ImagePlaceholder from "@/components/utils/ImagePlaceholder";
 import PennantTag from "@/components/utils/PennantTag";
 import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
 
-// import { assets } from "@/lib/assets";
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  reducedVariants,
+  groupVariants,
+  itemVariants,
+  headerVariants,
+} from "@/data/animation-variants";
 
 const HIGHLIGHTS = [
   {
@@ -36,17 +43,30 @@ const HIGHLIGHTS = [
 ];
 
 export default function MenuHighlights() {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="bg-background">
       <Container>
-        <div className="relative grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
-          <div className="absolute -top-2 -left-5 -rotate-5 z-10">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={v(groupVariants)}
+          className="relative grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
+        >
+          <motion.div
+            variants={v(headerVariants)}
+            className="absolute -top-2 -left-5 -rotate-5 z-10"
+          >
             <PennantTag ribbonImage={ribbonLime}>
               Eat. Drink. Watch. Repeat.
             </PennantTag>
-          </div>
+          </motion.div>
           {HIGHLIGHTS.map((item) => (
-            <div
+            <motion.div
+              variants={v(itemVariants)}
               key={item.label}
               className="group relative aspect-square overflow-hidden"
             >
@@ -65,9 +85,9 @@ export default function MenuHighlights() {
               <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/90 to-transparent px-2 py-3">
                 <Title className="text-center uppercase">{item.label}</Title>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </Container>
     </section>
   );

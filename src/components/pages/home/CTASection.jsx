@@ -1,9 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import Subheading from "@/components/utils/SubHeadingText";
 import sectionBg1 from "../../../../public//images/assets/section-bg-1.jpg"; // TODO: swap for your real photo
 import Container from "@/components/utils/Container";
 import RibbonButton from "@/components/utils/Ribbonbutton";
+import { openTableReservationLink } from "@/data/external-links";
+
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  reducedVariants,
+  itemVariants,
+  groupVariants,
+} from "@/data/animation-variants";
 
 /**
  * ReserveTableSection
@@ -24,10 +34,17 @@ import RibbonButton from "@/components/utils/Ribbonbutton";
  * If `multiply` ends up too dark/muddy once you see the real
  * photo, try swapping to `mix-blend-mode: color` instead — it
  * preserves the photo's original lightness more faithfully.
+ *
+ * Motion: same EASE curve and stagger timing as FeaturesSection.jsx
+ * and FeaturedMenuSection.jsx — subheading, paragraph, and button
+ * stagger in together as one group, once, on scroll into view.
  * ---------------------------------------------------------------
  */
 
 export default function CTASection() {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="relative overflow-hidden border-y-2 border-black/60">
       {/* Layer 1 — the photo, desaturated */}
@@ -36,7 +53,7 @@ export default function CTASection() {
         alt="Concrete background image"
         fill
         sizes="100vw"
-        priority={false}
+        priority
         aria-hidden="true"
         className="object-cover grayscale contrast-125 brightness-200"
       />
@@ -54,39 +71,35 @@ export default function CTASection() {
 
       <Container>
         {/* Content */}
-        <div className="relative z-10 flex flex-col items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left">
-          <Subheading className="leading-none tracking-wide w-[33%]">
-            Good Nights
-            <br />
-            Start Here.
-          </Subheading>
-          <p className="max-w-xs text-2xl lg:text-4xl text-foreground font-body sm:w-[33%]">
+        <motion.div
+          className="relative z-10 flex flex-col items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={v(groupVariants)}
+        >
+          <motion.div variants={v(itemVariants)}>
+            <Subheading className="leading-none tracking-wide w-[33%] text-nowrap">
+              Good Nights
+              <br />
+              Start Here.
+            </Subheading>
+          </motion.div>
+
+          <motion.p
+            variants={v(itemVariants)}
+            className="max-w-xs text-2xl lg:text-4xl text-foreground font-body sm:w-[33%]"
+          >
             Reserve your table and let the good times roll.
-          </p>
-          <RibbonButton href="/reserve">Reserve a Table</RibbonButton>
-        </div>
+          </motion.p>
+
+          <motion.div variants={v(itemVariants)}>
+            <RibbonButton href={openTableReservationLink} target="_blank">
+              Reserve a Table
+            </RibbonButton>
+          </motion.div>
+        </motion.div>
       </Container>
     </section>
-  );
-}
-
-/**
- * ArrowButton
- * ---------------------------------------------------------------
- * The outlined pennant/arrow button on the right. Same single-notch
- * clip-path shape as PennantTag, but styled as a translucent
- * bordered button rather than a solid photo-filled tag — this one
- * is interactive (a real link), so it also gets hover states.
- * ---------------------------------------------------------------
- */
-function ArrowButton({ href, children }) {
-  return (
-    <Link
-      href={href}
-      className="relative inline-flex items-center whitespace-nowrap border border-white/70 bg-black/30 py-3 pl-6 pr-9 font-display text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-black/50"
-      style={{ clipPath: "polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%)" }}
-    >
-      {children}
-    </Link>
   );
 }

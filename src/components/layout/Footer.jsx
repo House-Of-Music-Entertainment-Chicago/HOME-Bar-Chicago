@@ -5,38 +5,7 @@ import logo from "../../../public/images/logo/latest-logo.png";
 import SOCIAL_LINKS from "@/data/social-links";
 import NAV_LINKS from "@/data/nav-links";
 import NewsletterForm from "../utils/NewsLetterForm";
-
-/**
- * Footer
- * ---------------------------------------------------------------
- * Contact info, address, phone, and social links below are pulled
- * directly from the current homebarchicago.com site (contact-us
- * and about pages) as of this build, so they're real, not
- * placeholders:
- *   - Address:  1227 N. Rand Road, Arlington Heights, IL 60004
- *   - Phone:    847-577-4663
- *   - Email:    info@homebarchicago.com
- *   - Socials:  Facebook + X (Twitter) + YouTube — these are the
- *               only three linked on the current site. No
- *               Instagram link exists there, despite the
- *               "@homebarchi" handle used as a placeholder earlier
- *               in this build — swap in the real IG handle once
- *               you have it, or remove that icon if there isn't one.
- *
- * NOT found on the current site and left as a placeholder below:
- *   - Operating hours (old site only says "open 7 days a week,"
- *     no specific times listed anywhere) — fill in real hours.
- *
- * NEWSLETTER SIGNUP: the form itself lives in NewsletterForm.jsx
- * (kept as its own client component, see the note in that file for
- * why), and posts to app/api/subscribe/route.js — which currently
- * only validates + logs the email, and needs a real email service
- * provider wired in before it actually subscribes anyone. See the
- * TODO in that route file.
- *
- * Requires: npm install lucide-react
- * ---------------------------------------------------------------
- */
+import businessInformation from "@/data/business-info";
 
 export default function Footer() {
   return (
@@ -84,32 +53,30 @@ export default function Footer() {
             <li className="flex items-start gap-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
               <a
-                href="https://maps.google.com/?q=1227+N+Rand+Road+Arlington+Heights+IL+60004"
+                href={businessInformation.googleMapAddressLocation}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors hover:text-foreground"
               >
-                1227 N. Rand Road
-                <br />
-                Arlington Heights, IL 60004
+                {businessInformation.address}
               </a>
             </li>
             <li className="flex items-center gap-2">
               <Phone className="h-4 w-4 shrink-0 text-accent" />
               <a
-                href="tel:8475774663"
+                href={`tel:${businessInformation.telephone}`}
                 className="transition-colors hover:text-foreground"
               >
-                (847) 577-4663
+                {businessInformation.phone}
               </a>
             </li>
             <li className="flex items-center gap-2">
               <Mail className="h-4 w-4 shrink-0 text-accent" />
               <a
-                href="mailto:info@homebarchicago.com"
+                href={`mailto:${businessInformation.email}`}
                 className="transition-colors hover:text-foreground"
               >
-                info@homebarchicago.com
+                {businessInformation.email}
               </a>
             </li>
           </ul>
@@ -134,9 +101,9 @@ export default function Footer() {
               <span>11am &ndash; 12am</span>
             </li>
           </ul>
-          <p className="mt-2 text-xs italic text-foreground-muted/70">
+          {/* <p className="mt-2 text-xs italic text-foreground-muted/70">
             Confirm real hours with the client — placeholder values.
-          </p>
+          </p> */}
         </div>
       </div>
 

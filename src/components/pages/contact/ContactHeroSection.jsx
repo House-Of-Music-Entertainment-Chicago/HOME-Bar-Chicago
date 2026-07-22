@@ -1,21 +1,47 @@
+"use client";
+
 import Heading from "@/components/utils/HeadingText";
 import Title from "@/components/utils/TitleText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import PaperDivider from "@/components/utils/PaperDivider";
 
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  reducedVariants,
+  groupVariants,
+  itemVariants,
+  headerVariants,
+} from "@/data/animation-variants";
+
 export default function ContactHero() {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="relative bg-background">
-      <Container className="relative z-10 text-center">
-        <Heading>
-          Get In <span className="text-lime">Touch</span>
-        </Heading>
-        <DividerFlourish className="mx-auto mt-3 w-20" />
-        <Title className="mx-auto mt-4 max-w-100 text-foreground-muted">
-          Questions about reservations, private events, or just want to say hi?
-          We'd love to hear from you.
-        </Title>
+      <Container className="relative">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={v(groupVariants)}
+          className="relative z-10 text-center"
+        >
+          <motion.div variants={v(headerVariants)}>
+            <Heading>
+              Get In <span className="text-lime">Touch</span>
+            </Heading>
+            <DividerFlourish className="mx-auto mt-3 w-20" />
+          </motion.div>
+
+          <motion.div variants={v(headerVariants)}>
+            <Title className="mx-auto mt-4 max-w-100 text-foreground-muted">
+              Questions about reservations, private events, or just want to say
+              hi? We'd love to hear from you.
+            </Title>
+          </motion.div>
+        </motion.div>
       </Container>
 
       <PaperDivider position="bottom" />

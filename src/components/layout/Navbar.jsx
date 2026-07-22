@@ -93,13 +93,13 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-          <button
+          {/* <button
             type="button"
             aria-label="Search"
             className="text-foreground transition-colors hover:text-accent"
           >
             <SearchIcon />
-          </button>
+          </button> */}
         </div>
 
         {/* Hamburger (mobile only) — sits on the right, replacing the

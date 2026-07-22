@@ -5,10 +5,21 @@ import dynamic from "next/dynamic";
 import { MapPin, Phone, Clock, ParkingCircle } from "lucide-react";
 import Subheading from "@/components/utils/SubHeadingText";
 import Title from "@/components/utils/TitleText";
-import Text from "@/components/utils/BodyText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import RibbonButton from "@/components/utils/Ribbonbutton";
+
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  reducedVariants,
+  groupVariants,
+  itemVariants,
+  headerVariants,
+  buttonVariants,
+} from "@/data/animation-variants";
+
+import businessInformation from "@/data/business-info";
+
 // Leaflet touches window directly — must be loaded client-only,
 // never during server-side rendering, or it throws.
 const InteractiveMap = dynamic(
@@ -18,23 +29,21 @@ const InteractiveMap = dynamic(
     loading: () => <div className="h-full w-full animate-pulse bg-surface" />,
   },
 );
-/**
- * LocationSection
- * ---------------------------------------------------------------
- * NOTE: latitude/longitude below are placeholders (Makati City
- * center) — replace with the business's actual coordinates. Get
- * them by right-clicking the real address in Google Maps and
- * copying the lat/lng shown, or via a geocoding API.
- * ---------------------------------------------------------------
- */
+
 const LOCATION = {
-  latitude: 14.5547,
-  longitude: 121.0244,
-  address: "123 Champions Ave, Makati City, Philippines",
-  phone: "(02) 8123 4567",
-  hours: "Mon – Thu: 4PM – 1AM\nFri – Sun: 12NN – 2AM",
+  latitude: 42.0999464,
+  longitude: -87.9592789,
+  address: businessInformation.address,
+  googleMapsAddressLocation: businessInformation.googleMapAddressLocation,
+  phone: businessInformation.phone,
+  telephone: businessInformation.telephone,
+  hours: "Mon – Thu: 11AM – 12AM\nFri – Sun: 11AM – 12AM",
+  parking: "Free Parking Available",
 };
 export default function LocationSection() {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="relative bg-background">
       <Image
@@ -46,48 +55,85 @@ export default function LocationSection() {
         aria-hidden="true"
         className="absolute inset-0 z-0 object-cover"
       />
-      <Container className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+      <Container className="relative">
         {/* Left — address, phone, hours, parking */}
-        <div className="z-1 flex flex-col gap-4">
-          <div>
-            <Subheading>Location</Subheading>
-            <DividerFlourish className="mx-0 mt-2 w-20" />
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={v(groupVariants)}
+          className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2"
+        >
+          <div className="z-1 flex flex-col gap-4">
+            <div>
+              <Subheading>Location</Subheading>
+              <DividerFlourish className="mx-0 mt-2 w-20" />
+            </div>
+            <ul className="flex flex-col gap-3 text-sm text-foreground-muted sm:text-base">
+              <li>
+                <motion.div variants={v(headerVariants)}>
+                  <a
+                    href={LOCATION.googleMapsAddressLocation}
+                    className="flex items-center gap-3 hover:scale-110 hover:text-foreground duration-200"
+                  >
+                    <MapPin className="mt-0.5 h-10 w-10 shrink-0 text-accent" />
+                    <Title>{LOCATION.address}</Title>
+                  </a>
+                </motion.div>
+              </li>
+              <li>
+                <motion.div variants={v(headerVariants)}>
+                  <a
+                    href={`tel:${LOCATION.telephone}`}
+                    className="flex items-center gap-3 hover:scale-110 hover:text-foreground duration-200"
+                  >
+                    <Phone className="h-10 w-10 shrink-0 text-accent" />
+                    <Title> {LOCATION.phone}</Title>
+                  </a>
+                </motion.div>
+              </li>
+              <li>
+                <motion.div
+                  variants={v(headerVariants)}
+                  className="flex items-start gap-3 whitespace-pre-line"
+                >
+                  <Clock className="mt-0.5 h-10 w-10 shrink-0 text-accent" />
+                  <Title> {LOCATION.hours}</Title>
+                </motion.div>
+              </li>
+              <li>
+                <motion.div
+                  variants={v(headerVariants)}
+                  className="flex items-center gap-3"
+                >
+                  <ParkingCircle className="h-10 w-10 shrink-0 text-accent" />
+                  <Title> {LOCATION.parking}</Title>
+                </motion.div>
+              </li>
+            </ul>
+            <motion.div variants={v(buttonVariants)}>
+              <RibbonButton
+                href={businessInformation.googleMapAddressLocation}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get Directions
+              </RibbonButton>
+            </motion.div>
           </div>
-          <ul className="flex flex-col gap-3 text-sm text-foreground-muted sm:text-base">
-            <li className="flex items-start gap-3">
-              <MapPin className="mt-0.5 h-10 w-10 shrink-0 text-accent" />
-              <Title>{LOCATION.address}</Title>
-            </li>
-            <li className="flex items-center gap-3">
-              <Phone className="h-10 w-10 shrink-0 text-accent" />
-              <Title> {LOCATION.phone}</Title>
-            </li>
-            <li className="flex items-start gap-3 whitespace-pre-line">
-              <Clock className="mt-0.5 h-10 w-10 shrink-0 text-accent" />
-              <Title> {LOCATION.hours}</Title>
-            </li>
-            <li className="flex items-center gap-3">
-              <ParkingCircle className="h-10 w-10 shrink-0 text-accent" />
-              <Title> Free Parking Available</Title>
-            </li>
-          </ul>
-          <RibbonButton
-            href={`https://www.google.com/maps/dir/?api=1&destination=${LOCATION.latitude},${LOCATION.longitude}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Right — interactive map + Get Directions */}
+          <motion.div
+            variants={v(itemVariants)}
+            className="relative aspect-4/3 w-full overflow-hidden shadow-lg"
           >
-            Get Directions
-          </RibbonButton>
-        </div>
-        {/* Right — interactive map + Get Directions */}
-        <div className="relative aspect-4/3 w-full overflow-hidden shadow-lg">
-          <InteractiveMap
-            latitude={LOCATION.latitude}
-            longitude={LOCATION.longitude}
-            name="Home Sports Bar"
-            address={LOCATION.address}
-          />
-        </div>
+            <InteractiveMap
+              latitude={LOCATION.latitude}
+              longitude={LOCATION.longitude}
+              name="Home Sports Bar"
+              address={LOCATION.address}
+            />
+          </motion.div>
+        </motion.div>
       </Container>
     </section>
   );

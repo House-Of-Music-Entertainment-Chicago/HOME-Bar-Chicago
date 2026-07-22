@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Subheading from "@/components/utils/SubHeadingText";
 import Title from "@/components/utils/TitleText";
@@ -6,6 +8,14 @@ import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import RoughBorderFrame from "../../utils/RoughBorderFrame";
 import PaperDivider from "@/components/utils/PaperDivider";
+
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  reducedVariants,
+  groupVariants,
+  itemVariants,
+  headerVariants,
+} from "@/data/animation-variants";
 
 const PLACES = [
   {
@@ -40,43 +50,59 @@ const PLACES = [
 ];
 
 export default function PlacesToPlaySection() {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="relative bg-background">
       <Container>
-        <div className="mb-10 flex flex-col items-center text-center">
-          <Subheading>Places to Play &amp; Enjoy</Subheading>
-          <DividerFlourish className="mt-2 w-24" />
-        </div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={v(groupVariants)}
+        >
+          <motion.div
+            variants={v(headerVariants)}
+            className="mb-10 flex flex-col items-center text-center"
+          >
+            <Subheading>Places to Play &amp; Enjoy</Subheading>
+            <DividerFlourish className="mt-2 w-24" />
+          </motion.div>
 
-        <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
-          {PLACES.map((place) => (
-            <div key={place.title} className="flex flex-col gap-3">
-              <div className="relative aspect-3/4 w-full">
-                {place.image ? (
-                  <Image
-                    src={place.image}
-                    alt={place.alt}
-                    fill
-                    sizes="(min-width: 1024px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-surface text-xs text-foreground-muted">
-                    TODO: photo
-                  </div>
-                )}
-                <RoughBorderFrame />
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+            {PLACES.map((place) => (
+              <div key={place.title} className="flex flex-col gap-3">
+                <motion.div
+                  variants={v(itemVariants)}
+                  className="relative aspect-3/4 w-full"
+                >
+                  {place.image ? (
+                    <Image
+                      src={place.image}
+                      alt={place.alt}
+                      fill
+                      sizes="(min-width: 1024px) 50vw, 100vw"
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-surface text-xs text-foreground-muted">
+                      TODO: photo
+                    </div>
+                  )}
+                  <RoughBorderFrame />
+                </motion.div>
+                <motion.div variants={v(headerVariants)}>
+                  <Title>{place.title}</Title>
+                  <div className="mb-1 h-0.5 w-10 bg-accent" />
+                  <Text className="text-foreground-muted">
+                    {place.description}
+                  </Text>
+                </motion.div>
               </div>
-              <div>
-                <Title>{place.title}</Title>
-                <div className="mb-1 h-0.5 w-10 bg-accent" />
-                <Text className="text-foreground-muted">
-                  {place.description}
-                </Text>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </motion.div>
       </Container>
       <PaperDivider position="bottom" />
     </section>

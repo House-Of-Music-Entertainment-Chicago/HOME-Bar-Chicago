@@ -8,6 +8,13 @@ import StatsSection from "@/components/pages/about/StatsSection";
 import GallerySection from "@/components/pages/about/GalleryPreviewSection";
 import CTASection from "@/components/pages/home/CTASection";
 
+export const metadata = {
+  title: "About",
+  description:
+    "Learn more about HOME Sports Bar — a premier sports bar and entertainment venue in the northwest suburbs of Chicago.",
+  alternates: { canonical: "/about" },
+};
+
 function About() {
   return (
     <>

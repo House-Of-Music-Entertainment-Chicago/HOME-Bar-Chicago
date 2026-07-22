@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Container from "@/components/utils/Container";
@@ -11,6 +13,18 @@ import sandwich from "../../../../public/images/assets/menu/food/sandwich-w-frie
 import drink2 from "../../../../public/images/assets/menu/drinks/drink-2.webp";
 import PennantTag from "@/components/utils/PennantTag";
 import TornPaper from "@/components/utils/TornPaper";
+
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  headerVariants,
+  reducedVariants,
+  groupVariants,
+  itemVariants,
+} from "@/data/animation-variants";
+
+// Same easing + timing values as FeaturesSection.jsx — kept identical
+// on purpose so entrances read as one consistent motion language
+// across sections rather than each one inventing its own feel.
 
 function MenuItemCard({ image, alt, title }) {
   // Normalize: plain string -> one line, one part. Flat array (old
@@ -79,35 +93,50 @@ const MENU_ITEMS = [
 ];
 
 function FeaturedMenuSection() {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="relative overflow-x-hidden">
       <Container>
         <div className="w-full flex justify-center items-center">
-          {/* <div className="relative container mx-auto flex flex-wrap pt-6 sm:flex-nowrap bg-white"> */}
-          <div className="relative container mx-auto grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 pt-6">
+          <motion.div
+            className="relative container mx-auto grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 pt-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={v(groupVariants)}
+          >
             {/* Pennant tag — overlaps the top-left corner of the section */}
-            <div className="absolute -top-2 -left-5 -rotate-5 z-10">
-              <PennantTag ribbonImage={ribbonLime}>
-                {/* <Subheading>Featured Menu</Subheading> */}
-                Featured Menu
-              </PennantTag>
-            </div>
+            <motion.div
+              className="absolute -top-2 -left-5 -rotate-5 z-10"
+              variants={v(headerVariants)}
+            >
+              <PennantTag ribbonImage={ribbonLime}>Featured Menu</PennantTag>
+            </motion.div>
 
             {MENU_ITEMS.map((item) => (
-              <div key={item.alt} className="min-w-0 border-t border-lime">
+              <motion.div
+                key={item.alt}
+                variants={v(itemVariants)}
+                className="min-w-0 border-t border-lime"
+              >
                 <MenuItemCard {...item} />
-              </div>
+              </motion.div>
             ))}
 
-            <div className="col-span-2 sm:col-span-4 xl:col-span-1">
+            <motion.div
+              variants={v(itemVariants)}
+              className="col-span-2 sm:col-span-4 xl:col-span-1"
+            >
               <TornPaper
                 href="/menu"
                 firstText="Hungry?"
                 secondText="Thirsty?"
                 thirdText="We got you."
               />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </Container>
     </section>

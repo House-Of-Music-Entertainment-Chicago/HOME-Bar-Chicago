@@ -1,10 +1,20 @@
-import { SiFacebook, SiX, SiYoutube } from "@icons-pack/react-simple-icons";
+import {
+  SiFacebook,
+  SiX,
+  SiYoutube,
+  SiInstagram,
+} from "@icons-pack/react-simple-icons";
 
 const SOCIAL_LINKS = [
   {
     label: "Facebook",
     href: "https://www.facebook.com/HOME.Bar.Chicago",
     Icon: SiFacebook,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/homebarchicago/",
+    Icon: SiInstagram,
   },
   {
     label: "X (Twitter)",

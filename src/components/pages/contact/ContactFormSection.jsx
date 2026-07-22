@@ -2,10 +2,18 @@
 
 import { useState } from "react";
 import Subheading from "@/components/utils/SubHeadingText";
-import Title from "@/components/utils/TitleText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import RibbonButton from "@/components/utils/Ribbonbutton";
+
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  reducedVariants,
+  groupVariants,
+  itemVariants,
+  headerVariants,
+  buttonVariants,
+} from "@/data/animation-variants";
 
 const REASONS = [
   "General Inquiry",
@@ -28,6 +36,10 @@ export default function ContactFormSection() {
     reason: "",
     message: "",
   });
+
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
 
   const handleChange = (e) => {
@@ -56,89 +68,99 @@ export default function ContactFormSection() {
 
   return (
     <section className="bg-background">
-      <Container className="max-w-2xl">
-        <div className="mb-8 text-center">
-          <Subheading>Send Us A Message</Subheading>
-          <DividerFlourish className="mx-auto mt-2 w-20" />
-        </div>
-
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-4 border border-olive/40 p-6 sm:p-8"
+      <Container className="relative flex justify-center">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={v(groupVariants)}
+          className="max-w-2xl"
         >
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={form.name}
-              onChange={handleChange}
-              required
-              className={inputClass}
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              value={form.email}
-              onChange={handleChange}
-              required
-              className={inputClass}
-            />
-          </div>
+          <motion.div variants={v(headerVariants)} className="mb-8 text-center">
+            <Subheading>Send Us A Message</Subheading>
+            <DividerFlourish className="mx-auto mt-2 w-20" />
+          </motion.div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Phone Number (optional)"
-              value={form.phone}
-              onChange={handleChange}
-              className={inputClass}
-            />
-            <select
-              name="reason"
-              value={form.reason}
-              onChange={handleChange}
-              required
-              className={`${inputClass} appearance-none`}
-            >
-              <option value="" disabled>
-                Reason for Contact
-              </option>
-              {REASONS.map((r) => (
-                <option key={r} value={r}>
-                  {r}
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4 border border-olive/40 p-6 sm:p-8"
+          >
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={form.name}
+                onChange={handleChange}
+                required
+                className={inputClass}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={form.email}
+                onChange={handleChange}
+                required
+                className={inputClass}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone Number (optional)"
+                value={form.phone}
+                onChange={handleChange}
+                className={inputClass}
+              />
+              <select
+                name="reason"
+                value={form.reason}
+                onChange={handleChange}
+                required
+                className={`${inputClass} appearance-none`}
+              >
+                <option value="" disabled>
+                  Reason for Contact
                 </option>
-              ))}
-            </select>
-          </div>
+                {REASONS.map((r) => (
+                  <option key={r} value={r}>
+                    {r}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <textarea
-            name="message"
-            placeholder="Your message"
-            value={form.message}
-            onChange={handleChange}
-            rows={5}
-            required
-            className={`${inputClass} resize-none`}
-          />
+            <textarea
+              name="message"
+              placeholder="Your message"
+              value={form.message}
+              onChange={handleChange}
+              rows={5}
+              required
+              className={`${inputClass} resize-none`}
+            />
 
-          <RibbonButton type="submit" disabled={status === "submitting"}>
-            {status === "submitting" ? "Sending..." : "Send Message"}
-          </RibbonButton>
+            <motion.div variants={v(buttonVariants)} className="mx-auto">
+              <RibbonButton type="submit" disabled={status === "submitting"}>
+                {status === "submitting" ? "Sending..." : "Send Message"}
+              </RibbonButton>
+            </motion.div>
 
-          {status === "success" && (
-            <p className="text-center text-sm text-olive">
-              Thanks — we'll get back to you shortly.
-            </p>
-          )}
-          {status === "error" && (
-            <p className="text-center text-sm text-red-500">
-              Something went wrong. Please try again or call us directly.
-            </p>
-          )}
-        </form>
+            {status === "success" && (
+              <p className="text-center text-sm text-olive">
+                Thanks — we'll get back to you shortly.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="text-center text-sm text-red-500">
+                Something went wrong. Please try again or call us directly.
+              </p>
+            )}
+          </form>
+        </motion.div>
       </Container>
     </section>
   );

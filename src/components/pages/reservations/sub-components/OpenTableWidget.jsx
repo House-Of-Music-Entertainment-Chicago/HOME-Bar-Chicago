@@ -1,6 +1,7 @@
 "use client";
 
 import RibbonButton from "@/components/utils/Ribbonbutton";
+import { openTableReservationLink } from "@/data/external-links";
 /**
  * OpenTableWidget
  * ---------------------------------------------------------------
@@ -22,17 +23,15 @@ import RibbonButton from "@/components/utils/Ribbonbutton";
  * ---------------------------------------------------------------
  */
 
-export default function OpenTableWidget({
-  restaurantSlug = "REPLACE_WITH_YOUR_OPENTABLE_SLUG",
-}) {
+export default function OpenTableWidget() {
   return (
     <div className="flex flex-col gap-2">
       <RibbonButton
-        href={`https://www.opentable.com/r/${restaurantSlug}`}
+        href={openTableReservationLink}
         target="_blank"
         rel="noopener noreferrer"
       >
-        Reserve with OpenTable
+        Reserve A Table Now!
       </RibbonButton>
       <p className="flex items-center gap-1.5 text-xs text-foreground-muted">
         🔒 You will be redirected to OpenTable to complete your reservation.

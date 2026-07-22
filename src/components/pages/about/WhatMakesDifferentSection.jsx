@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Title from "@/components/utils/TitleText";
 import Subheading from "@/components/utils/SubHeadingText";
@@ -10,7 +12,14 @@ import {
   BurgerIcon,
   CommunityIcon,
 } from "@/data/features-icons";
-import PaperDivider from "@/components/utils/PaperDivider";
+
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  reducedVariants,
+  groupVariants,
+  itemVariants,
+  headerVariants,
+} from "@/data/animation-variants";
 
 const DIFFERENTIATORS = [
   {
@@ -40,6 +49,9 @@ const DIFFERENTIATORS = [
 ];
 
 export default function WhatMakesDifferentSection() {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="relative bg-background">
       <Image
@@ -54,22 +66,32 @@ export default function WhatMakesDifferentSection() {
 
       <Container className="flex justify-center items-center">
         {/* Center — heading + icon grid */}
-        <div className="z-1 flex flex-col items-center gap-8 text-center">
-          <div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={v(groupVariants)}
+          className="z-1 flex flex-col items-center gap-8 text-center"
+        >
+          <motion.div variants={v(headerVariants)}>
             <Subheading>What Makes Home Different</Subheading>
             <DividerFlourish className="mt-2 w-24" />
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">
             {DIFFERENTIATORS.map(({ Icon, title, description }) => (
-              <div key={title} className="flex flex-col items-center gap-2">
+              <motion.div
+                variants={v(itemVariants)}
+                key={title}
+                className="flex flex-col items-center gap-2"
+              >
                 <Icon className="h-24 w-24 text-accent filter-[drop-shadow(0_0_4px_var(--color-accent))_drop-shadow(0_0_10px_var(--color-accent))]" />
                 <Title>{title}</Title>
                 <Text className="text-foreground-muted">{description}</Text>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </Container>
     </section>
   );

@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Subheading from "@/components/utils/SubHeadingText";
 import Title from "@/components/utils/TitleText";
@@ -6,6 +8,16 @@ import Container from "@/components/utils/Container";
 import ImagePlaceholder from "@/components/utils/ImagePlaceholder";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import RibbonButton from "@/components/utils/Ribbonbutton";
+import { openTableReservationLink } from "@/data/external-links";
+
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  reducedVariants,
+  groupVariants,
+  itemVariants,
+  headerVariants,
+  buttonVariants,
+} from "@/data/animation-variants";
 
 const FEATURED_EVENTS = [
   {
@@ -32,6 +44,9 @@ const FEATURED_EVENTS = [
 ];
 
 export default function FeaturedEventsSection() {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="relative bg-background">
       <Image
@@ -44,32 +59,50 @@ export default function FeaturedEventsSection() {
         className="absolute inset-0 z-0 object-cover"
       />
       <Container className="relative">
-        <Subheading className="text-center">Featured Events</Subheading>
-        <DividerFlourish className="mb-8" />
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={v(groupVariants)}
+          className="relative"
+        >
+          <motion.div variants={v(headerVariants)}>
+            <Subheading className="text-center">Featured Events</Subheading>
+            <DividerFlourish className="mb-8" />
+          </motion.div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURED_EVENTS.map((event) => (
-            <div
-              key={event.title}
-              className="flex flex-col border border-olive/40 bg-background-alt/40"
-            >
-              <div className="relative aspect-4/3 w-full overflow-hidden">
-                <ImagePlaceholder
-                  label="Event photo"
-                  className="h-full w-full"
-                />
-              </div>
-              <div className="flex flex-1 flex-col gap-2 p-4">
-                <Title className="uppercase">{event.title}</Title>
-                <Text className="uppercase text-lime">{event.when}</Text>
-                <Text className="flex-1 text-foreground-muted">
-                  {event.description}
-                </Text>
-                <RibbonButton>Reserve Now</RibbonButton>
-              </div>
-            </div>
-          ))}
-        </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {FEATURED_EVENTS.map((event) => (
+              <motion.div
+                variants={v(itemVariants)}
+                key={event.title}
+                className="flex flex-col border border-olive/40 bg-background-alt/40"
+              >
+                <div className="relative aspect-4/3 w-full overflow-hidden">
+                  <ImagePlaceholder
+                    label="Event photo"
+                    className="h-full w-full"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col gap-2 p-4">
+                  <Title className="uppercase">{event.title}</Title>
+                  <Text className="uppercase text-lime">{event.when}</Text>
+                  <Text className="flex-1 text-foreground-muted">
+                    {event.description}
+                  </Text>
+                  <motion.div variants={v(buttonVariants)}>
+                    <RibbonButton
+                      href={openTableReservationLink}
+                      target="_blank"
+                    >
+                      Reserve Now
+                    </RibbonButton>
+                  </motion.div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </Container>
     </section>
   );

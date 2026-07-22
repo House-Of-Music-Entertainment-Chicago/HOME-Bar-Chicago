@@ -1,6 +1,6 @@
-import Image from "next/image";
+"use client";
+
 import ImagePlaceholder from "@/components/utils/ImagePlaceholder";
-import Subheading from "@/components/utils/SubHeadingText";
 import Title from "@/components/utils/TitleText";
 import Text from "@/components/utils/BodyText";
 import PennantTag from "@/components/utils/PennantTag";
@@ -8,11 +8,13 @@ import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
 import Container from "@/components/utils/Container";
 import DateBanner from "@/components/utils/DateBanner";
 
-// Ribbon label — same shape language as the pennant tags on the menu
-// cards, just centered and full-width-ish rather than card-anchored.
-
-// The olive date badge — reused as-is (just swap color) in
-// UpcomingSpecialEventsSection.jsx for the accent-colored version.
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  reducedVariants,
+  groupVariants,
+  itemVariants,
+  headerVariants,
+} from "@/data/animation-variants";
 
 const WEEK_DAYS = [
   {
@@ -68,37 +70,51 @@ const WEEK_DAYS = [
 ];
 
 export default function ThisWeekStrip() {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="bg-background">
       <Container>
-        <div className="flex justify-center">
-          <PennantTag ribbonImage={ribbonLime}>This Week At HOME</PennantTag>
-        </div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={v(groupVariants)}
+        >
+          <motion.div
+            variants={v(headerVariants)}
+            className="flex justify-center"
+          >
+            <PennantTag ribbonImage={ribbonLime}>This Week At HOME</PennantTag>
+          </motion.div>
 
-        <div className="mx-auto grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7">
-          {WEEK_DAYS.map((d) => (
-            <div
-              key={d.day}
-              className="relative flex flex-col border border-olive/40"
-            >
-              <Text className="bg-background-alt text-center uppercase text-foreground-muted">
-                {d.day}
-              </Text>
-              <div className="relative aspect-square w-full overflow-hidden">
-                <ImagePlaceholder
-                  label="Event photo"
-                  className="h-full w-full"
-                />
-                {/* Date badge — olive, per your note that this is important */}
-              </div>
-              <DateBanner month={d.month} day={d.date} color="olive" />
-              <div className="px-2 py-2 text-center">
-                <Title className="uppercase">{d.title}</Title>
-                <Text className="mt-0.5 text-foreground-muted">{d.time}</Text>
-              </div>
-            </div>
-          ))}
-        </div>
+          <div className="mx-auto grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7">
+            {WEEK_DAYS.map((d) => (
+              <motion.div
+                variants={v(itemVariants)}
+                key={d.day}
+                className="relative flex flex-col border border-olive/40"
+              >
+                <Text className="bg-background-alt text-center uppercase text-foreground-muted">
+                  {d.day}
+                </Text>
+                <div className="relative aspect-square w-full overflow-hidden">
+                  <ImagePlaceholder
+                    label="Event photo"
+                    className="h-full w-full"
+                  />
+                  {/* Date badge — olive, per your note that this is important */}
+                </div>
+                <DateBanner month={d.month} day={d.date} color="olive" />
+                <div className="px-2 py-2 text-center">
+                  <Title className="uppercase">{d.title}</Title>
+                  <Text className="mt-0.5 text-foreground-muted">{d.time}</Text>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </Container>
     </section>
   );

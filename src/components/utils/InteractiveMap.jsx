@@ -104,7 +104,7 @@ import "leaflet/dist/leaflet.css";
 const logoIcon = L.icon({
   iconUrl: "/images/logo/latest-logo.png", // put the file in /public
   iconSize: [48, 48], // match your actual image dimensions
-  iconAnchor: [24, 48], // bottom-center of image = the actual pin point
+  iconAnchor: [24, 24], // center of image
   popupAnchor: [0, -48],
 });
 
@@ -152,7 +152,7 @@ export default function InteractiveMap({ latitude, longitude, name, address }) {
   return (
     <MapContainer
       center={[latitude, longitude]}
-      zoom={16}
+      zoom={18}
       scrollWheelZoom={false}
       style={{ height: "100%", width: "100%" }}
       ref={mapRef}
@@ -160,7 +160,7 @@ export default function InteractiveMap({ latitude, longitude, name, address }) {
       <InvalidateSizeOnMount />
       <TileLayer
         url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
       />
       <Marker position={[latitude, longitude]} icon={logoIcon} />
     </MapContainer>

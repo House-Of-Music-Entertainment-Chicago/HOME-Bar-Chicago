@@ -1,11 +1,20 @@
+"use client";
+
 import Image from "next/image";
 import PennantTag from "@/components/utils/PennantTag";
 import TestimonialCard from "./TestimonialCard";
 import ribbonOrange from "../../../../../public/images/assets/ribbon-orange.png";
 import Container from "@/components/utils/Container";
 import SOCIAL_LINKS from "@/data/social-links";
-
 import InstagramEmbed from "./InstagramEmbed";
+
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  headerVariants,
+  reducedVariants,
+  groupVariants,
+  itemVariants,
+} from "@/data/animation-variants";
 
 /**
  * TestimonialsAndSocialSection
@@ -57,20 +66,34 @@ const TESTIMONIALS = [
 export default function TestimonialSection({
   instagramPostUrl = "https://www.instagram.com/p/DaOaojUxaQg/",
 }) {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="bg-background-alt">
       <Container>
-        <div className="container mx-auto flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-10">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={v(groupVariants)}
+          className="container mx-auto flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-10"
+        >
           {/* Left — testimonials */}
           <div className="relative flex-1 p-5">
-            <div className="absolute -top-20 -left-5 z-10">
+            <motion.div
+              variants={v(headerVariants)}
+              className="absolute -top-20 -left-5 z-10"
+            >
               <PennantTag ribbonImage={ribbonOrange}>
                 What People Are Saying
               </PennantTag>
-            </div>
+            </motion.div>
             <div className="grid grid-cols-1 gap-6 xl:gap-10 sm:grid-cols-2">
               {TESTIMONIALS.map((t) => (
-                <TestimonialCard key={t.name} {...t} />
+                <motion.div key={t.name} variants={v(itemVariants)}>
+                  <TestimonialCard {...t} />
+                </motion.div>
               ))}
             </div>
           </div>
@@ -78,7 +101,10 @@ export default function TestimonialSection({
           {/* Right — social callout + embedded IG post */}
           {/* <div className="flex flex-1 items-center gap-6"> */}
           <div className="relative flex flex-1 flex-col items-center lg:flex-row lg:justify-center">
-            <div className="shrink-0 text-center lg:text-left lg:-rotate-90">
+            <motion.div
+              variants={v(itemVariants)}
+              className="shrink-0 text-center lg:text-left lg:-rotate-90"
+            >
               <p className="font-display text-2xl font-black italic text-accent sm:text-3xl">
                 #HomeBar
               </p>
@@ -86,27 +112,15 @@ export default function TestimonialSection({
                 Follow us
                 <br />
               </p>
-              {/* <div className="flex items-center justify-center gap-4 mt-2">
-                {SOCIAL_LINKS.map(({ label, href, Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="text-foreground-muted transition-colors hover:text-accent"
-                  >
-                    <Icon className="h-8 w-8" />
-                  </a>
-                ))}
-              </div> */}
-            </div>
-            <InstagramEmbed
-              url={instagramPostUrl}
-              className="w-full sm:max-w-xs"
-            />
+            </motion.div>
+            <motion.div variants={v(itemVariants)}>
+              <InstagramEmbed
+                url={instagramPostUrl}
+                className="w-full sm:max-w-xs"
+              />
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </Container>
     </section>
   );

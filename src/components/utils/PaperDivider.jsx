@@ -62,7 +62,7 @@ export default function PaperDivider({
       <Image
         src={tornPaper}
         alt="Torn paper divider"
-        priority={false}
+        priority
         className="h-auto w-full select-none"
       />
     </div>

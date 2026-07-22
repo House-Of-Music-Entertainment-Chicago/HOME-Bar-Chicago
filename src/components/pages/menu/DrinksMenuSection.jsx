@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import {
   Martini,
@@ -14,9 +16,17 @@ import Text from "@/components/utils/BodyText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import PaperDivider from "@/components/utils/PaperDivider";
-import ImagePlaceholder from "@/components/utils/ImagePlaceholder";
 import PennantTag from "@/components/utils/PennantTag";
 import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
+
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  reducedVariants,
+  groupVariants,
+  itemVariants,
+  headerVariants,
+} from "@/data/animation-variants";
+
 // import PennantTag from "@/components/utils/PennantTag";
 // NOTE: swap the inline PennantTagStub below for your real PennantTag
 // component, same as in FoodMenuSection.jsx.
@@ -167,15 +177,21 @@ const COLUMN_CLASS = {
 };
 
 function DrinkCategoryCard({ title, icon: Icon, items, columns = 1 }) {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <div className="relative border border-olive/50 bg-background p-6">
       <div className="relative -mx-6 -mt-6 mb-4 h-20 sm:h-24">
-        <div className="relative z-10 flex justify-between h-full items-center gap-1">
+        <motion.div
+          variants={v(headerVariants)}
+          className="relative z-10 flex justify-between h-full items-center gap-1"
+        >
           <PennantTag ribbonImage={ribbonLime}>{title}</PennantTag>
           <span className="mx-5 hidden sm:flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-olive bg-background text-olive">
             <Icon className="h-4 w-4" />
           </span>
-        </div>
+        </motion.div>
       </div>
 
       <ul className={COLUMN_CLASS[columns] ?? COLUMN_CLASS[1]}>
@@ -199,6 +215,9 @@ function DrinkCategoryCard({ title, icon: Icon, items, columns = 1 }) {
 }
 
 export default function DrinksMenuSection() {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="relative overflow-hidden bg-background">
       {/* Background photo — replace ImagePlaceholder with a real <Image>
@@ -212,52 +231,67 @@ export default function DrinksMenuSection() {
         aria-hidden="true"
         className="absolute inset-0 z-0 object-cover"
       />
-      <Container className="relative z-10">
-        <div className="mb-10 text-center">
-          <Subheading>Drinks Menu</Subheading>
-          <Title className="mt-1 uppercase text-lime">
-            Ice cold drinks. All night long.
-          </Title>
-          <DividerFlourish className="mx-auto mt-2 w-24" />
-        </div>
+      <Container className="relative">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={v(groupVariants)}
+          className="relative z-10"
+        >
+          <motion.div
+            variants={v(headerVariants)}
+            className="mb-10 text-center"
+          >
+            <Subheading>Drinks Menu</Subheading>
+            <Title className="mt-1 uppercase text-lime">
+              Ice cold drinks. All night long.
+            </Title>
+            <DividerFlourish className="mx-auto mt-2 w-24" />
+          </motion.div>
 
-        {/* Signature + classic cocktail lists */}
-        <div className="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
-          <DrinkCategoryCard
-            title="Special Cocktails"
-            icon={Martini}
-            items={SPECIAL_COCKTAILS}
-            columns={2}
-          />
-          <DrinkCategoryCard
-            title="Classic Favorites"
-            icon={Citrus}
-            items={CLASSIC_FAVORITES}
-            columns={2}
-          />
-        </div>
+          {/* Signature + classic cocktail lists */}
+          <div className="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <DrinkCategoryCard
+              title="Special Cocktails"
+              icon={Martini}
+              items={SPECIAL_COCKTAILS}
+              columns={2}
+            />
+            <DrinkCategoryCard
+              title="Classic Favorites"
+              icon={Citrus}
+              items={CLASSIC_FAVORITES}
+              columns={2}
+            />
+          </div>
 
-        {/* Everything else: jugs, beer, seltzers, wine, spirits */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {BAR_CATEGORIES.map(({ title, icon: Icon, description }) => (
-            <div
-              key={title}
-              className="flex flex-col items-center gap-3 border border-olive/50 bg-background-alt/60 px-4 py-6 text-center"
-            >
-              <Icon className="h-12 w-12 text-lime" />
-              <Title className="uppercase">{title}</Title>
-              <Text className="text-foreground-muted">{description}</Text>
-            </div>
-          ))}
-        </div>
+          {/* Everything else: jugs, beer, seltzers, wine, spirits */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {BAR_CATEGORIES.map(({ title, icon: Icon, description }) => (
+              <motion.div
+                variants={v(itemVariants)}
+                key={title}
+                className="flex flex-col items-center gap-3 border border-olive/50 bg-background-alt/60 px-4 py-6 text-center"
+              >
+                <Icon className="h-12 w-12 text-lime" />
+                <Title className="uppercase">{title}</Title>
+                <Text className="text-foreground-muted">{description}</Text>
+              </motion.div>
+            ))}
+          </div>
 
-        {/* Closing tagline — matches the footer banner on the printed menu */}
-        <div className="mt-10 text-center">
-          <Title className="italic text-lime">Watch Every Game</Title>
-          <Subheading className="mt-1 uppercase">
-            Cold Drinks. <span className="text-accent">Hot Slots.</span>
-          </Subheading>
-        </div>
+          {/* Closing tagline — matches the footer banner on the printed menu */}
+          <motion.div
+            variants={v(headerVariants)}
+            className="mt-10 text-center"
+          >
+            <Title className="italic text-lime">Watch Every Game</Title>
+            <Subheading className="mt-1 uppercase">
+              Cold Drinks. <span className="text-accent">Hot Slots.</span>
+            </Subheading>
+          </motion.div>
+        </motion.div>
       </Container>
 
       <PaperDivider position="bottom" />

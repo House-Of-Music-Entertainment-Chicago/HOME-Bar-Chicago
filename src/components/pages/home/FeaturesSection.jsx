@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Container from "@/components/utils/Container";
@@ -22,6 +24,14 @@ import liveDj from "../../../../public/images/assets/entertainment/live-dj.jpg";
 import sectionBg1 from "../../../../public//images/assets/section-bg-1.jpg";
 import PaperDivider from "@/components/utils/PaperDivider";
 
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  headerVariants,
+  reducedVariants,
+  buttonVariants,
+  groupVariants,
+  itemVariants,
+} from "@/data/animation-variants";
 /**
  * FeaturesSection
  * ---------------------------------------------------------------
@@ -34,6 +44,13 @@ import PaperDivider from "@/components/utils/PaperDivider";
  * here instead) — NOT a raster image or icon-library feature, so
  * it stays crisp at any size and recolors instantly via the
  * --color-accent token.
+ *
+ * Motion: header fades up, then the card grid staggers in child by
+ * child, then the CTA follows — each triggered once on scroll into
+ * view. EASE matches IntroSplash's curve so entrances feel like one
+ * consistent motion language site-wide. Falls back to a plain,
+ * instant fade (no movement, no stagger) when the visitor has
+ * requested reduced motion.
  * ---------------------------------------------------------------
  */
 
@@ -83,6 +100,9 @@ const FEATURES = [
 ];
 
 function FeaturesSection() {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="relative">
       <Image
@@ -96,32 +116,46 @@ function FeaturesSection() {
       />
       <Container>
         <div className="flex flex-col items-center justify-center w-full">
-          <Subheading className="z-1">THE HOME EXPERIENCE</Subheading>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={v(headerVariants)}
+            className="flex flex-col items-center"
+          >
+            <Subheading className="z-1">THE HOME EXPERIENCE</Subheading>
+            <DividerFlourish />
+          </motion.div>
 
-          <DividerFlourish />
-
-          {/* <div className="mt-10 w-full grid grid-cols-2 gap-5 sm:grid-cols-3 xl:grid-cols-4">
+          <motion.div
+            className="mt-10 w-full flex flex-wrap justify-center"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={v(groupVariants)}
+          >
             {FEATURES.map((feature) => (
-              <FeatureCard key={feature.title} {...feature} />
-            ))}
-          </div> */}
-
-          <div className="mt-10 w-full flex flex-wrap justify-center">
-            {FEATURES.map((feature) => (
-              <div
+              <motion.div
                 key={feature.title}
+                variants={v(itemVariants)}
                 className="w-[calc(50%-10px)] md:w-[calc(33.3333%-13.333px)] xl:w-[calc(25%-15px)]"
               >
                 <FeatureCard {...feature} />
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          <div className="mt-12 flex justify-center">
+          <motion.div
+            className="mt-12 flex justify-center"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={v(buttonVariants)}
+          >
             <RibbonButton href="/about" tone="olive">
               Learn More About Home
             </RibbonButton>
-          </div>
+          </motion.div>
         </div>
       </Container>
       <PaperDivider />

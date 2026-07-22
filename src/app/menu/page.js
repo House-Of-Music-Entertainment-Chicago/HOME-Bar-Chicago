@@ -5,6 +5,13 @@ import FoodMenuSection from "@/components/pages/menu/FoodMenuSection";
 import DrinksMenuSection from "@/components/pages/menu/DrinksMenuSection";
 import CTASection from "@/components/pages/home/CTASection";
 
+export const metadata = {
+  title: "Menu",
+  description:
+    "Explore HOME Sports Bar's full food and drinks menu — signature burgers, wings, pizza, cocktails, and more.",
+  alternates: { canonical: "/menu" },
+};
+
 function Menu() {
   return (
     <>

@@ -1,65 +1,104 @@
+"use client";
+
 import Title from "@/components/utils/TitleText";
 import Text from "@/components/utils/BodyText";
 import { Phone, Mail, Clock, MapPin } from "lucide-react";
-import { SiFacebook, SiInstagram } from "@icons-pack/react-simple-icons";
 import Container from "@/components/utils/Container";
 
-// NOTE: address, phone, and hours below match the placeholders
-// already used in LocationSection.jsx (Makati City coordinates) —
-// keep these two files in sync, and swap both together once you
-// have HOME Bar Chicago's real address and phone number. Email is
-// a placeholder too — no real inbox has been set up for this yet.
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  reducedVariants,
+  groupVariants,
+  itemVariants,
+  headerVariants,
+} from "@/data/animation-variants";
+
+import businessInformation from "@/data/business-info";
+import SOCIAL_LINKS from "@/data/social-links";
+
 const CONTACT_INFO = [
   {
     icon: MapPin,
     label: "Address",
-    value: "123 Champions Ave, Makati City, Philippines",
+    value: businessInformation.address,
+    href: businessInformation.googleMapAddressLocation,
   },
-  { icon: Phone, label: "Phone", value: "(02) 8123 4567" },
-  { icon: Mail, label: "Email", value: "hello@homesportsbar.com" },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: businessInformation.phone,
+    href: `tel:${businessInformation.telephone}`,
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    value: businessInformation.email,
+    href: `mailto:${businessInformation.email}`,
+  },
   {
     icon: Clock,
     label: "Hours",
-    value: "Mon – Thu: 4PM – 1AM\nFri – Sun: 12NN – 2AM",
+    value: "Mon – Thu: 11AM – 12AM\nFri – Sun: 11AM – 12AM",
+    href: null,
   },
 ];
 
 export default function ContactInfoStrip() {
+  const prefersReducedMotion = useReducedMotion();
+  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+
   return (
     <section className="bg-background">
       <Container>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {CONTACT_INFO.map(({ icon: Icon, label, value }) => (
-            <div
-              key={label}
-              className="flex flex-col items-center gap-2 border border-olive/40 bg-background-alt/50 px-4 py-6 text-center"
-            >
-              <Icon className="h-12 w-12 text-accent" />
-              <Title className="uppercase text-lime">{label}</Title>
-              <Text className="whitespace-pre-line text-foreground-muted">
-                {value}
-              </Text>
-            </div>
-          ))}
-        </div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={v(groupVariants)}
+        >
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {CONTACT_INFO.map(({ icon: Icon, label, value, href }) => (
+              <motion.div variants={v(itemVariants)} key={label}>
+                {href ? (
+                  <a
+                    href={href}
+                    className="w-full h-full px-4 py-6 flex flex-col items-center gap-2 border border-olive/40 bg-background-alt/50 text-center hover:scale-110 hover:bg-olive/20 duration-200"
+                  >
+                    <Icon className="h-12 w-12 text-accent" />
+                    <Title className="uppercase text-lime">{label}</Title>
+                    <Text className="whitespace-pre-line text-foreground-muted">
+                      {value}
+                    </Text>
+                  </a>
+                ) : (
+                  <div className="w-full h-full px-4 py-6 flex flex-col items-center gap-2 border border-olive/40 bg-background-alt/50 text-center">
+                    <Icon className="h-12 w-12 text-accent" />
+                    <Title className="uppercase text-lime">{label}</Title>
+                    <Text className="whitespace-pre-line text-foreground-muted">
+                      {value}
+                    </Text>
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
 
-        <div className="mt-6 flex items-center justify-center gap-4">
-          <a
-            href="#"
-            aria-label="Facebook"
-            className="text-foreground-muted transition-colors hover:text-lime"
+          <motion.div
+            variants={v(itemVariants)}
+            className="mt-6 flex items-center justify-center gap-5"
           >
-            <SiFacebook className="h-12 w-12" />
-          </a>
-          <a
-            href="#"
-            aria-label="Instagram"
-            className="text-foreground-muted transition-colors hover:text-lime"
-          >
-            <SiInstagram className="h-12 w-12" />
-          </a>
-          {/* lucide-react has no TikTok glyph — swap in a brand SVG here, same caveat as the footer */}
-        </div>
+            {SOCIAL_LINKS.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="text-foreground-muted transition-colors hover:text-lime"
+              >
+                <Icon className="h-12 w-12" />
+              </a>
+            ))}
+          </motion.div>
+        </motion.div>
       </Container>
     </section>
   );
