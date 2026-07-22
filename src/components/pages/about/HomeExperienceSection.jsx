@@ -8,13 +8,13 @@ import Text from "@/components/utils/BodyText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import sectionBg1 from "../../../../public/images/assets/section-bg-1.jpg";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
   itemVariants,
   headerVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const CHECKLIST = [
   "Multiple HD Screens",
@@ -26,8 +26,7 @@ const CHECKLIST = [
 ];
 
 export default function HomeExperienceSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative bg-background">

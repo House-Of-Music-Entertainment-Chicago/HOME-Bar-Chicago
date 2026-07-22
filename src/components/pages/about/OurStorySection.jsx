@@ -10,17 +10,16 @@ import StackedPhotoCard from "./sub-components/StackedPhotoCard";
 import PaperDivider from "@/components/utils/PaperDivider";
 import sectionBg1 from "../../../../public/images/assets/section-bg-1.jpg";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
   itemVariants,
   headerVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 export default function OurStorySection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative bg-background">

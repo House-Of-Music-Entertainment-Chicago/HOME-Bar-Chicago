@@ -12,17 +12,16 @@ import PaperDivider from "@/components/utils/PaperDivider";
 import PennantTag from "@/components/utils/PennantTag";
 import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
   itemVariants,
   headerVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 export default function AboutHeroSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative flex flex-col items-center justify-center">

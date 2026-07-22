@@ -10,14 +10,14 @@ import DividerFlourish from "@/components/utils/DividerFlourish";
 import RibbonButton from "@/components/utils/Ribbonbutton";
 import { openTableReservationLink } from "@/data/external-links";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
   itemVariants,
   headerVariants,
   buttonVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const FEATURED_EVENTS = [
   {
@@ -44,8 +44,7 @@ const FEATURED_EVENTS = [
 ];
 
 export default function FeaturedEventsSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative bg-background">

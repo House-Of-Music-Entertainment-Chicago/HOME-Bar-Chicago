@@ -8,14 +8,14 @@ import Text from "@/components/utils/BodyText";
 import Container from "@/components/utils/Container";
 import RibbonButton from "@/components/utils/Ribbonbutton";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
   itemVariants,
   headerVariants,
   buttonVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const FEATURES = [
   {
@@ -32,8 +32,7 @@ const FEATURES = [
 ];
 
 export default function HostEventSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative overflow-hidden bg-background">

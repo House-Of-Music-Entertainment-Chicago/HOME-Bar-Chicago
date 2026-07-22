@@ -6,17 +6,12 @@ import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import PaperDivider from "@/components/utils/PaperDivider";
 
-import { motion, useReducedMotion } from "framer-motion";
-import {
-  reducedVariants,
-  groupVariants,
-  itemVariants,
-  headerVariants,
-} from "@/data/animation-variants";
+import { motion } from "framer-motion";
+import { groupVariants, headerVariants } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 export default function ContactHero() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative bg-background">

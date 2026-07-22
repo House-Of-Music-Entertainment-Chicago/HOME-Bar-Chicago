@@ -5,13 +5,9 @@ import Text from "@/components/utils/BodyText";
 import { Phone, Mail, Clock, MapPin } from "lucide-react";
 import Container from "@/components/utils/Container";
 
-import { motion, useReducedMotion } from "framer-motion";
-import {
-  reducedVariants,
-  groupVariants,
-  itemVariants,
-  headerVariants,
-} from "@/data/animation-variants";
+import { motion } from "framer-motion";
+import { groupVariants, itemVariants } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 import businessInformation from "@/data/business-info";
 import SOCIAL_LINKS from "@/data/social-links";
@@ -44,8 +40,7 @@ const CONTACT_INFO = [
 ];
 
 export default function ContactInfoStrip() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="bg-background">
@@ -62,7 +57,7 @@ export default function ContactInfoStrip() {
                 {href ? (
                   <a
                     href={href}
-                    className="w-full h-full px-4 py-6 flex flex-col items-center gap-2 border border-olive/40 bg-background-alt/50 text-center hover:scale-110 hover:bg-olive/20 duration-200"
+                    className="w-full h-full px-4 py-6 flex flex-col items-center gap-2 border border-olive/40 bg-background-alt/50 text-center hover:bg-olive/20 transition-all duration-200 transform hover:scale-[1.03]"
                   >
                     <Icon className="h-12 w-12 text-accent" />
                     <Title className="uppercase text-lime">{label}</Title>

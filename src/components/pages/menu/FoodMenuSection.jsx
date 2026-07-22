@@ -10,13 +10,9 @@ import Container from "@/components/utils/Container";
 import PennantTag from "@/components/utils/PennantTag";
 import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
 
-import { motion, useReducedMotion } from "framer-motion";
-import {
-  reducedVariants,
-  groupVariants,
-  itemVariants,
-  headerVariants,
-} from "@/data/animation-variants";
+import { motion } from "framer-motion";
+import { groupVariants, headerVariants } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const APPETIZERS = [
   {
@@ -327,13 +323,11 @@ function MenuCategoryCard({
   title,
   icon: Icon,
   items,
-  thumbnail,
   columns = 1,
   notes,
+  thumbnail,
+  v = () => {},
 }) {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
-
   const notesList = notes ? (Array.isArray(notes) ? notes : [notes]) : null;
 
   return (
@@ -394,8 +388,7 @@ function MenuCategoryCard({
 }
 
 export default function FoodMenuSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative bg-background">
@@ -433,6 +426,7 @@ export default function FoodMenuSection() {
                 items={APPETIZERS}
                 thumbnail
                 columns={3}
+                v={v}
               />
               <MenuCategoryCard
                 title="Sandwiches & Entrées"
@@ -444,6 +438,7 @@ export default function FoodMenuSection() {
                   title: "A note on sides",
                   body: "All burgers and sandwiches are served with fries, sweet potato fries, or coleslaw. Substitute any bun to gluten free $2.",
                 }}
+                v={v}
               />
             </div>
 
@@ -463,6 +458,7 @@ export default function FoodMenuSection() {
                     body: "Sausage, pepperoni, bacon, mushrooms, green peppers, tomatoes, onions, olives, jalapeños, banana peppers, giardiniera.",
                   },
                 ]}
+                v={v}
               />
               <MenuCategoryCard
                 title="Soups & Salads"
@@ -473,12 +469,14 @@ export default function FoodMenuSection() {
                   title: "Note",
                   body: "All salads can be made into a wrap.",
                 }}
+                v={v}
               />
               <MenuCategoryCard
                 title="Desserts"
                 icon={IceCreamCone}
                 items={DESSERTS}
                 thumbnail
+                v={v}
               />
             </div>
           </div>

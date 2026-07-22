@@ -9,13 +9,13 @@ import PennantTag from "@/components/utils/PennantTag";
 import ribbonOrange from "../../../../public/images/assets/ribbon-orange.png";
 import DateBanner from "@/components/utils/DateBanner";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
   itemVariants,
   headerVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const SPECIAL_EVENTS = [
   { month: "Oct", day: "31", title: "Halloween Party" },
@@ -25,8 +25,7 @@ const SPECIAL_EVENTS = [
 ];
 
 export default function UpcomingSpecialEventsSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="bg-background">

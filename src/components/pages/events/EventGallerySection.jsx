@@ -4,19 +4,18 @@ import Subheading from "@/components/utils/SubHeadingText";
 import PaperDivider from "@/components/utils/PaperDivider";
 import ImagePlaceholder from "@/components/utils/ImagePlaceholder";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
   itemVariants,
   headerVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const GALLERY_COUNT = 6;
 
 export default function EventGallerySection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="py-5 relative bg-background">

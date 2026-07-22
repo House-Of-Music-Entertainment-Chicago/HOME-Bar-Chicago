@@ -21,15 +21,9 @@ import {
   groupVariants,
   itemVariants,
 } from "@/data/animation-variants";
-
-// Same easing + timing values as FeaturesSection.jsx — kept identical
-// on purpose so entrances read as one consistent motion language
-// across sections rather than each one inventing its own feel.
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 function MenuItemCard({ image, alt, title }) {
-  // Normalize: plain string -> one line, one part. Flat array (old
-  // shape) -> treated as a single line. Array-of-arrays -> already
-  // in the line/part shape we want.
   const lines = Array.isArray(title)
     ? Array.isArray(title[0])
       ? title
@@ -93,8 +87,7 @@ const MENU_ITEMS = [
 ];
 
 function FeaturedMenuSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative overflow-x-hidden">

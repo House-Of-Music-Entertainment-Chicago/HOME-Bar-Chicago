@@ -9,13 +9,13 @@ import Container from "@/components/utils/Container";
 import RoughBorderFrame from "../../utils/RoughBorderFrame";
 import PaperDivider from "@/components/utils/PaperDivider";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
   itemVariants,
   headerVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const PLACES = [
   {
@@ -50,8 +50,7 @@ const PLACES = [
 ];
 
 export default function PlacesToPlaySection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative bg-background">

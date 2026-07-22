@@ -9,14 +9,14 @@ import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import RibbonButton from "@/components/utils/Ribbonbutton";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
   itemVariants,
   headerVariants,
   buttonVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 import businessInformation from "@/data/business-info";
 
@@ -41,8 +41,7 @@ const LOCATION = {
   parking: "Free Parking Available",
 };
 export default function LocationSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative bg-background">
@@ -74,7 +73,7 @@ export default function LocationSection() {
                 <motion.div variants={v(headerVariants)}>
                   <a
                     href={LOCATION.googleMapsAddressLocation}
-                    className="flex items-center gap-3 hover:scale-110 hover:text-foreground duration-200"
+                    className="flex items-center gap-3 hover:text-foreground transition-all duration-200 transform hover:scale-[1.03]"
                   >
                     <MapPin className="mt-0.5 h-10 w-10 shrink-0 text-accent" />
                     <Title>{LOCATION.address}</Title>
@@ -85,7 +84,7 @@ export default function LocationSection() {
                 <motion.div variants={v(headerVariants)}>
                   <a
                     href={`tel:${LOCATION.telephone}`}
-                    className="flex items-center gap-3 hover:scale-110 hover:text-foreground duration-200"
+                    className="flex items-center gap-3 hover:text-foreground transition-all duration-200 transform hover:scale-[1.03]"
                   >
                     <Phone className="h-10 w-10 shrink-0 text-accent" />
                     <Title> {LOCATION.phone}</Title>

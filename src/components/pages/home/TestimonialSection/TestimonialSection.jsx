@@ -1,11 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import PennantTag from "@/components/utils/PennantTag";
 import TestimonialCard from "./TestimonialCard";
 import ribbonOrange from "../../../../../public/images/assets/ribbon-orange.png";
 import Container from "@/components/utils/Container";
-import SOCIAL_LINKS from "@/data/social-links";
 import InstagramEmbed from "./InstagramEmbed";
 
 import { motion, useReducedMotion } from "framer-motion";
@@ -15,20 +13,7 @@ import {
   groupVariants,
   itemVariants,
 } from "@/data/animation-variants";
-
-/**
- * TestimonialsAndSocialSection
- * ---------------------------------------------------------------
- * Left: "WHAT PEOPLE ARE SAYING" pennant (solid variant, not
- * photo-filled) + two testimonial cards side by side.
- * Right: "#HOMEBAR" callout + a strip of photos.
- *
- * `photos` can be fed either static-imported images, OR the
- * results of getLatestInstagramPosts() from lib/instagram.js
- * (built earlier in this project) if you want this strip to stay
- * live-updated from the real feed instead of curated manually.
- * ---------------------------------------------------------------
- */
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const TESTIMONIALS = [
   {
@@ -66,8 +51,7 @@ const TESTIMONIALS = [
 export default function TestimonialSection({
   instagramPostUrl = "https://www.instagram.com/p/DaOaojUxaQg/",
 }) {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="bg-background-alt">

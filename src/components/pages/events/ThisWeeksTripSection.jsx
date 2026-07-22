@@ -8,13 +8,13 @@ import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
 import Container from "@/components/utils/Container";
 import DateBanner from "@/components/utils/DateBanner";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
   itemVariants,
   headerVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const WEEK_DAYS = [
   {
@@ -70,8 +70,7 @@ const WEEK_DAYS = [
 ];
 
 export default function ThisWeekStrip() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="bg-background">

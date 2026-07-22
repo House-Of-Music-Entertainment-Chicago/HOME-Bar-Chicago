@@ -22,6 +22,7 @@ import {
   headerVariants,
   buttonVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 /**
  * HeroSection
@@ -48,7 +49,7 @@ import {
 function HeroSection() {
   const sectionRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,

@@ -6,14 +6,13 @@ import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import RibbonButton from "@/components/utils/Ribbonbutton";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
-  itemVariants,
   headerVariants,
   buttonVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const REASONS = [
   "General Inquiry",
@@ -37,8 +36,7 @@ export default function ContactFormSection() {
     message: "",
   });
 
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
 

@@ -14,36 +14,10 @@ import {
   itemVariants,
   groupVariants,
 } from "@/data/animation-variants";
-
-/**
- * ReserveTableSection
- * ---------------------------------------------------------------
- * The "GOOD NIGHTS START HERE." bar. Background is a real photo
- * (concrete/crowd texture) put through a duotone treatment:
- *
- *   1. `grayscale` filter strips the photo's own color, leaving
- *      just its luminance (light/dark texture, shapes, silhouettes).
- *   2. An olive-colored layer sits on top with
- *      `mix-blend-mode: multiply` — this recolors based on the
- *      photo's actual light/dark values instead of just sitting
- *      over it like a flat tinted pane of glass. Dark parts of the
- *      photo stay dark, light parts pick up the olive tone.
- *   3. A subtle dark gradient at the edges on top of THAT, purely
- *      for text legibility where the headline/button sit.
- *
- * If `multiply` ends up too dark/muddy once you see the real
- * photo, try swapping to `mix-blend-mode: color` instead — it
- * preserves the photo's original lightness more faithfully.
- *
- * Motion: same EASE curve and stagger timing as FeaturesSection.jsx
- * and FeaturedMenuSection.jsx — subheading, paragraph, and button
- * stagger in together as one group, once, on scroll into view.
- * ---------------------------------------------------------------
- */
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 export default function CTASection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative overflow-hidden border-y-2 border-black/60">

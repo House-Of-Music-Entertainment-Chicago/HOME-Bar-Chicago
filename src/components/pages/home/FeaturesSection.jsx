@@ -24,35 +24,14 @@ import liveDj from "../../../../public/images/assets/entertainment/live-dj.jpg";
 import sectionBg1 from "../../../../public//images/assets/section-bg-1.jpg";
 import PaperDivider from "@/components/utils/PaperDivider";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   headerVariants,
-  reducedVariants,
   buttonVariants,
   groupVariants,
   itemVariants,
 } from "@/data/animation-variants";
-/**
- * FeaturesSection
- * ---------------------------------------------------------------
- * The 4-column "Ice Cold Drinks / Great Food / UFC & Sports / Live
- * Entertainment" feature row, plus the "Learn More About Home" CTA
- * beneath it.
- *
- * The neon glow on each icon is a stacked drop-shadow filter (same
- * technique as the ribbon button's hard shadow, just soft/blurred
- * here instead) — NOT a raster image or icon-library feature, so
- * it stays crisp at any size and recolors instantly via the
- * --color-accent token.
- *
- * Motion: header fades up, then the card grid staggers in child by
- * child, then the CTA follows — each triggered once on scroll into
- * view. EASE matches IntroSplash's curve so entrances feel like one
- * consistent motion language site-wide. Falls back to a plain,
- * instant fade (no movement, no stagger) when the visitor has
- * requested reduced motion.
- * ---------------------------------------------------------------
- */
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const FEATURES = [
   {
@@ -100,8 +79,7 @@ const FEATURES = [
 ];
 
 function FeaturesSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative">

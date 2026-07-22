@@ -9,13 +9,9 @@ import StarRating from "@/components/utils/StarRating";
 import PaperDivider from "@/components/utils/PaperDivider";
 import AnimatedCounter from "@/components/utils/AnimatedCounter";
 
-import { motion, useReducedMotion } from "framer-motion";
-import {
-  reducedVariants,
-  groupVariants,
-  itemVariants,
-  headerVariants,
-} from "@/data/animation-variants";
+import { motion } from "framer-motion";
+import { groupVariants, headerVariants } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const STATS = [
   { value: "15+", label: "HD Screens" },
@@ -26,8 +22,7 @@ const STATS = [
 ];
 
 export default function StatsSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative bg-background">

@@ -19,13 +19,13 @@ import PaperDivider from "@/components/utils/PaperDivider";
 import PennantTag from "@/components/utils/PennantTag";
 import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
   itemVariants,
   headerVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 // import PennantTag from "@/components/utils/PennantTag";
 // NOTE: swap the inline PennantTagStub below for your real PennantTag
@@ -176,10 +176,13 @@ const COLUMN_CLASS = {
   3: "sm:columns-2 lg:columns-3 sm:gap-8",
 };
 
-function DrinkCategoryCard({ title, icon: Icon, items, columns = 1 }) {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
-
+function DrinkCategoryCard({
+  title,
+  icon: Icon,
+  items,
+  columns = 1,
+  v = () => {},
+}) {
   return (
     <div className="relative border border-olive/50 bg-background p-6">
       <div className="relative -mx-6 -mt-6 mb-4 h-20 sm:h-24">
@@ -215,8 +218,7 @@ function DrinkCategoryCard({ title, icon: Icon, items, columns = 1 }) {
 }
 
 export default function DrinksMenuSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative overflow-hidden bg-background">
@@ -257,12 +259,14 @@ export default function DrinksMenuSection() {
               icon={Martini}
               items={SPECIAL_COCKTAILS}
               columns={2}
+              v={v}
             />
             <DrinkCategoryCard
               title="Classic Favorites"
               icon={Citrus}
               items={CLASSIC_FAVORITES}
               columns={2}
+              v={v}
             />
           </div>
 

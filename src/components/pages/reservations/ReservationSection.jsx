@@ -10,14 +10,14 @@ import Container from "@/components/utils/Container";
 import RoughBorderFrame from "@/components/utils/RoughBorderFrame";
 import OpenTableWidget from "./sub-components/OpenTableWidget";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
   itemVariants,
   headerVariants,
   buttonVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const PERKS = [
   {
@@ -38,8 +38,7 @@ const PERKS = [
 ];
 
 export default function TableReservationSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   return (
     <section className="relative bg-background">

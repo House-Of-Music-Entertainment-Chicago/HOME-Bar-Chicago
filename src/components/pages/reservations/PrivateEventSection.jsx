@@ -10,14 +10,14 @@ import Container from "@/components/utils/Container";
 import PaperDivider from "@/components/utils/PaperDivider";
 import RibbonButton from "@/components/utils/Ribbonbutton";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  reducedVariants,
   groupVariants,
   itemVariants,
   headerVariants,
   buttonVariants,
 } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const PERKS = [
   "Private & semi-private areas",
@@ -39,8 +39,7 @@ const inputClass =
   "w-full border border-white/15 bg-background px-4 py-3 text-sm text-white placeholder:text-foreground-muted focus:border-accent focus:outline-none";
 
 export default function PrivateEventSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
+  const v = useSafeVariants();
 
   const [form, setForm] = useState({
     fullName: "",

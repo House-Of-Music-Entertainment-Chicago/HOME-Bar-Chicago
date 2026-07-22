@@ -8,14 +8,9 @@ import Text from "@/components/utils/BodyText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 
-import { motion, useReducedMotion } from "framer-motion";
-import {
-  reducedVariants,
-  groupVariants,
-  itemVariants,
-  headerVariants,
-  buttonVariants,
-} from "@/data/animation-variants";
+import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
+import { groupVariants, headerVariants } from "@/data/animation-variants";
+import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const FAQS = [
   {
@@ -49,12 +44,10 @@ const FAQS = [
   },
 ];
 
-export default function ContactFAQSection() {
+export default function ContactFAQSection({ data = FAQS }) {
   const prefersReducedMotion = useReducedMotion();
-  const v = (full) => (prefersReducedMotion ? reducedVariants : full);
-
   const [openIndex, setOpenIndex] = useState(null);
-
+  const v = useSafeVariants();
   return (
     <section className="relative bg-background">
       <Container className="relative flex justify-center">
@@ -78,6 +71,7 @@ export default function ContactFAQSection() {
                   <button
                     type="button"
                     onClick={() => setOpenIndex(isOpen ? null : i)}
+                    aria-expanded={isOpen}
                     className="flex w-full items-center justify-between gap-4 py-4 text-left"
                   >
                     <Title>{faq.question}</Title>
@@ -85,11 +79,40 @@ export default function ContactFAQSection() {
                       className={`h-5 w-5 shrink-0 text-accent transition-transform ${isOpen ? "rotate-180" : ""}`}
                     />
                   </button>
-                  {isOpen && (
+
+                  {/* {isOpen && (
                     <Text className="pb-4 text-foreground-muted">
                       {faq.answer}
                     </Text>
-                  )}
+                  )} */}
+
+                  {/* SEO FIX: AnimatePresence keeps text in HTML source while animating height */}
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={
+                          prefersReducedMotion
+                            ? { opacity: 0 }
+                            : { height: 0, opacity: 0 }
+                        }
+                        animate={
+                          prefersReducedMotion
+                            ? { opacity: 1 }
+                            : { height: "auto", opacity: 1 }
+                        }
+                        exit={
+                          prefersReducedMotion
+                            ? { opacity: 0 }
+                            : { height: 0, opacity: 0 }
+                        }
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      >
+                        <Text className="pb-4 text-foreground-muted">
+                          {faq.answer}
+                        </Text>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
               );
             })}
