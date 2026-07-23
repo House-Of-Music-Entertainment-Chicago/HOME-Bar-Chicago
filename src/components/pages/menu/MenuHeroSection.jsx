@@ -29,6 +29,7 @@ export default function MenuHero() {
           fill
           sizes="100vw"
           priority
+          fetchPriority="high"
           className="object-cover object-right lg:object-center opacity-100"
         />
         <div className="absolute inset-0 bg-linear-to-r from-background via-background/30 to-background/10" />

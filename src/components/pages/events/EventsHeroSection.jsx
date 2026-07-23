@@ -25,6 +25,7 @@ export default function EventsHero() {
         fill
         sizes="100vw"
         priority
+        fetchPriority="high"
         aria-hidden="true"
         className="absolute inset-0 z-0 object-cover"
       />

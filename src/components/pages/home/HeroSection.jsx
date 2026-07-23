@@ -80,6 +80,7 @@ function HeroSection() {
           fill
           sizes="100vw"
           priority
+          fetchPriority="high"
           aria-hidden="true"
           className="object-cover object-top"
         />
