@@ -80,10 +80,12 @@ export default function NewsletterForm() {
         />
         <button
           type="submit"
-          disabled={status === "loading"}
+          // disabled={status === "loading"}
+          disabled={true}
           className="shrink-0 rounded-sm bg-accent px-5 py-2 text-sm font-semibold uppercase tracking-wide text-black transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {status === "loading" ? "Subscribing..." : "Subscribe"}
+          {/* {status === "loading" ? "Subscribing..." : "Subscribe"} */}
+          Work In Progress
         </button>
       </form>
 

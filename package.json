@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^13.11.1",
+    "@wix/crm": "^1.0.1591",
+    "@wix/sdk": "^1.21.13",
     "framer-motion": "^12.42.2",
     "leaflet": "^1.9.4",
     "lucide-react": "^1.24.0",

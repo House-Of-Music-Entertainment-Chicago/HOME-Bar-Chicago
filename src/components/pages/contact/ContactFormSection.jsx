@@ -142,8 +142,13 @@ export default function ContactFormSection() {
             />
 
             <motion.div variants={v(buttonVariants)} className="mx-auto">
-              <RibbonButton type="submit" disabled={status === "submitting"}>
-                {status === "submitting" ? "Sending..." : "Send Message"}
+              <RibbonButton
+                type="submit"
+                // disabled={status === "submitting"}
+                disabled={true}
+              >
+                {/* {status === "submitting" ? "Sending..." : "Send Message"} */}
+                Work In Progress
               </RibbonButton>
             </motion.div>
 

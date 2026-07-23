@@ -223,8 +223,13 @@ export default function PrivateEventSection() {
               />
 
               <motion.div variants={v(buttonVariants)} className="mx-auto">
-                <RibbonButton type="submit" disabled={status === "submitting"}>
-                  {status === "submitting" ? "Submitting..." : "Submit Inquiry"}
+                <RibbonButton
+                  type="submit"
+                  // disabled={status === "submitting"}
+                  disabled={true}
+                >
+                  {/* {status === "submitting" ? "Submitting..." : "Submit Inquiry"} */}
+                  Work In Progress
                 </RibbonButton>
               </motion.div>
 
