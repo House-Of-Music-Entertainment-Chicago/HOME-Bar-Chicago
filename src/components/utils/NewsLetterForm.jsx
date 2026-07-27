@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { handleWixFormSubmit } from "@/app/actions/wixForm";
 
 /**
  * NewsletterForm
@@ -12,47 +13,48 @@ import { useState } from "react";
  * far down the tree as possible, so the rest of Footer can stay a
  * plain server component.
  *
- * IMPORTANT: this posts to /api/subscribe, which currently just
- * validates and logs the email — it does NOT actually add anyone
- * to a mailing list yet. You need to pick an email service
- * (Mailchimp, ConvertKit, Klaviyo, Beehiiv, etc.), get an API key
- * from them, and wire the actual "add subscriber" call into that
- * route — see the TODO in app/api/subscribe/route.js.
+ * Submits via the handleWixFormSubmit server action with
+ * formType: "newsletter" — Wix's own field mapping + Automation
+ * handles Contact creation, labeling ("Subscriptions"), and Inbox
+ * delivery on submission, so this component only needs to send
+ * fullName, email, and checkbox consent.
  * ---------------------------------------------------------------
  */
 
 export default function NewsletterForm() {
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("idle"); // idle | loading | success | error
+  const [agreed, setAgreed] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | success | error
   const [message, setMessage] = useState("");
+  const [isPending, startTransition] = useTransition();
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    setStatus("loading");
+    setStatus("idle");
     setMessage("");
 
-    try {
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+    const formData = new FormData();
+    formData.set("formType", "newsletter");
+    formData.set("fullName", fullName);
+    formData.set("email", email);
+    formData.set("checkbox", agreed);
 
-      const data = await res.json();
+    startTransition(async () => {
+      const result = await handleWixFormSubmit(formData);
 
-      if (!res.ok) {
+      if (!result.success) {
         setStatus("error");
-        setMessage(data.error || "Something went wrong. Please try again.");
+        setMessage(result.message);
         return;
       }
 
       setStatus("success");
-      setMessage("You're in! Thanks for subscribing.");
+      setMessage(result.message);
+      setFullName("");
       setEmail("");
-    } catch (err) {
-      setStatus("error");
-      setMessage("Something went wrong. Please try again.");
-    }
+      setAgreed(false);
+    });
   }
 
   return (
@@ -64,29 +66,62 @@ export default function NewsletterForm() {
         Get event updates, drink specials, and news straight to your inbox.
       </p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2 sm:flex-row">
-        <label htmlFor="newsletter-email" className="sr-only">
-          Email address
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row xl:flex-col">
+          <label htmlFor="newsletter-name" className="sr-only">
+            Full name
+          </label>
+          <input
+            id="newsletter-name"
+            type="text"
+            required
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            placeholder="Your name"
+            disabled={isPending}
+            className="w-full rounded-sm border border-surface-border bg-surface px-3 py-2 text-sm text-foreground placeholder:text-foreground-muted/60 focus:border-accent focus:outline-none disabled:opacity-60"
+          />
+
+          <label htmlFor="newsletter-email" className="sr-only">
+            Email address
+          </label>
+          <input
+            id="newsletter-email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@email.com"
+            disabled={isPending}
+            className="w-full rounded-sm border border-surface-border bg-surface px-3 py-2 text-sm text-foreground placeholder:text-foreground-muted/60 focus:border-accent focus:outline-none disabled:opacity-60"
+          />
+
+          <button
+            type="submit"
+            disabled={isPending}
+            className="shrink-0 rounded-sm bg-accent px-5 py-2 text-sm font-semibold uppercase tracking-wide text-black transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {isPending ? "Subscribing..." : "Subscribe"}
+          </button>
+        </div>
+
+        <label className="flex items-start gap-2 text-xs text-foreground-muted">
+          <input
+            type="checkbox"
+            required
+            checked={agreed}
+            onChange={(e) => setAgreed(e.target.checked)}
+            disabled={isPending}
+            className="mt-0.5 shrink-0"
+          />
+          <span>
+            I agree to receive marketing emails and accept the{" "}
+            <a href="/terms" className="underline hover:text-accent">
+              Terms &amp; Conditions
+            </a>
+            .
+          </span>
         </label>
-        <input
-          id="newsletter-email"
-          type="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="you@email.com"
-          disabled={status === "loading"}
-          className="w-full rounded-sm border border-surface-border bg-surface px-3 py-2 text-sm text-foreground placeholder:text-foreground-muted/60 focus:border-accent focus:outline-none disabled:opacity-60"
-        />
-        <button
-          type="submit"
-          // disabled={status === "loading"}
-          disabled={true}
-          className="shrink-0 rounded-sm bg-accent px-5 py-2 text-sm font-semibold uppercase tracking-wide text-black transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {/* {status === "loading" ? "Subscribing..." : "Subscribe"} */}
-          Work In Progress
-        </button>
       </form>
 
       {message && (

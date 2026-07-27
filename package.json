@@ -11,6 +11,8 @@
   "dependencies": {
     "@icons-pack/react-simple-icons": "^13.11.1",
     "@wix/crm": "^1.0.1591",
+    "@wix/data": "^1.0.491",
+    "@wix/forms": "^1.0.473",
     "@wix/sdk": "^1.21.13",
     "framer-motion": "^12.42.2",
     "leaflet": "^1.9.4",
@@ -18,7 +20,8 @@
     "next": "16.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "react-leaflet": "^5.0.0"
+    "react-leaflet": "^5.0.0",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

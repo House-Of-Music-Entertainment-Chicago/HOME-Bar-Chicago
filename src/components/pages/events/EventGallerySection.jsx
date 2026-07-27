@@ -11,10 +11,9 @@ import {
   headerVariants,
 } from "@/data/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
+import Image from "next/image";
 
-const GALLERY_COUNT = 6;
-
-export default function EventGallerySection() {
+export default function EventGallerySection({ images = [] }) {
   const v = useSafeVariants();
 
   return (
@@ -30,20 +29,32 @@ export default function EventGallerySection() {
           <Subheading className="text-center">Event Gallery</Subheading>
         </motion.div>
 
-        <div className="flex gap-1 overflow-x-auto px-6 sm:grid sm:grid-cols-6 sm:gap-2 sm:overflow-visible sm:px-0">
-          {Array.from({ length: GALLERY_COUNT }).map((_, i) => (
-            <motion.div
-              variants={v(itemVariants)}
-              key={i}
-              className="aspect-square w-40 shrink-0 sm:w-full"
-            >
-              <ImagePlaceholder
-                label="Gallery photo"
-                className="h-full w-full"
-              />
-            </motion.div>
-          ))}
-        </div>
+        {images.length > 0 ? (
+          <div className="flex gap-1 overflow-x-auto px-6 sm:grid sm:grid-cols-5 sm:gap-2 sm:overflow-visible sm:px-0">
+            {images.map((image) => (
+              <motion.div
+                variants={v(itemVariants)}
+                key={image.id}
+                className="relative aspect-square w-40 shrink-0 overflow-hidden sm:w-full"
+              >
+                <Image
+                  src={image.imageUrl}
+                  alt="Event gallery photo"
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover"
+                />
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex justify-center px-6">
+            <ImagePlaceholder
+              label="Gallery photo"
+              className="aspect-square w-40"
+            />
+          </div>
+        )}
       </motion.div>
       <PaperDivider position="bottom" />
     </section>

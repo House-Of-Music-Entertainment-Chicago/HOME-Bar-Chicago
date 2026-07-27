@@ -49,7 +49,7 @@ const TESTIMONIALS = [
 ];
 
 export default function TestimonialSection({
-  instagramPostUrl = "https://www.instagram.com/p/DaOaojUxaQg/",
+  instagramPostUrl = "https://www.instagram.com/p/DbGVlKUR-46/",
 }) {
   const v = useSafeVariants();
 

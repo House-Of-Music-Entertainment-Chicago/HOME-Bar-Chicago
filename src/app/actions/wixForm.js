@@ -1,102 +1,138 @@
+// actions/handleWixFormSubmit.js
 "use server";
 
 import { wixClient } from "@/lib/wix";
 
+const FORM_IDS = {
+  newsletter: process.env.WIX_NEWSLETTER_FORM_ID,
+  "private-event": process.env.WIX_PRIVATE_EVENT_FORM_ID,
+  "contact-us": process.env.WIX_CONTACT_US_FORM_ID,
+};
+
+// Replace every value on the right with the real `target`/field key
+// from that form's schema (via debug-list-forms).
+
+const {
+  WIX_CONTACT_US_FIELD_FIRSTNAME,
+  WIX_CONTACT_US_FIELD_LASTNAME,
+  WIX_CONTACT_US_FIELD_EMAIL,
+  WIX_CONTACT_US_FIELD_PHONE,
+  WIX_CONTACT_US_FIELD_MESSAGE,
+  WIX_PRIVATE_EVENT_FIELD_FULLNAME,
+  WIX_PRIVATE_EVENT_FIELD_EMAIL,
+  WIX_PRIVATE_EVENT_FIELD_PHONE,
+  WIX_PRIVATE_EVENT_FIELD_DATE,
+  WIX_PRIVATE_EVENT_FIELD_EVENT_TYPE,
+  WIX_PRIVATE_EVENT_FIELD_GUESTS,
+  WIX_PRIVATE_EVENT_FIELD_MESSAGE,
+  WIX_NEWSLETTER_FIELD_FULLNAME,
+  WIX_NEWSLETTER_FIELD_EMAIL,
+  WIX_NEWSLETTER_FIELD_CHECKBOX,
+} = process.env;
+
+const FIELD_KEYS = {
+  newsletter: {
+    fullName: WIX_NEWSLETTER_FIELD_FULLNAME,
+    email: WIX_NEWSLETTER_FIELD_EMAIL,
+    checkbox: WIX_NEWSLETTER_FIELD_CHECKBOX,
+  },
+  "private-event": {
+    fullName: WIX_PRIVATE_EVENT_FIELD_FULLNAME,
+    email: WIX_PRIVATE_EVENT_FIELD_EMAIL,
+    phone: WIX_PRIVATE_EVENT_FIELD_PHONE,
+    date: WIX_PRIVATE_EVENT_FIELD_DATE,
+    eventType: WIX_PRIVATE_EVENT_FIELD_EVENT_TYPE,
+    guests: WIX_PRIVATE_EVENT_FIELD_GUESTS,
+    message: WIX_PRIVATE_EVENT_FIELD_MESSAGE,
+  },
+  "contact-us": {
+    firstName: WIX_CONTACT_US_FIELD_FIRSTNAME,
+    lastName: WIX_CONTACT_US_FIELD_LASTNAME,
+    email: WIX_CONTACT_US_FIELD_EMAIL,
+    phone: WIX_CONTACT_US_FIELD_PHONE,
+    message: WIX_CONTACT_US_FIELD_MESSAGE,
+  },
+};
+
+const REQUIRED_FIELDS = {
+  newsletter: ["fullName", "email", "checkbox"],
+  "private-event": [
+    "fullName",
+    "email",
+    "phone",
+    "date",
+    "eventType",
+    "guests",
+    "message",
+  ],
+  "contact-us": ["firstName", "lastName", "email", "phone", "message"],
+};
+
 export async function handleWixFormSubmit(formData) {
-  const formType = formData.get("formType"); // Identifies which form was sent
-  const email = formData.get("email");
-  const fullName = formData.get("fullName") || "";
+  const formType = formData.get("formType");
+  const keys = FIELD_KEYS[formType];
+  const formId = FORM_IDS[formType];
 
-  // Split fullName into first/last safely for Wix if provided
-  const nameParts = fullName.trim().split(" ");
-  const firstName = formData.get("firstName") || nameParts[0] || "Subscriber";
-  const lastName =
-    formData.get("lastName") || nameParts.slice(1).join(" ") || "";
-
-  if (!email) {
-    return { success: false, message: "Email address is required." };
+  if (!keys || !formId) {
+    return { success: false, message: "Unknown form type." };
   }
 
-  try {
-    // 1. Core payload structure
-    const contactPayload = {
-      info: {
-        name: { first: firstName, last: lastName },
-        emails: [
-          { email: email.trim().toLowerCase(), tag: "MAIN", primary: true },
-        ],
-      },
-      extendedFields: {
-        // "items.marketing_status": "SUBSCRIBED", // Automatically opts them into marketing
-        "emailSubscription.subscriptionStatus": "SUBSCRIBED",
-      },
-      labelKeys: [],
-    };
+  // --- Collect raw values ---
+  const values = {
+    fullName: (formData.get("fullName") || "").trim(),
+    firstName: (formData.get("firstName") || "").trim(),
+    lastName: (formData.get("lastName") || "").trim(),
+    email: (formData.get("email") || "").trim().toLowerCase(),
+    phone: formData.get("phone") || "",
+    checkbox:
+      formData.get("checkbox") === "true" || formData.get("checkbox") === "on",
+    date: formData.get("date") || "",
+    eventType: formData.get("eventType") || "",
+    guests: formData.get("guests") || "",
+    message: formData.get("message") || "",
+  };
 
-    // Add phone numbers if present in the form data
-    const phone = formData.get("phone");
-    if (phone) {
-      contactPayload.info.phones = [{ phone: phone.trim(), primary: true }];
-    }
+  // --- Validate required fields for this form type ---
+  const missing = REQUIRED_FIELDS[formType].filter((field) => {
+    if (field === "checkbox") return values.checkbox !== true;
+    return !values[field];
+  });
 
-    // 2. Form-Specific Logic (Data Packing)
-    let summaryNote = `Form Submitted: ${formType}\n`;
-
-    if (formType === "newsletter") {
-      summaryNote += `User subscribed to the general newsletter.`;
-
-      // Inject label keys for subscription flow
-      contactPayload.labelKeys = ["custom.subscriptions"];
-    } else if (formType === "private-event") {
-      const date = formData.get("date");
-      const eventType = formData.get("eventType");
-      const guests = formData.get("guests");
-      const message = formData.get("message");
-
-      summaryNote += `--- Event Details ---\n`;
-      summaryNote += `Target Date: ${date || "Not specified"}\n`;
-      summaryNote += `Event Type: ${eventType || "Not specified"}\n`;
-      summaryNote += `Estimated Guests: ${guests || "Not specified"}\n`;
-      summaryNote += `Message: ${message || "None"}`;
-
-      // Inquiries fall under both categorization matrices
-      contactPayload.labelKeys = ["custom.contact", "custom.subscriptions"];
-    } else if (formType === "contact-us") {
-      const reason = formData.get("reason");
-      const message = formData.get("message");
-
-      summaryNote += `--- Contact Inquiry ---\n`;
-      summaryNote += `Reason for Contact: ${reason || "Not specified"}\n`;
-      summaryNote += `Message: ${message || "None"}`;
-
-      // Mark directly as contact touchpoint
-      contactPayload.labelKeys = ["custom.contact", "custom.subscriptions"];
-    }
-
-    // Attach the compiled summary directly into Wix Profile Notes
-    contactPayload.notes = [{ content: summaryNote }];
-
-    // 3. Post to Wix CRM Tables
-    await wixClient.contacts.createContact(contactPayload);
-
+  if (missing.length > 0) {
     return {
-      success: true,
-      message: "Thank you! Your information was securely synced to our system.",
+      success: false,
+      message: `Please fill in all required fields: ${missing.join(", ")}.`,
     };
+  }
+
+  // --- Build submission payload for this specific form's field keys ---
+  const submissionFields = { [keys.email]: values.email };
+  if (keys.fullName) submissionFields[keys.fullName] = values.fullName;
+  if (keys.firstName) submissionFields[keys.firstName] = values.firstName;
+  if (keys.lastName) submissionFields[keys.lastName] = values.lastName;
+  if (keys.phone) submissionFields[keys.phone] = values.phone;
+  if (keys.checkbox) submissionFields[keys.checkbox] = values.checkbox;
+  if (keys.date) submissionFields[keys.date] = values.date;
+  if (keys.eventType) submissionFields[keys.eventType] = values.eventType;
+  if (keys.guests) submissionFields[keys.guests] = values.guests;
+  if (keys.message) submissionFields[keys.message] = values.message;
+
+  // --- Submit. Wix handles Contact creation, labeling, and Inbox via Automation. ---
+  try {
+    await wixClient.submissions.createSubmission({
+      formId,
+      submissions: submissionFields,
+    });
   } catch (error) {
-    console.error("Wix Form integration failure:", error);
-
-    // If customer already exists, it updates or logs successfully
-    if (error?.message?.includes("ALREADY_EXISTS")) {
-      return {
-        success: true,
-        message: "Submission received! Your profile details have been updated.",
-      };
-    }
-
+    console.error(`Wix submission failed for "${formType}":`, error);
     return {
       success: false,
       message: "Submission failed. Please check your inputs and try again.",
     };
   }
+
+  return {
+    success: true,
+    message: "Thank you! Your submission has been received.",
+  };
 }

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Subheading from "@/components/utils/SubHeadingText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import RibbonButton from "@/components/utils/Ribbonbutton";
+import { handleWixFormSubmit } from "@/app/actions/wixForm";
 
 import { motion } from "framer-motion";
 import {
@@ -14,54 +15,61 @@ import {
 } from "@/data/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
-const REASONS = [
-  "General Inquiry",
-  "Reservations",
-  "Private Events",
-  "Feedback",
-  "Careers",
-  "Press / Media",
-  "Other",
-];
-
 const inputClass =
   "w-full border border-white/15 bg-background px-4 py-3 text-sm text-white placeholder:text-foreground-muted focus:border-accent focus:outline-none";
 
 export default function ContactFormSection() {
   const [form, setForm] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
-    reason: "",
     message: "",
   });
 
   const v = useSafeVariants();
 
-  const [status, setStatus] = useState("idle"); // idle | submitting | success | error
+  const [status, setStatus] = useState("idle"); // idle | success | error
+  const [statusMessage, setStatusMessage] = useState("");
+  const [isPending, startTransition] = useTransition();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setStatus("submitting");
-    try {
-      // TODO: point this at your contact inquiry route — same
-      // direct-email routing pattern used for private events.
-      const res = await fetch("/api/contact-inquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      if (!res.ok) throw new Error("Request failed");
+    setStatus("idle");
+    setStatusMessage("");
+
+    const formData = new FormData();
+    formData.set("formType", "contact-us");
+    formData.set("firstName", form.firstName);
+    formData.set("lastName", form.lastName);
+    formData.set("email", form.email);
+    formData.set("phone", form.phone);
+    formData.set("message", form.message);
+
+    startTransition(async () => {
+      const result = await handleWixFormSubmit(formData);
+
+      if (!result.success) {
+        setStatus("error");
+        setStatusMessage(result.message);
+        return;
+      }
+
       setStatus("success");
-      setForm({ name: "", email: "", phone: "", reason: "", message: "" });
-    } catch {
-      setStatus("error");
-    }
+      setStatusMessage(result.message);
+      setForm({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+    });
   };
 
   return (
@@ -86,13 +94,27 @@ export default function ContactFormSection() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <input
                 type="text"
-                name="name"
-                placeholder="Full Name"
-                value={form.name}
+                name="firstName"
+                placeholder="First Name"
+                value={form.firstName}
                 onChange={handleChange}
                 required
+                disabled={isPending}
                 className={inputClass}
               />
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                value={form.lastName}
+                onChange={handleChange}
+                required
+                disabled={isPending}
+                className={inputClass}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <input
                 type="email"
                 name="email"
@@ -100,35 +122,19 @@ export default function ContactFormSection() {
                 value={form.email}
                 onChange={handleChange}
                 required
+                disabled={isPending}
                 className={inputClass}
               />
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <input
                 type="tel"
                 name="phone"
-                placeholder="Phone Number (optional)"
+                placeholder="Phone Number"
                 value={form.phone}
                 onChange={handleChange}
+                required
+                disabled={isPending}
                 className={inputClass}
               />
-              <select
-                name="reason"
-                value={form.reason}
-                onChange={handleChange}
-                required
-                className={`${inputClass} appearance-none`}
-              >
-                <option value="" disabled>
-                  Reason for Contact
-                </option>
-                {REASONS.map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
             </div>
 
             <textarea
@@ -138,28 +144,22 @@ export default function ContactFormSection() {
               onChange={handleChange}
               rows={5}
               required
+              disabled={isPending}
               className={`${inputClass} resize-none`}
             />
 
             <motion.div variants={v(buttonVariants)} className="mx-auto">
-              <RibbonButton
-                type="submit"
-                // disabled={status === "submitting"}
-                disabled={true}
-              >
-                {/* {status === "submitting" ? "Sending..." : "Send Message"} */}
-                Work In Progress
+              <RibbonButton type="submit" disabled={isPending}>
+                {isPending ? "Sending..." : "Send Message"}
               </RibbonButton>
             </motion.div>
 
             {status === "success" && (
-              <p className="text-center text-sm text-olive">
-                Thanks — we'll get back to you shortly.
-              </p>
+              <p className="text-center text-sm text-olive">{statusMessage}</p>
             )}
             {status === "error" && (
               <p className="text-center text-sm text-red-500">
-                Something went wrong. Please try again or call us directly.
+                {statusMessage}
               </p>
             )}
           </form>

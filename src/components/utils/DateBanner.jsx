@@ -4,7 +4,7 @@ import Text from "./BodyText";
 function DateBanner({ month, day, color = "olive" }) {
   return (
     <div
-      className={`absolute left-0 top-0 flex flex-col items-center justify-center px-2 py-3 leading-none shadow-md`}
+      className={`absolute left-0 top-0 flex flex-col items-center justify-center px-2 py-3 leading-none`}
     >
       <Image
         src={
