@@ -85,7 +85,7 @@ export default function Navbar() {
     // <header className="relative z-40 overflow-visible bg-background border-b border-foreground">
     // <header className="fixed top-0 left-0 z-40 w-full overflow-visible bg-background border-b border-foreground">
     <header
-      className={`fixed top-0 left-0 z-40 w-full overflow-visible border-b transition-colors duration-300 ${
+      className={`fixed top-0 left-0 z-999999 w-full overflow-visible border-b transition-colors duration-300 ${
         scrolled
           ? "border-foreground/20 bg-background/70 backdrop-blur-sm"
           : "border-foreground bg-background"
