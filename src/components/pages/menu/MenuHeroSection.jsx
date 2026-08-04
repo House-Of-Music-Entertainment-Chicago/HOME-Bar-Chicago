@@ -6,7 +6,7 @@ import Subheading from "@/components/utils/SubHeadingText";
 import Title from "@/components/utils/TitleText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
-import PaperDivider from "@/components/utils/PaperDivider";
+import ShieldNotch from "@/components/utils/ShieldNotch";
 
 import { motion } from "framer-motion";
 import { groupVariants, headerVariants } from "@/data/animation-variants";
@@ -19,7 +19,8 @@ export default function MenuHero() {
   const v = useSafeVariants();
 
   return (
-    <section className="relative bg-background">
+    // Shield notch — pairs with shield-notch-join on MenuHighlights.
+    <section className="shield-notch-bottom relative z-10 bg-background">
       {/* Background photo — you said you already have this asset, so this
           <Image> is wired up and ready; just point `src` at it. */}
       <div className="absolute inset-0">
@@ -64,7 +65,7 @@ export default function MenuHero() {
 
             {/* <PennantTag
             className="mt-2 inline-block w-fit -rotate-2"
-            ribbonImage={ribbonLime}
+            ribbonImage={ribbonBrass}
           >
             Eat. Drink. Watch. Repeat.
           </PennantTag> */}
@@ -98,7 +99,7 @@ export default function MenuHero() {
           </div>
         </motion.div>
       </Container>
-      <PaperDivider />
+      <ShieldNotch />
     </section>
   );
 }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
-import logo from "../../../public/images/logo/latest-logo.png";
+import logo from "../../../public/images/logo/logo-shield.png";
 import SOCIAL_LINKS from "@/data/social-links";
 import NAV_LINKS from "@/data/nav-links";
 import NewsletterForm from "../utils/NewsLetterForm";
@@ -9,14 +9,14 @@ import businessInformation from "@/data/business-info";
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-surface-border bg-background-alt">
+    <footer className="relative border-t border-surface-border bg-backgrounds">
       <div className="container mx-auto grid grid-cols-1 gap-5 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
         {/* Brand */}
         <div className="flex flex-col items-start gap-4">
-          <Image src={logo} alt="Home Bar Chicago" className="h-16 w-auto" />
+          <Image src={logo} alt="Home Bar Chicago" className="h-36 w-auto" />
           <p className="max-w-xs text-sm text-foreground-muted">
-            Your home away from home — Arlington Heights&rsquo; sports bar, live
-            music, and entertainment destination since 2012.
+            There is no place like HOME — Arlington Heights&rsquo; sports bar,
+            live music, and entertainment destination since 2012.
           </p>
         </div>
 
@@ -89,16 +89,12 @@ export default function Footer() {
           </h3>
           <ul className="flex flex-col gap-2 text-sm text-foreground-muted">
             <li className="flex justify-between gap-4">
-              <span>Mon &ndash; Thu</span>
-              <span>11am &ndash; 12am</span>
+              <span>Sun &ndash; Thu</span>
+              <span>11:00am &ndash; 2:00am</span>
             </li>
             <li className="flex justify-between gap-4">
               <span>Fri &ndash; Sat</span>
-              <span>11am &ndash; 2am</span>
-            </li>
-            <li className="flex justify-between gap-4">
-              <span>Sunday</span>
-              <span>11am &ndash; 12am</span>
+              <span>11:00am &ndash; 4:00am</span>
             </li>
           </ul>
           {/* <p className="mt-2 text-xs italic text-foreground-muted/70">

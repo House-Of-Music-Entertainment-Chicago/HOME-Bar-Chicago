@@ -46,7 +46,8 @@ export default function MenuHighlights() {
   const v = useSafeVariants();
 
   return (
-    <section className="bg-background">
+    // Pulled up under the Menu hero's chevron to fill the clipped corners.
+    <section className="shield-notch-join bg-background">
       <Container>
         <motion.div
           initial="hidden"

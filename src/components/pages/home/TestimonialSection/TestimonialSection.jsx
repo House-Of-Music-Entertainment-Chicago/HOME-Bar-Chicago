@@ -2,7 +2,7 @@
 
 import PennantTag from "@/components/utils/PennantTag";
 import TestimonialCard from "./TestimonialCard";
-import ribbonOrange from "../../../../../public/images/assets/ribbon-orange.png";
+import ribbonLime from "../../../../../public/images/assets/ribbon-lime.png";
 import Container from "@/components/utils/Container";
 import InstagramEmbed from "./InstagramEmbed";
 
@@ -54,7 +54,10 @@ export default function TestimonialSection({
   const v = useSafeVariants();
 
   return (
-    <section className="bg-background-alt">
+    // Closing white band. bg-background-alt resolves to pure white here
+    // rather than the dark panel colour, because surface-light re-points
+    // that variable — no per-element change needed.
+    <section className="overflow-hidden surface-light bg-background-alt">
       <Container>
         <motion.div
           initial="hidden"
@@ -69,7 +72,7 @@ export default function TestimonialSection({
               variants={v(headerVariants)}
               className="absolute -top-20 -left-5 z-10"
             >
-              <PennantTag ribbonImage={ribbonOrange}>
+              <PennantTag ribbonImage={ribbonLime}>
                 What People Are Saying
               </PennantTag>
             </motion.div>

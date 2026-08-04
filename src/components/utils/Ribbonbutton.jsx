@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import ribbonOrange from "../../../public/images/assets/ribbon-orange.png"; // TODO: swap for your actual photo path
+import ribbonLime from "../../../public/images/assets/ribbon-lime.png"; // TODO: swap for your actual photo path
 
 /**
  * RibbonButton
@@ -39,7 +39,7 @@ export default function RibbonButton({
       <span className="relative flex items-center justify-center overflow-hidden whitespace-nowrap px-15 py-3">
         {/* Background photo — fills the torn silhouette */}
         <Image
-          src={ribbonOrange}
+          src={ribbonLime}
           alt="Pennant"
           fill
           sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
@@ -49,7 +49,7 @@ export default function RibbonButton({
         />
 
         {/* Text — sits above the photo + overlay */}
-        <span className="relative z-10 font-display italic tracking-wide text-background drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
+        <span className="ribbon-beat relative z-10 font-display italic tracking-wide text-background drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
           {children}
         </span>
       </span>

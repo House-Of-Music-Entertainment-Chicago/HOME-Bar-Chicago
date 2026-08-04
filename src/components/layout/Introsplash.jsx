@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import logo from "../../../public/images/logo/latest-logo.png";
+import logo from "../../../public/images/logo/logo-shield.png";
 import { useBodyScrollLock } from "@/app/hooks/UseBodyScrollLock";
 
 /**

@@ -20,7 +20,9 @@ export default function CTASection() {
   const v = useSafeVariants();
 
   return (
-    <section className="relative overflow-hidden border-y-2 border-black/60">
+    // Stays ink: this band is a full-bleed photograph with copy over it,
+    // so it can't take the light surface without the text losing its bed.
+    <section className="surface-dark relative overflow-hidden border-y-2 border-black/60">
       {/* Layer 1 — the photo, desaturated */}
       <Image
         src={sectionBg1}
@@ -68,7 +70,11 @@ export default function CTASection() {
           </motion.p>
 
           <motion.div variants={v(itemVariants)}>
-            <RibbonButton href={openTableReservationLink} target="_blank">
+            <RibbonButton
+              href={openTableReservationLink}
+              target="_blank"
+              className="text-background"
+            >
               Reserve a Table
             </RibbonButton>
           </motion.div>

@@ -37,7 +37,7 @@ const LOCATION = {
   googleMapsAddressLocation: businessInformation.googleMapAddressLocation,
   phone: businessInformation.phone,
   telephone: businessInformation.telephone,
-  hours: "Mon – Thu: 11AM – 12AM\nFri – Sun: 11AM – 12AM",
+  hours: "Sun – Thu: 11:00AM – 2:00AM\nFri – Sat: 11AM – 4:00AM",
   parking: "Free Parking Available",
 };
 export default function LocationSection() {

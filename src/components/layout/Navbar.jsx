@@ -3,7 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import logo from "../../../public/images/logo/latest-logo.png";
+// logo-shield.png is "Logo White.jpeg" with only the OUTER white flood-
+// filled to transparent — the white *inside* the shield is deliberately
+// kept, so the mark carries its own backing plate instead of letting
+// whatever is behind it show through the badge.
+import logo from "../../../public/images/logo/logo-shield.png";
 import { useBodyScrollLock } from "@/app/hooks/UseBodyScrollLock";
 
 /**
@@ -33,7 +37,25 @@ const RIGHT_LINKS = [
 ];
 
 export default function Navbar() {
+  // const [open, setOpen] = useState(false);
+
+  // // Close the mobile menu automatically if the viewport grows back
+  // // to desktop size while it's open.
+  // useEffect(() => {
+  //   const onResize = () => {
+  //     if (window.innerWidth >= 1024) setOpen(false);
+  //   };
+  //   window.addEventListener("resize", onResize);
+  //   return () => window.removeEventListener("resize", onResize);
+  // }, []);
+
+  // // Lock body scroll while the mobile menu overlay is open — shared,
+  // // reference-counted lock so this can never fight with IntroSplash
+  // // (or any future modal) over document.body.style.overflow.
+  // useBodyScrollLock(open);
+
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   // Close the mobile menu automatically if the viewport grows back
   // to desktop size while it's open.
@@ -45,13 +67,30 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  // Glassy/translucent once scrolled past the top; solid again the
+  // moment we're back at the very top.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   // Lock body scroll while the mobile menu overlay is open — shared,
   // reference-counted lock so this can never fight with IntroSplash
   // (or any future modal) over document.body.style.overflow.
   useBodyScrollLock(open);
 
   return (
-    <header className="relative z-40 overflow-visible bg-background border-b border-white">
+    // <header className="relative z-40 overflow-visible bg-background border-b border-foreground">
+    // <header className="fixed top-0 left-0 z-40 w-full overflow-visible bg-background border-b border-foreground">
+    <header
+      className={`fixed top-0 left-0 z-40 w-full overflow-visible border-b transition-colors duration-300 ${
+        scrolled
+          ? "border-foreground/20 bg-background/70 backdrop-blur-sm"
+          : "border-foreground bg-background"
+      }`}
+    >
       <nav className="relative flex h-18 items-center justify-between px-4 md:px-8 container mx-auto">
         {/* Left group (desktop) */}
         <div className="hidden items-center gap-8 lg:flex">
@@ -69,10 +108,10 @@ export default function Navbar() {
         {/* Center logo — overlaps the bottom edge of the bar */}
         <Link
           href="/"
-          className="absolute left-1/2 top-1 z-50 -translate-x-1/2"
+          className="absolute left-1/2 -top-3 z-50 -translate-x-1/2"
           aria-label="Home Bar Chicago — home"
         >
-          <div className="relative w-47 -translate-y-2">
+          <div className="relative w-64 -translate-y-2">
             <Image
               src={logo}
               alt="Home Bar Chicago"

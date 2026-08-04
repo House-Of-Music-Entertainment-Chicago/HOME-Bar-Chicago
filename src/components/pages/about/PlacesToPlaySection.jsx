@@ -19,9 +19,8 @@ import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const PLACES = [
   {
-    image:
-      "/images/assets/entertainment/about-placestoenjoy-billiards-place.png", // TODO: real photo of the billiard table
-    alt: "Billiard table at Home Bar Chicago",
+    image: "/images/assets/pool-room.png",
+    alt: "Fast Eddie's Pool Room at Home Bar Chicago — Diamond tables with blue felt beneath a hand-painted mural",
     title: "Billiard Place",
     description:
       "Challenge your friends to a game of pool in our premium billiard area.",
@@ -34,9 +33,9 @@ const PLACES = [
       "Experience the world's best courses in our high-tech golf simulators.",
   },
   {
-    image:
-      "/images/assets/entertainment/about-placestoplayenjoy-gamesareaimage.png", // TODO: real photo of the games area
-    alt: "Arcade games area at Home Bar Chicago",
+    // image: "/images/assets/games-entertainment-area.png",
+    image: "/images/assets/entertainment/gallery-image2.jpg",
+    alt: "Gaming area at Home Bar Chicago — guests at the machines with sports playing on the screens above",
     title: "Games Area",
     description: "Arcade games, table games, and more fun for everyone.",
   },

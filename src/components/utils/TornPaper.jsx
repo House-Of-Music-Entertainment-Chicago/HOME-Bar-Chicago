@@ -9,14 +9,19 @@ function TornPaper({
   thirdText = "",
 }) {
   return (
-    <div className="relative flex w-full flex-col items-center justify-center py-6">
+    // max-w-md is deliberate: vintage-paper-bg.png is only 415x463, so
+    // letting this stretch to a full container width upscaled it ~3x and
+    // it read as blurry/pixelated on large screens. Capping the banner
+    // near the asset's native width keeps it crisp; raise this only if
+    // the source image is re-exported at a higher resolution.
+    <div className="relative mx-auto flex w-full max-w-md flex-col items-center justify-center py-10">
       {/* Background — vintage paper photo, its own torn shape comes
           from the image's alpha channel now, not a clip-path */}
       <Image
         src={vintagePaper}
         alt="Vintage slightly torn paper"
         fill
-        sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+        sizes="(min-width: 448px) 448px, 100vw"
         priority={false}
         aria-hidden="true"
         className="object-cover"

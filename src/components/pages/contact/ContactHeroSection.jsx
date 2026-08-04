@@ -4,7 +4,7 @@ import Heading from "@/components/utils/HeadingText";
 import Title from "@/components/utils/TitleText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
-import PaperDivider from "@/components/utils/PaperDivider";
+import ShieldNotch from "@/components/utils/ShieldNotch";
 
 import { motion } from "framer-motion";
 import { groupVariants, headerVariants } from "@/data/animation-variants";
@@ -14,7 +14,8 @@ export default function ContactHero() {
   const v = useSafeVariants();
 
   return (
-    <section className="relative bg-background">
+    // Shield notch — pairs with shield-notch-join on ContactInfoStrip.
+    <section className="shield-notch-bottom relative z-10 bg-background">
       <Container className="relative">
         <motion.div
           initial="hidden"
@@ -39,7 +40,7 @@ export default function ContactHero() {
         </motion.div>
       </Container>
 
-      <PaperDivider position="bottom" />
+      <ShieldNotch />
     </section>
   );
 }

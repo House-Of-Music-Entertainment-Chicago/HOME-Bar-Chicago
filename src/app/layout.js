@@ -1,4 +1,3 @@
-// import { Geist, Geist_Mono } from "next/font/google";
 import { Bebas_Neue, Montserrat } from "next/font/google";
 import "./globals.css";
 
@@ -79,7 +78,8 @@ export default function RootLayout({ children }) {
         <BackToTop />
         <main className="relative flex flex-1 flex-col">
           <Navbar />
-          {children}
+          <span className="pt-16">{children}</span>
+          {/* {children} */}
           <Footer />
         </main>
       </body>

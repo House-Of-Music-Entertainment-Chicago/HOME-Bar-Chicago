@@ -34,7 +34,7 @@ const CONTACT_INFO = [
   {
     icon: Clock,
     label: "Hours",
-    value: "Mon – Thu: 11AM – 12AM\nFri – Sun: 11AM – 12AM",
+    value: "Sun – Thu: 11:00AM – 2:00AM\nFri – Sat: 11AM – 4:00AM",
     href: null,
   },
 ];
@@ -43,7 +43,8 @@ export default function ContactInfoStrip() {
   const v = useSafeVariants();
 
   return (
-    <section className="bg-background">
+    // Pulled up under the Contact hero's chevron to fill the clipped corners.
+    <section className="shield-notch-join bg-background-alt">
       <Container>
         <motion.div
           initial="hidden"

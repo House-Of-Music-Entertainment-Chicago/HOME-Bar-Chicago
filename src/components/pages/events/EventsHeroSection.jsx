@@ -6,7 +6,7 @@ import Subheading from "@/components/utils/SubHeadingText";
 import Title from "@/components/utils/TitleText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
-import PaperDivider from "@/components/utils/PaperDivider";
+import ShieldNotch from "@/components/utils/ShieldNotch";
 
 import { motion } from "framer-motion";
 import { groupVariants, headerVariants } from "@/data/animation-variants";
@@ -16,7 +16,8 @@ export default function EventsHero() {
   const v = useSafeVariants();
 
   return (
-    <section className="relative bg-background">
+    // Shield notch — pairs with shield-notch-join on ThisWeekStrip.
+    <section className="shield-notch-bottom relative z-10 bg-background">
       {/* Background — grayscale crowd photo behind the left copy */}
 
       <Image
@@ -66,7 +67,7 @@ export default function EventsHero() {
         </motion.div>
       </Container>
 
-      <PaperDivider position="bottom" />
+      <ShieldNotch />
     </section>
   );
 }

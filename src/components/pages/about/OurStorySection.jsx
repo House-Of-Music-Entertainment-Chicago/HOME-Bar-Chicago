@@ -22,7 +22,9 @@ export default function OurStorySection() {
   const v = useSafeVariants();
 
   return (
-    <section className="relative bg-background">
+    // Pulled up under the About hero's chevron so its background fills
+    // the triangles that clip removes.
+    <section className="shield-notch-join relative bg-background">
       <Image
         src={sectionBg1}
         alt="Concrete background image"

@@ -72,7 +72,8 @@ export default function ThisWeekStrip({ events = [] }) {
   const weekSlots = buildWeekSlots(events);
 
   return (
-    <section className="bg-background">
+    // Pulled up under the Events hero's chevron to fill the clipped corners.
+    <section className="shield-notch-join bg-background-alt">
       <Container>
         <motion.div
           initial="hidden"

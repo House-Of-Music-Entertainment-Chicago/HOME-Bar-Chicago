@@ -15,6 +15,17 @@ import tornPaper from "../../../public/images/assets/divider-1.png";
  *   up/down by `overlap` so it straddles the seam — half sits over
  *   the current section's background, half spills into the next.
  *
+ * IMPORTANT — the parent section must NOT have `overflow-hidden`
+ * (or `overflow-x-hidden`). That spill past the section's edge is
+ * the whole point, and any hidden overflow slices the tear in half.
+ * If a section needs to clip something else:
+ *   - clipping a full-bleed/100vw child horizontally → put
+ *     `overflow-x-clip` on the section. `clip` is the only value
+ *     that lets the other axis stay `visible`; `overflow-x-hidden`
+ *     forces `overflow-y` to compute to `auto`, which clips too.
+ *   - clipping a transformed/animated background → wrap just that
+ *     layer in its own `overflow-hidden` div (see HeroSection).
+ *
  * Usage — divider between a dark section and the one below it:
  *
  *   <section className="relative bg-background">

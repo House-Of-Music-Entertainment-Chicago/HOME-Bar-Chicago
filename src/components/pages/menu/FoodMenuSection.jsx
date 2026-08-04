@@ -8,7 +8,28 @@ import Text from "@/components/utils/BodyText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import PennantTag from "@/components/utils/PennantTag";
+import MenuItemThumbnail from "@/components/utils/MenuItemThumbnail";
 import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
+
+import mozzarellaSticks from "../../../../public/images/assets/menu/food/mozzarella-sticks.jpeg";
+import cheeseQuesadilla from "../../../../public/images/assets/menu/food/cheese-quesadilla.jpeg";
+import chickenWings from "../../../../public/images/assets/menu/food/buffalo-wings.jpeg";
+import chickenSliders from "../../../../public/images/assets/menu/food/chicken-sliders.jpeg";
+import nachos from "../../../../public/images/assets/menu/food/nachos.jpeg";
+import onionRingTower from "../../../../public/images/assets/menu/food/onion-ring-tower.jpeg";
+import loadedFrots from "../../../../public/images/assets/menu/food/loaded-frots.jpeg";
+import spinachArtichokeDip from "../../../../public/images/assets/menu/food/spinach-artichoke-dip.jpeg";
+import specialPizza from "../../../../public/images/assets/menu/food/special-pizza.jpeg";
+import mvpBurger from "../../../../public/images/assets/menu/food/burger-w-fries.jpeg";
+import cornedBeefReuben from "../../../../public/images/assets/menu/food/corned-beef-reuben.jpeg";
+import thePhilly from "../../../../public/images/assets/menu/food/the-philly-sandwich.jpeg";
+import tripleDeckerClub from "../../../../public/images/assets/menu/food/sandwich-w-fries.jpeg";
+import sauteedShrimpBowl from "../../../../public/images/assets/menu/food/rice-w-shrimp.jpeg";
+import macAndCheese from "../../../../public/images/assets/menu/food/mac-and-cheese-short-rib.jpeg";
+import signatureTacos from "../../../../public/images/assets/menu/food/signature-tacos-trio.jpeg";
+import chickenLemonRiceSoup from "../../../../public/images/assets/menu/food/chicken-lemon-rice-soup.jpeg";
+import southwestSalad from "../../../../public/images/assets/menu/food/southwest-salad.jpeg";
+import warmCookieSkillet from "../../../../public/images/assets/menu/food/warm-cookie-skillet.jpeg";
 
 import { motion } from "framer-motion";
 import { groupVariants, headerVariants } from "@/data/animation-variants";
@@ -20,6 +41,7 @@ const APPETIZERS = [
     price: "$6.99 | $10.99",
     description:
       "Mozzarella cheese and roasted garlic spread hand wrapped into wonton wrappers served with marinara sauce. (3) $6.99 | (5) $10.99",
+    image: mozzarellaSticks,
   },
   {
     name: "Cheese Quesadilla",
@@ -27,12 +49,14 @@ const APPETIZERS = [
     description:
       "Flour tortilla and a mixed blend of cheeses served with sour cream, guacamole and pico de gallo.",
     addOns: ["Add chicken or mixed vegetables $4", "Add steak or shrimp $6"],
+    image: cheeseQuesadilla,
   },
   {
     name: "Chicken Wings",
     price: "$10.99 | $18.99",
     description:
       "Tossed in your choice of hot, medium, mild, barbecue, hot honey, teriyaki, garlic parmesan, lemon oreganato, spicy dry rub, or naked. Served with carrots, celery, and your choice of ranch or blue cheese. (6) $10.99 | (12) $18.99",
+    image: chickenWings,
   },
   {
     name: "Fried Cheese Curds",
@@ -62,6 +86,7 @@ const APPETIZERS = [
     price: "$9.99",
     description:
       "(3) Fried chicken breast tossed in Buffalo or hot honey sauce, topped with pickles.",
+    image: chickenSliders,
   },
   {
     name: "Nachos",
@@ -69,6 +94,7 @@ const APPETIZERS = [
     description:
       "Crispy tortilla chips topped with melted cheese, jalapeños, pico de gallo, guacamole, and sour cream.",
     addOns: ["Add grilled chicken $4", "Add chili $4", "Add steak $6"],
+    image: nachos,
   },
   {
     name: "Chicken Tenders",
@@ -81,6 +107,7 @@ const APPETIZERS = [
     price: "$6.99",
     description:
       "A tall stack of crispy battered onion rings, served with your choice of dipping sauce.",
+    image: onionRingTower,
   },
   {
     name: "Basket of Tater Tots or French Fries",
@@ -92,6 +119,7 @@ const APPETIZERS = [
     price: "$12.99",
     description:
       "A crispy mix of fries and tater tots topped with bacon bits, melted cheddar cheese, chopped tomatoes, green onions, jalapeños, and sour cream.",
+    image: loadedFrots,
   },
   {
     name: "Buffalo Garlic Cauliflower Bites",
@@ -114,6 +142,7 @@ const APPETIZERS = [
     name: "Spinach & Artichoke Dip",
     price: "$12.99",
     description: "Served with tortilla chips.",
+    image: spinachArtichokeDip,
   },
 ];
 
@@ -122,6 +151,7 @@ const PIZZA = [
     name: '14" HOME Bar Special Pizza',
     price: "$19.99",
     description: "Sausage, green peppers, onions, and mushrooms.",
+    image: specialPizza,
   },
   {
     name: '14" Signature Tavern-Style Pizza',
@@ -138,6 +168,7 @@ const SANDWICHES = [
     description:
       "Half-pound juicy beef burger on a toasted brioche bun with lettuce, tomato, onion, and pickles.",
     addOns: ["Add cheese, egg, bacon, grilled mushrooms or onions $1.50 ea"],
+    image: mvpBurger,
   },
   {
     name: "Texas BBQ Bacon",
@@ -172,6 +203,7 @@ const SANDWICHES = [
     price: "$15.99",
     description:
       "Corned beef, Swiss cheese, sauerkraut, and 1000 island dressing on grilled rye bread.",
+    image: cornedBeefReuben,
   },
   {
     name: "Italian Beef Sandwich",
@@ -196,12 +228,14 @@ const SANDWICHES = [
     price: "$15.99",
     description:
       "Thinly sliced tender steak, melted provolone, sautéed onions and peppers served on a classic Amoroso hoagie roll.",
+    image: thePhilly,
   },
   {
     name: "Triple Decker Club",
     price: "$16.99",
     description:
       "Turkey, ham, bacon, havarti cheese, lettuce, tomato, avocado, and mayo on a toasted everything seasoned sourdough served with fries.",
+    image: tripleDeckerClub,
   },
   {
     name: "Grilled Cheese",
@@ -214,6 +248,7 @@ const SANDWICHES = [
     price: "$16.99",
     description:
       "Shredded brussel sprouts, cherry tomatoes, and brown rice with a lemon vinaigrette.",
+    image: sauteedShrimpBowl,
   },
   {
     name: "Sausage Rigatoni",
@@ -230,6 +265,7 @@ const SANDWICHES = [
       "Add short rib with crispy onions $5",
       "Add buffalo chicken with green onions $4",
     ],
+    image: macAndCheese,
   },
   {
     name: "HOME Signature Tacos (3)",
@@ -242,6 +278,7 @@ const SANDWICHES = [
       "Shrimp $15.99",
       "Thai Shrimp $15.99 — sriracha marinated shrimp with cilantro, carrots, red cabbage, and green onions in a ginger peanut sauce",
     ],
+    image: signatureTacos,
   },
 ];
 
@@ -250,6 +287,7 @@ const SOUPS_SALADS = [
     name: "Chicken Lemon Rice Soup",
     price: "$5.99",
     description: "Tender chicken and rice in a warm, savory lemon broth.",
+    image: chickenLemonRiceSoup,
   },
   {
     name: "Beef Chili",
@@ -276,6 +314,7 @@ const SOUPS_SALADS = [
     description:
       "Romaine, black beans, corn, tomatoes, avocado, cheddar cheese, and tortilla strips with Southwest dressing.",
     addOns: ["Add grilled or crispy chicken $4", "Add steak $6"],
+    image: southwestSalad,
   },
   {
     name: "Buffalo Chicken Salad",
@@ -302,6 +341,7 @@ const DESSERTS = [
     price: "$8.99",
     description:
       "Warm baked chocolate chip cookie topped with vanilla ice cream.",
+    image: warmCookieSkillet,
   },
   {
     name: "Ice Cream Sundae",
@@ -325,23 +365,34 @@ function MenuCategoryCard({
   items,
   columns = 1,
   notes,
-  thumbnail,
+  bannerImage,
+  bannerAlt,
   v = () => {},
 }) {
   const notesList = notes ? (Array.isArray(notes) ? notes : [notes]) : null;
 
   return (
     <div className="relative overflow-hidden border border-olive/50 bg-background p-6">
-      {/* Header strip: pennant tag sits beside a full-bleed image.
-          The image is pulled out to the card's actual edges with
-          negative margins (no padding/margin of its own), then faded
-          to the card's background color on its left side so it
-          blends into the area behind the tag instead of a hard edge. */}
+      {/* Header strip: category photo behind the pennant tag, faded to
+          the card's background on the left so the tag stays legible
+          and the transition into the list below feels intentional. */}
       <motion.div
         variants={v(headerVariants)}
-        className="relative -mx-6 -mt-6 mb-4 h-20 sm:h-24"
+        className="relative -mx-6 -mt-6 mb-4 h-20 overflow-hidden sm:h-24"
       >
-        <div className="relative z-10 flex justify-between h-full items-center gap-1">
+        {bannerImage && (
+          <>
+            <Image
+              src={bannerImage}
+              alt={bannerAlt ?? title}
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-linear-to-r from-background via-background/70 to-background/10" />
+          </>
+        )}
+        <div className="relative z-10 flex h-full items-center justify-between gap-1">
           <PennantTag ribbonImage={ribbonLime}>{title}</PennantTag>
           <span className="mx-5 hidden sm:flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-olive bg-background text-olive">
             <Icon className="h-4 w-4" />
@@ -350,25 +401,41 @@ function MenuCategoryCard({
       </motion.div>
 
       <ul className={COLUMN_CLASS[columns] ?? COLUMN_CLASS[1]}>
+        {/* Each row is an @container: the layout keys off the row's own
+            width, not the viewport's, because this same markup renders
+            in a full-width list (Pizza, Soups, Desserts) and in
+            3-column lists (Appetizers, Sandwiches). Wide enough → photo
+            sits left of the text; narrow → it stacks on top. */}
         {items.map((item) => (
           <li
             key={item.name}
-            className="break-inside-avoid border-t border-surface-border py-3 first:border-t-0 sm:first:pt-0"
+            className="@container break-inside-avoid border-t border-surface-border py-4 first:border-t-0 sm:first:pt-0"
           >
-            <div className="flex items-baseline justify-between gap-3">
-              <Title className="uppercase">{item.name}</Title>
-              <Text className="whitespace-nowrap">{item.price}</Text>
+            <div className="flex flex-col gap-3 @xs:flex-row @xs:items-start">
+              <MenuItemThumbnail
+                image={item.image}
+                alt={item.name}
+                className="w-full @xs:w-32 @xs:shrink-0"
+              />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline justify-between gap-3">
+                  <Title className="uppercase">{item.name}</Title>
+                  <Text className="shrink-0 whitespace-nowrap">
+                    {item.price}
+                  </Text>
+                </div>
+                {item.description && (
+                  <Text className="mt-0.5 text-foreground-muted">
+                    {item.description}
+                  </Text>
+                )}
+                {item.addOns?.map((addOn) => (
+                  <Text key={addOn} className="mt-0.5 text-lime">
+                    {addOn}
+                  </Text>
+                ))}
+              </div>
             </div>
-            {item.description && (
-              <Text className="mt-0.5 text-foreground-muted">
-                {item.description}
-              </Text>
-            )}
-            {item.addOns?.map((addOn) => (
-              <Text key={addOn} className="mt-0.5 text-lime">
-                {addOn}
-              </Text>
-            ))}
           </li>
         ))}
       </ul>
@@ -391,8 +458,8 @@ export default function FoodMenuSection() {
   const v = useSafeVariants();
 
   return (
-    <section className="relative bg-background">
-      <Image
+    <section className="relative bg-background-alt">
+      {/* <Image
         src="/images/assets/section-bg-1.jpg"
         alt="Concrete background image"
         fill
@@ -400,7 +467,7 @@ export default function FoodMenuSection() {
         priority
         aria-hidden="true"
         className="absolute inset-0 z-0 object-cover"
-      />
+      /> */}
 
       <Container className="relative">
         <motion.div
@@ -424,19 +491,21 @@ export default function FoodMenuSection() {
                 title="Appetizers"
                 icon={Utensils}
                 items={APPETIZERS}
-                thumbnail
                 columns={3}
+                bannerImage={onionRingTower}
+                bannerAlt="Onion Ring Tower"
                 v={v}
               />
+
               <MenuCategoryCard
-                title="Sandwiches & Entrées"
-                icon={Sandwich}
-                items={SANDWICHES}
-                thumbnail
-                columns={3}
+                title="Soups & Salads"
+                icon={Soup}
+                items={SOUPS_SALADS}
+                bannerImage={southwestSalad}
+                bannerAlt="Southwest Salad"
                 notes={{
-                  title: "A note on sides",
-                  body: "All burgers and sandwiches are served with fries, sweet potato fries, or coleslaw. Substitute any bun to gluten free $2.",
+                  title: "Note",
+                  body: "All salads can be made into a wrap.",
                 }}
                 v={v}
               />
@@ -447,7 +516,8 @@ export default function FoodMenuSection() {
                 title="Pizza"
                 icon={Pizza}
                 items={PIZZA}
-                thumbnail
+                bannerImage={specialPizza}
+                bannerAlt="HOME Bar Special Pizza"
                 notes={[
                   {
                     title: "Gluten free available",
@@ -460,22 +530,27 @@ export default function FoodMenuSection() {
                 ]}
                 v={v}
               />
+
               <MenuCategoryCard
-                title="Soups & Salads"
-                icon={Soup}
-                items={SOUPS_SALADS}
-                thumbnail
+                title="Sandwiches & Entrées"
+                icon={Sandwich}
+                items={SANDWICHES}
+                columns={3}
+                bannerImage={thePhilly}
+                bannerAlt="The Philly sandwich"
                 notes={{
-                  title: "Note",
-                  body: "All salads can be made into a wrap.",
+                  title: "A note on sides",
+                  body: "All burgers and sandwiches are served with fries, sweet potato fries, or coleslaw. Substitute any bun to gluten free $2.",
                 }}
                 v={v}
               />
+
               <MenuCategoryCard
                 title="Desserts"
                 icon={IceCreamCone}
                 items={DESSERTS}
-                thumbnail
+                bannerImage={warmCookieSkillet}
+                bannerAlt="Warm Cookie Skillet"
                 v={v}
               />
             </div>

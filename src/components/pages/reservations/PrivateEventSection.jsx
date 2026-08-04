@@ -352,7 +352,9 @@ export default function PrivateEventSection() {
   };
 
   return (
-    <section className="relative bg-background">
+    // Pulled up under the Reservations hero's chevron to fill the clipped
+    // corners.
+    <section className="shield-notch-join relative bg-background-alt">
       <Container className="relative">
         {/* Left — copy + perks */}
         <motion.div

@@ -2,8 +2,8 @@
 
 /* ------------------------------------------------------------------
    HOME BAR CHICAGO — DESIGN TOKENS
-   Dark, gritty sports-bar aesthetic: near-black base, burnt-orange
-   accent, torn-paper/brick texture cues, bold condensed headlines.
+   Dark, gritty sports-bar aesthetic: near-black base, lime accent,
+   torn-paper/brick texture cues, bold condensed headlines.
 ------------------------------------------------------------------- */
 
 :root {
@@ -16,12 +16,14 @@
   /* Text */
   --foreground: #f5f5f4; /* primary text on dark */
   --foreground-muted: #a3a3a3; /* secondary/body copy */
-  --foreground-inverted: #0a0a0a; /* text on light/orange surfaces */
+  --foreground-inverted: #0a0a0a; /* text on light/accent surfaces */
 
-  /* Brand accent — the burnt orange CTA/highlight color */
-  --accent: #e8531e;
-  --accent-hover: #ff6a2e;
-  --accent-foreground: #ffffff;
+  /* Brand accent — lime. Foreground is dark, not white: white text on
+     this lime only hits ~2.9:1 contrast, below the 3:1 floor for
+     large/bold CTA text, so accent-foreground goes dark instead. */
+  --accent: var(--lime);
+  --accent-hover: #a7bd3c;
+  --accent-foreground: var(--foreground-inverted);
 
   --lime: #8e9f2d;
   --olive: #7f922a;
@@ -31,7 +33,7 @@
   --brick: #7a2e1d;
   --brick-dark: #4a1c12;
 
-  /* Card border (the thin orange outline around lineup/event cards) */
+  /* Card border (the thin outline around lineup/event cards) */
   --card-border: var(--accent);
 
   /* Paper / torn-paper texture accent (menu card in Food & Drink page) */
@@ -41,18 +43,14 @@
   /* Radii & misc */
   --radius-card: 0.5rem;
   --radius-pill: 999px;
-}
 
-/* Optional: respect system light mode preference but this brand is
-   inherently dark-themed, so we keep it dark by default and only
-   lighten slightly if the user forces light mode. Remove this block
-   entirely if the site should always be dark regardless of system. */
-/* @media (prefers-color-scheme: light) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #f5f5f4;
-  }
-} */
+  /* Depth of the logo-derived chevron cut into the bottom of the home
+     hero. Lives on :root because two sibling sections need it — the hero
+     clips itself by it (.shield-notch-bottom) and the section below
+     pulls itself up by the same amount (.shield-notch-join). Defining it
+     on the hero alone wouldn't inherit sideways to its sibling. */
+  --shield-notch: clamp(2.5rem, 6vw, 7rem);
+}
 
 @theme inline {
   /* Map CSS vars into Tailwind's theme so you get utilities like
@@ -87,12 +85,7 @@
   --radius-pill: var(--radius-pill);
 
   /* Fonts — pair a bold condensed display face for headlines with a
-     clean sans for body copy. Load these via next/font in layout.tsx
-     (see notes below) and they'll plug in here automatically. */
-
-  /* --font-sans: var(--font-inter), Arial, Helvetica, sans-serif;
-  --font-display: var(--font-anton), "Arial Narrow", Arial, sans-serif; */
-
+     clean sans for body copy. Loaded via next/font in layout.js. */
   --font-heading: var(--font-bebas);
   --font-body: var(--font-montserrat);
 }
@@ -155,7 +148,7 @@ body {
     );
   }
 
-  /* Card style matching the orange-bordered event/lineup cards */
+  /* Card style matching the accent-bordered event/lineup cards */
   .card-outlined {
     background: var(--color-surface);
     border: 2px solid var(--color-card-border);
@@ -179,5 +172,130 @@ body {
   }
   .btn-cta:hover {
     background: var(--color-accent-hover);
+  }
+
+  /* Looping single-row image marquee (e.g. Home Experience section).
+     .marquee-viewport clips + edge-fades; .marquee-track holds two
+     back-to-back copies of the content and scrolls exactly -50%, so
+     the loop point is seamless. Pauses on hover and for anyone who
+     prefers reduced motion. */
+  .marquee-viewport {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 6%,
+      black 94%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 6%,
+      black 94%,
+      transparent
+    );
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 15s linear infinite;
+    /* Item spacing must come from each item's own trailing margin,
+       never from `gap` on this element: `gap` only sits between
+       siblings (not after the last one), so it breaks the exact
+       50%-of-total-width math the -50% keyframe below depends on
+       for a seamless loop and shows up as a stutter on reset. */
+  }
+  .marquee-viewport:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+  @keyframes marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Shield notch — the downward chevron from the HOME logo's bottom edge,
+     used to shape the bottom of the home hero so the section reads as the
+     mark itself.
+
+     Measured off the logo artwork: its V is perfectly linear, apex on the
+     horizontal centre, descending at a slope of ~0.505 (about 27deg), with
+     a depth equal to ~25% of the shield's width. That ratio is kept for
+     the *shape* but not the depth — 25% of a 1440px hero would be a 360px
+     bite out of the layout. The clamp keeps the motif at a sane size and
+     the angle simply relaxes on wider screens.
+
+     padding-bottom is bound to the same variable so content can never end
+     up underneath the part that gets clipped away. */
+  .shield-notch-bottom {
+    padding-bottom: var(--shield-notch);
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - var(--shield-notch)),
+      50% 100%,
+      0 calc(100% - var(--shield-notch))
+    );
+  }
+
+  /* Put on the section that FOLLOWS a .shield-notch-bottom one. It pulls
+     the section up by exactly the notch depth so its own background fills
+     the two triangles the clip cut away — the seam then reads as one
+     surface interlocking with the next rather than a floating wedge with
+     gaps beside it. The matching padding-top puts the content back where
+     it would otherwise have sat.
+
+     The preceding section must out-rank this one in paint order (it
+     carries z-10), otherwise this background would slide up and cover the
+     notch instead of filling in behind it. */
+  .shield-notch-join {
+    margin-top: calc(var(--shield-notch) * -1);
+    padding-top: var(--shield-notch);
+  }
+
+  /* RibbonButton label pulse.
+     A heartbeat rhythm — two quick beats then a long rest — rather than
+     a uniform throb, so it reads as a nudge toward the CTA instead of a
+     loading spinner. Done in CSS rather than Framer Motion on purpose:
+     this loops forever, and a keyframe animation runs on the compositor
+     instead of keeping a JS animation frame alive for the life of every
+     button on the page.
+     Paused on hover because the whole button already scales up then —
+     two scale animations at once just reads as jitter. */
+  .ribbon-beat {
+    transform-origin: center;
+    animation: ribbon-beat 2.4s ease-in-out infinite;
+    will-change: transform;
+  }
+  .ribbon-face:hover .ribbon-beat {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ribbon-beat {
+      animation: none;
+    }
+  }
+  @keyframes ribbon-beat {
+    0%,
+    16%,
+    32%,
+    100% {
+      transform: scale(1);
+    }
+    8% {
+      transform: scale(1.08);
+    }
+    24% {
+      transform: scale(1.05);
+    }
   }
 }

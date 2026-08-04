@@ -88,14 +88,14 @@ export default function FeaturedEventsSection({ events = [] }) {
                       <Text className="flex-1 text-foreground-muted">
                         {event.description}
                       </Text>
-                      <motion.div variants={v(buttonVariants)}>
+                      {/* <motion.div variants={v(buttonVariants)}>
                         <RibbonButton
                           href={openTableReservationLink}
                           target="_blank"
                         >
                           Reserve Now
                         </RibbonButton>
-                      </motion.div>
+                      </motion.div> */}
                     </>
                   ) : (
                     <Text className="flex-1 text-foreground-muted">

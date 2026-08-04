@@ -7,7 +7,7 @@ import Title from "@/components/utils/TitleText";
 import Text from "@/components/utils/BodyText";
 import ImagePlaceholder from "@/components/utils/ImagePlaceholder";
 import PennantTag from "@/components/utils/PennantTag";
-import ribbonOrange from "../../../../public/images/assets/ribbon-orange.png";
+import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
 import DateBanner from "@/components/utils/DateBanner";
 
 import { motion } from "framer-motion";
@@ -56,7 +56,7 @@ export default function UpcomingSpecialEventsSection({ events = [] }) {
             variants={v(headerVariants)}
             className="mb-3 flex justify-center"
           >
-            <PennantTag ribbonImage={ribbonOrange}>
+            <PennantTag ribbonImage={ribbonLime}>
               Upcoming Special Events
             </PennantTag>
           </motion.div>
@@ -84,9 +84,7 @@ export default function UpcomingSpecialEventsSection({ events = [] }) {
                       className="h-full w-full"
                     />
                   )}
-                  {event && (
-                    <DateBanner month={month} day={day} color="orange" />
-                  )}
+                  {event && <DateBanner month={month} day={day} />}
                   <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/90 to-transparent px-2 py-3">
                     <Title className="text-center uppercase">
                       {event ? event.title : "No Event"}
