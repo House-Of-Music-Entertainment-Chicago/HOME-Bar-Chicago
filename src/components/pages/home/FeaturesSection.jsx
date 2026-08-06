@@ -104,11 +104,7 @@ function FeaturesSection() {
     // its background fills the two triangles that clip cuts away, making
     // the seam read as one continuous surface. It pairs with
     // .shield-notch-bottom on HeroSection — the two share --shield-notch.
-    // surface-light: first white band of the alternating rhythm. The dark
-    // concrete texture that used to back this section is gone — it only
-    // existed to add depth to a dark surface, and on bone it just muddied
-    // the paper. The marquee photography carries the visual weight now.
-    <section className="bg-background-alt surface-light relative overflow-x-clip shield-notch-join">
+    <section className="bg-background-alt relative overflow-x-clip shield-notch-join">
       <Container className="relative">
         <div className="flex flex-col items-center justify-center w-full">
           <motion.div

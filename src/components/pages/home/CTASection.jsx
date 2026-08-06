@@ -20,9 +20,7 @@ export default function CTASection() {
   const v = useSafeVariants();
 
   return (
-    // Stays ink: this band is a full-bleed photograph with copy over it,
-    // so it can't take the light surface without the text losing its bed.
-    <section className="surface-dark relative overflow-hidden border-y-2 border-black/60">
+    <section className="relative overflow-hidden border-y-2 border-black/60">
       {/* Layer 1 — the photo, desaturated */}
       <Image
         src={sectionBg1}
@@ -48,7 +46,7 @@ export default function CTASection() {
       <Container>
         {/* Content */}
         <motion.div
-          className="relative z-10 flex flex-col items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left"
+          className="relative z-8 flex flex-col items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}

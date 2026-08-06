@@ -83,8 +83,7 @@ function FeaturedMenuSection() {
   const v = useSafeVariants();
 
   return (
-    // Back to ink after the white Features band above.
-    <section className="surface-dark relative overflow-x-hidden">
+    <section className="relative overflow-x-hidden">
       <Container>
         <motion.div
           className="relative pt-6"

@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 // whatever is behind it show through the badge.
 import logo from "../../../public/images/logo/logo-shield.png";
 import { useBodyScrollLock } from "@/app/hooks/UseBodyScrollLock";
+import { useActivePath } from "@/components/hooks/useActivePath";
 
 /**
  * Navbar
@@ -27,6 +28,7 @@ import { useBodyScrollLock } from "@/app/hooks/UseBodyScrollLock";
 
 const LEFT_LINKS = [
   { label: "About", href: "/about" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Reservations", href: "/reservations" },
 ];
 
@@ -36,26 +38,23 @@ const RIGHT_LINKS = [
   { label: "Contact", href: "/contact" },
 ];
 
+/* Shared by both desktop groups so they can't drift apart.
+   The bottom border is always rendered and merely transparent when
+   inactive — toggling between "no border" and "border" would shift the
+   link 2px every time you navigate. */
+const desktopLinkClass = (active) =>
+  [
+    "font-heading text-sm lg:text-xl xl:text-3xl uppercase tracking-wide",
+    "border-b-2 pb-0.5 transition-colors transition-transform duration-500",
+    active
+      ? "border-accent text-accent scale-120"
+      : "border-transparent text-foreground hover:text-accent hover:scale-110",
+  ].join(" ");
+
 export default function Navbar() {
-  // const [open, setOpen] = useState(false);
-
-  // // Close the mobile menu automatically if the viewport grows back
-  // // to desktop size while it's open.
-  // useEffect(() => {
-  //   const onResize = () => {
-  //     if (window.innerWidth >= 1024) setOpen(false);
-  //   };
-  //   window.addEventListener("resize", onResize);
-  //   return () => window.removeEventListener("resize", onResize);
-  // }, []);
-
-  // // Lock body scroll while the mobile menu overlay is open — shared,
-  // // reference-counted lock so this can never fight with IntroSplash
-  // // (or any future modal) over document.body.style.overflow.
-  // useBodyScrollLock(open);
-
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const isActive = useActivePath();
 
   // Close the mobile menu automatically if the viewport grows back
   // to desktop size while it's open.
@@ -98,7 +97,10 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="font-heading text-sm lg:text-xl xl:text-3xl uppercase tracking-wide text-foreground transition-colors hover:text-accent"
+              // aria-current is what actually tells a screen reader which
+              // page this is; the colour alone conveys nothing to one.
+              aria-current={isActive(link.href) ? "page" : undefined}
+              className={desktopLinkClass(isActive(link.href))}
             >
               {link.label}
             </Link>
@@ -106,10 +108,14 @@ export default function Navbar() {
         </div>
 
         {/* Center logo — overlaps the bottom edge of the bar */}
+        {/* The logo is the Home link, so it carries Home's active state.
+            There's no room for a visual marker here without disturbing
+            the badge, but aria-current still announces it. */}
         <Link
           href="/"
           className="absolute left-1/2 -top-3 z-50 -translate-x-1/2"
           aria-label="Home Bar Chicago — home"
+          aria-current={isActive("/") ? "page" : undefined}
         >
           <div className="relative w-64 -translate-y-2">
             <Image
@@ -127,7 +133,8 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="font-heading text-sm lg:text-xl xl:text-3xl uppercase tracking-wide text-foreground transition-colors hover:text-accent"
+              aria-current={isActive(link.href) ? "page" : undefined}
+              className={desktopLinkClass(isActive(link.href))}
             >
               {link.label}
             </Link>
@@ -196,7 +203,16 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="py-4 font-display text-base uppercase tracking-wide text-foreground transition-colors hover:text-accent"
+              aria-current={isActive(link.href) ? "page" : undefined}
+              // A left rule rather than an underline here: these are
+              // stacked rows separated by divide-y, so an underline would
+              // read as a row separator. Transparent-when-inactive keeps
+              // the label from shifting.
+              className={`border-l-2 py-4 pl-3 font-display text-base uppercase tracking-wide transition-colors ${
+                isActive(link.href)
+                  ? "border-accent text-accent"
+                  : "border-transparent text-foreground hover:text-accent"
+              }`}
             >
               {link.label}
             </Link>

@@ -7,6 +7,7 @@ import Title from "@/components/utils/TitleText";
 import Text from "@/components/utils/BodyText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
+import RibbonButton from "@/components/utils/Ribbonbutton";
 import sectionBg1 from "../../../../public/images/assets/section-bg-1.jpg";
 
 import tablesArea from "../../../../public/images/assets/tables-area.png";
@@ -21,6 +22,7 @@ import {
   groupVariants,
   itemVariants,
   headerVariants,
+  buttonVariants,
 } from "@/data/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
@@ -151,6 +153,19 @@ export default function HomeExperienceSection() {
               <ExperienceTile key={item.label} {...item} v={v} />
             ))}
           </ul>
+
+          {/* Moved here from the gallery preview below: the tiles above
+              are largely "what's on" — screens, live music, weekly
+              events — so the events CTA follows the content it belongs to,
+              and the gallery section keeps its own gallery CTA. */}
+          <motion.div
+            variants={v(buttonVariants)}
+            className="mt-12 flex justify-center"
+          >
+            <RibbonButton href="/events" target="_self">
+              View Upcoming Events
+            </RibbonButton>
+          </motion.div>
         </motion.div>
       </Container>
     </section>

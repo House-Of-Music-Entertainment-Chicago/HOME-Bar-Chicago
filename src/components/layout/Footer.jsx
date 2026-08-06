@@ -1,10 +1,10 @@
-import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
 import logo from "../../../public/images/logo/logo-shield.png";
 import SOCIAL_LINKS from "@/data/social-links";
 import NAV_LINKS from "@/data/nav-links";
 import NewsletterForm from "../utils/NewsLetterForm";
+import ActiveLink from "../utils/ActiveLink";
 import businessInformation from "@/data/business-info";
 
 export default function Footer() {
@@ -33,12 +33,14 @@ export default function Footer() {
           <ul className="flex flex-col gap-3">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
-                <Link
+                <ActiveLink
                   href={link.href}
-                  className="text-sm text-foreground-muted transition-colors hover:text-foreground"
+                  className="text-sm transition-colors"
+                  activeClassName="text-accent font-semibold"
+                  inactiveClassName="text-foreground-muted hover:text-foreground"
                 >
                   {link.label}
-                </Link>
+                </ActiveLink>
               </li>
             ))}
           </ul>
@@ -106,10 +108,28 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-surface-border">
         <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-6 py-6 sm:flex-row">
-          <p className="text-xs text-foreground-muted">
-            &copy; {new Date().getFullYear()} Home Bar Chicago. All rights
-            reserved.
-          </p>
+          {/* Legal links live here rather than in NAV_LINKS — they belong
+              in the footer only, and NAV_LINKS also feeds the main nav. */}
+          <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
+            <p className="text-xs text-foreground-muted">
+              &copy; {new Date().getFullYear()} Home Bar Chicago. All rights
+              reserved.
+            </p>
+            <span
+              aria-hidden="true"
+              className="hidden text-xs text-surface-border sm:inline"
+            >
+              |
+            </span>
+            <ActiveLink
+              href="/terms"
+              className="text-xs underline-offset-4 transition-colors"
+              activeClassName="text-accent underline"
+              inactiveClassName="text-foreground-muted hover:text-accent hover:underline"
+            >
+              Terms &amp; Conditions
+            </ActiveLink>
+          </div>
 
           <div className="flex items-center gap-4">
             {SOCIAL_LINKS.map(({ label, href, Icon }) => (

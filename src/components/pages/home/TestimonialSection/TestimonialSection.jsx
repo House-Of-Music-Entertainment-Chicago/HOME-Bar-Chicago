@@ -54,10 +54,7 @@ export default function TestimonialSection({
   const v = useSafeVariants();
 
   return (
-    // Closing white band. bg-background-alt resolves to pure white here
-    // rather than the dark panel colour, because surface-light re-points
-    // that variable — no per-element change needed.
-    <section className="overflow-x-clip surface-light bg-background-alt">
+    <section className="overflow-x-clip bg-background-alt">
       <Container>
         <motion.div
           initial="hidden"

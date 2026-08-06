@@ -14,7 +14,7 @@ import { groupVariants, headerVariants } from "@/data/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const STATS = [
-  { value: "15+", label: "HD Screens" },
+  { value: "50+", label: "HD Screens" },
   { value: "100+", label: "Seats" },
   { value: "4", label: "Play Areas" },
   { value: "7", label: "Days a Week" },

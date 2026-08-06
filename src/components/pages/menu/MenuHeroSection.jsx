@@ -65,7 +65,7 @@ export default function MenuHero() {
 
             {/* <PennantTag
             className="mt-2 inline-block w-fit -rotate-2"
-            ribbonImage={ribbonBrass}
+            ribbonImage={ribbonLime}
           >
             Eat. Drink. Watch. Repeat.
           </PennantTag> */}
