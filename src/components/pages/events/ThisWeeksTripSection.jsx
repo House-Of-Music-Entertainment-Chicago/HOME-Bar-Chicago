@@ -73,7 +73,17 @@ export default function ThisWeekStrip({ events = [] }) {
 
   return (
     // Pulled up under the Events hero's chevron to fill the clipped corners.
-    <section className="shield-notch-join bg-background-alt">
+    <section className="relative shield-notch-join bg-background-alt">
+      <Image
+        src="/images/assets/events-featuredevents-bg.png"
+        alt="Concrete background image"
+        fill
+        sizes="100vw"
+        priority
+        aria-hidden="true"
+        className="absolute inset-0 z-0 object-cover"
+      />
+
       <Container>
         <motion.div
           initial="hidden"
@@ -95,7 +105,7 @@ export default function ThisWeekStrip({ events = [] }) {
               const card = (
                 <motion.div
                   variants={v(itemVariants)}
-                  className="relative flex h-full flex-col border border-olive/40"
+                  className="relative flex h-full flex-col border border-olive/40 group"
                 >
                   <Text className="bg-background-alt text-center uppercase text-foreground-muted">
                     {day}
@@ -108,7 +118,7 @@ export default function ThisWeekStrip({ events = [] }) {
                         fill
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 14vw"
                         priority // only true for the very first rendered card
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-cover transition-transform duration-200 ease-out group-hover:scale-110"
                       />
                     ) : (
                       <ImagePlaceholder
@@ -137,6 +147,15 @@ export default function ThisWeekStrip({ events = [] }) {
                             {event.location}
                           </Text>
                         )}
+                        <Text className="mt-0.5 text-accent">
+                          {event.eventUrl ? (
+                            <span className="animate-pulse">
+                              Click here to save seat
+                            </span>
+                          ) : (
+                            "No need to save seat"
+                          )}
+                        </Text>
                       </>
                     ) : (
                       <Text className="mt-0.5 text-foreground-muted">

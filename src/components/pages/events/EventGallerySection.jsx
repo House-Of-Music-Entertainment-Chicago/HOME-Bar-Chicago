@@ -50,8 +50,8 @@ export default function EventGallerySection({ images = [] }) {
         ) : (
           <div className="flex justify-center px-6">
             <ImagePlaceholder
-              label="Gallery photo"
-              className="aspect-square w-40"
+              label="No Events posted yet"
+              className="w-full h-64"
             />
           </div>
         )}

@@ -25,9 +25,9 @@ import { resolveImage } from "./wixResolveImage";
 
 export async function getEventGalleryImages() {
   const sources = [
-    { collectionId: "Events", limit: 7 },
-    { collectionId: "FeaturedEvents", limit: 4 },
-    { collectionId: "UpcomingSpecialEvents", limit: 4 },
+    { collectionId: "Events", limit: 10 },
+    // { collectionId: "FeaturedEvents", limit: 4 },
+    // { collectionId: "UpcomingSpecialEvents", limit: 4 },
   ];
 
   const results = await Promise.all(

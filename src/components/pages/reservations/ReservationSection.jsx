@@ -67,7 +67,7 @@ export default function TableReservationSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={v(groupVariants)}
-          className="flex max-w-2xl flex-col gap-5"
+          className="flex max-w-2xl flex-col gap-5 mx-auto lg:mx-0"
         >
           <motion.div variants={v(headerVariants)}>
             <Heading className="drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)]">

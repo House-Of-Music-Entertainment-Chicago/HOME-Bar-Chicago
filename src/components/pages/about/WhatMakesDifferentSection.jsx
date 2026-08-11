@@ -31,8 +31,7 @@ const DIFFERENTIATORS = [
   {
     Icon: MusicNoteIcon,
     title: "Entertainment",
-    description:
-      "Live bands, DJs, trivia nights, karaoke, and themed events every week.",
+    description: "Live bands, DJs, karaoke, and themed events every week.",
   },
   {
     Icon: BurgerIcon,

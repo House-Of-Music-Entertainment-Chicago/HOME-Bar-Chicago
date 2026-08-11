@@ -38,13 +38,13 @@ export default function GalleryHeroSection({ photoCount }) {
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={v(groupVariants)}
-          className="flex max-w-2xl flex-col items-center gap-3 text-center lg:items-start lg:text-start"
+          className="flex max-w-2xl flex-col items-center gap-3 text-center mx-auto lg:mx-0 lg:items-start lg:text-start"
         >
           <motion.div variants={v(headerVariants)}>
             <Heading className="drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)]">
               Gallery
             </Heading>
-            <DividerFlourish className="mx-auto w-24 lg:mx-0" />
+            <DividerFlourish className="mx-auto w-24" />
           </motion.div>
 
           <motion.div

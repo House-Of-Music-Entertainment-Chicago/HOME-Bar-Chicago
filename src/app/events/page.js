@@ -16,22 +16,22 @@ export const revalidate = false; // controlled by webhook instead of a timer
 export const metadata = {
   title: "Events",
   description:
-    "See what's happening this week at HOME — trivia nights, live music, UFC watch parties, karaoke, and upcoming special events.",
+    "See what's happening this week at HOME — live music, UFC watch parties, karaoke, and upcoming special events.",
   alternates: { canonical: "/events" },
 };
 
 export default async function Events() {
   const events = await getThisWeekEvents();
-  const featuredEvents = await getFeaturedEvents();
-  const upcomingSpecialEvents = await getUpcomingSpecialEvents();
+  // const featuredEvents = await getFeaturedEvents();
+  // const upcomingSpecialEvents = await getUpcomingSpecialEvents();
   const eventGalleryImages = await getEventGalleryImages();
 
   return (
     <>
       <EventsHero />
       <ThisWeekStrip events={events} />
-      <FeaturedEventsSection events={featuredEvents.reverse()} />
-      <UpcomingSpecialEventsSection events={upcomingSpecialEvents.reverse()} />
+      {/* <FeaturedEventsSection events={featuredEvents.reverse()} />
+      <UpcomingSpecialEventsSection events={upcomingSpecialEvents.reverse()} /> */}
       <EventGallerySection images={eventGalleryImages} />
       <HostEventSection />
       <CTASection />
