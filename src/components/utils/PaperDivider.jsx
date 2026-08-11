@@ -65,7 +65,7 @@ export default function PaperDivider({
   return (
     <div
       aria-hidden="true"
-      className={`pointer-events-none absolute left-0 z-20 w-full ${edgeClass} ${className}`}
+      className={`pointer-events-none absolute left-0 z-8 w-full ${edgeClass} ${className}`}
       style={{
         transform: `${translateY}${flip ? " scaleY(-1)" : ""}`,
       }}
