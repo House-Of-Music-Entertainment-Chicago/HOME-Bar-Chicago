@@ -11,6 +11,7 @@ import { getThisWeekEvents } from "@/lib/getThisWeekEvents";
 import { getFeaturedEvents } from "@/lib/getFeaturedEvents";
 import { getUpcomingSpecialEvents } from "@/lib/getUpcomingSpecialEvents";
 import { getEventGalleryImages } from "@/lib/getEventsGallery";
+
 export const revalidate = false; // controlled by webhook instead of a timer
 
 export const metadata = {
