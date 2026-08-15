@@ -45,7 +45,7 @@ export default function OurStorySection() {
           {/* Left — stacked building photo */}
           <motion.div variants={v(itemVariants)}>
             <StackedPhotoCard
-              image="/images/assets/about-ourstory-image.jpg"
+              image="/images/assets/about-ourstory-image.jpeg"
               alt="Home Bar Chicago building interior"
               className="aspect-4/3 w-full"
             />
