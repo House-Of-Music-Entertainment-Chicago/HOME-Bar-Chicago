@@ -44,17 +44,17 @@ export const GALLERY_IMAGES = [
     alt: "Rows of high-top seating facing the wall of screens",
   },
   {
-    src: `${A}/entertainment/reservation-table-image.jpg`,
+    src: `${A}/entertainment/main-area-crowd.jpeg`,
     category: "venue",
-    alt: "Leather chesterfield lounge seating beside the pool tables",
+    alt: "Main area crowd",
   },
-  // {
-  //   src: `${A}/entertainment/gallery-image1.jpg`,
-  //   category: "venue",
-  //   alt: "Foosball table in the lounge with the HOME crest on the wall behind",
-  // },
   {
-    src: `${A}/about-ourstory-image.jpg`,
+    src: `${A}/entertainment/pool-area-crowd.jpeg`,
+    category: "venue",
+    alt: "Crowd in our pool area",
+  },
+  {
+    src: `${A}/about-ourstory-image.jpeg`,
     category: "venue",
     alt: "Inside HOME Sports Bar",
   },
