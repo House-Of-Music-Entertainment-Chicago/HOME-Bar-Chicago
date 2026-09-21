@@ -38,6 +38,7 @@ export default function VirtualTourEmbed({
   title,
   poster,
   posterAlt = "",
+  posterSizes = "(min-width: 1024px) 66vw, 100vw",
   prompt = "Step Inside",
   hint = "Click and drag to look around",
   className = "",
@@ -157,7 +158,7 @@ export default function VirtualTourEmbed({
           src={poster}
           alt={posterAlt}
           fill
-          sizes="(min-width: 1024px) 66vw, 100vw"
+          sizes={posterSizes}
           aria-hidden={posterAlt ? undefined : "true"}
           className={`object-cover transition-opacity duration-700 ${
             isReady ? "opacity-0" : "opacity-60"

@@ -24,7 +24,6 @@ import entertainment from "../../../../public/images/assets/entertainment/live-e
 import watchSports from "../../../../public/images/assets/entertainment/watch-sports.jpeg";
 import liveDj from "../../../../public/images/assets/entertainment/live-dj.jpg";
 import PaperDivider from "@/components/utils/PaperDivider";
-import RoughBorderFrame from "@/components/utils/RoughBorderFrame";
 import VirtualTourEmbed from "@/components/utils/VirtualTourEmbed";
 import barCounter from "../../../../public/images/assets/bar-counter.png";
 
@@ -181,56 +180,65 @@ function FeaturesSection() {
         </div>
       </motion.div>
 
+      {/* 360° walkthrough. It sits directly under the marquee on
+          purpose: the strip above shows the rooms as photographs, this
+          lets you actually stand in them — and it lands before the
+          "Learn More" CTA rather than after it, so the proof comes
+          before the ask.
+
+          Deliberately a direct child of <section>, not of the container
+          wrapper below, so the band can be plain `w-full`. The marquee's
+          `w-screen + ml-[calc(50%-50vw)]` escape hatch would also work
+          here, but 100vw counts the scrollbar while the section doesn't,
+          so that route overhangs ~7px per side and hands those pixels to
+          overflow-x-clip. Harmless on a looping photo strip; less so on
+          a tour whose own controls live near the right edge. */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={v(groupVariants)}
+        className="mt-14"
+      >
+        <motion.div variants={v(headerVariants)}>
+          <Title className="text-center uppercase tracking-[0.2em] text-accent">
+            Take a Look Around
+          </Title>
+        </motion.div>
+
+        {/* Height is clamped rather than driven by an aspect ratio — at
+            full width 16/9 would compute to ~800px on a desktop and
+            swallow the whole viewport. Capping it at 70vh keeps a strip
+            of ordinary page visible above and below, which is the
+            visitor's way out if an activated tour is eating their scroll
+            wheel (Esc and the Exit button being the other two). */}
+        <motion.div
+          variants={v(itemVariants)}
+          className="relative mt-4 h-[clamp(20rem,70vh,44rem)] w-full border-y-2 border-olive/40"
+        >
+          <VirtualTourEmbed
+            src={VIRTUAL_TOUR_URL}
+            title="360° virtual tour of HOME Sports Bar in Arlington Heights"
+            poster={barCounter}
+            posterSizes="100vw"
+            prompt="Step Inside HOME"
+            hint="Click and drag to look around"
+          />
+        </motion.div>
+
+        <motion.div variants={v(itemVariants)} className="flex justify-center">
+          <Text className="mt-4 max-w-md px-5 text-center text-foreground-muted">
+            Walk the bar, the pool room and the game floor — 360° in every
+            direction, and it works on mobile too.
+          </Text>
+        </motion.div>
+      </motion.div>
+
       {/* Plain container-width wrapper (not the <Container> component) —
           this section's own py-15 was already spent by the header
           Container above, so a second one here would double up the
           vertical gap on top of this button's own mt-10. */}
       <div className="container mx-auto px-5">
-        {/* 360° walkthrough. It sits directly under the marquee on
-            purpose: the strip above shows the rooms as photographs,
-            this lets you actually stand in them — and it lands before
-            the "Learn More" CTA rather than after it, so the proof
-            comes before the ask. */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={v(groupVariants)}
-          className="mt-14 flex flex-col items-center"
-        >
-          <motion.div variants={v(headerVariants)}>
-            <Title className="text-center uppercase tracking-[0.2em] text-accent">
-              Take a Look Around
-            </Title>
-          </motion.div>
-
-          {/* aspect-4/3 on phones, 16/9 from sm up: a 16/9 tour on a
-              narrow screen collapses to a letterbox slot too short to
-              actually look around in. */}
-          <motion.div
-            variants={v(itemVariants)}
-            className="relative mt-4 aspect-4/3 w-full max-w-4xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] sm:aspect-video"
-          >
-            <VirtualTourEmbed
-              src={VIRTUAL_TOUR_URL}
-              title="360° virtual tour of HOME Sports Bar in Arlington Heights"
-              poster={barCounter}
-              prompt="Step Inside HOME"
-              hint="Click and drag to look around"
-            />
-            {/* Sits above the embed's own z-20 controls layer, but it's
-                pointer-events-none so it never intercepts a drag. */}
-            <RoughBorderFrame className="z-30" />
-          </motion.div>
-
-          <motion.div variants={v(itemVariants)}>
-            <Text className="mt-4 max-w-md text-center text-foreground-muted">
-              Walk the bar, the pool room and the game floor — 360° in every
-              direction, and it works on mobile too.
-            </Text>
-          </motion.div>
-        </motion.div>
-
         <motion.div
           className="mt-10 flex justify-center pb-15"
           initial="hidden"
