@@ -15,8 +15,10 @@ import mozzarellaSticks from "../../../../public/images/assets/menu/food/mozzare
 import cheeseQuesadilla from "../../../../public/images/assets/menu/food/cheese-quesadilla.jpeg";
 import chickenWings from "../../../../public/images/assets/menu/food/buffalo-wings.jpeg";
 import chickenSliders from "../../../../public/images/assets/menu/food/chicken-sliders.jpeg";
+import potRoastSliders from "../../../../public/images/assets/menu/food/pot-roast-sliders.jpg";
 import nachos from "../../../../public/images/assets/menu/food/nachos.jpeg";
 import onionRingTower from "../../../../public/images/assets/menu/food/onion-ring-tower.jpeg";
+import basketOfTaterTots from "../../../../public/images/assets/menu/food/basket-of-tater-tots.jpg";
 import loadedFrots from "../../../../public/images/assets/menu/food/loaded-frots.jpeg";
 import spinachArtichokeDip from "../../../../public/images/assets/menu/food/spinach-artichoke-dip.jpeg";
 import specialPizza from "../../../../public/images/assets/menu/food/special-pizza.jpeg";
@@ -28,6 +30,8 @@ import sauteedShrimpBowl from "../../../../public/images/assets/menu/food/rice-w
 import macAndCheese from "../../../../public/images/assets/menu/food/mac-and-cheese-short-rib.jpeg";
 import signatureTacos from "../../../../public/images/assets/menu/food/signature-tacos-trio.jpeg";
 import chickenLemonRiceSoup from "../../../../public/images/assets/menu/food/chicken-lemon-rice-soup.jpeg";
+import beefChili from "../../../../public/images/assets/menu/food/beef-chili.jpg";
+import choppedSalad from "../../../../public/images/assets/menu/food/chopped-salad.jpg";
 import southwestSalad from "../../../../public/images/assets/menu/food/southwest-salad.jpeg";
 import warmCookieSkillet from "../../../../public/images/assets/menu/food/warm-cookie-skillet.jpeg";
 
@@ -80,6 +84,7 @@ const APPETIZERS = [
     price: "$10.99",
     description:
       "(3) Braised beef topped with sweet glazed carrots and crispy onion straws.",
+    image: potRoastSliders,
   },
   {
     name: "Chicken Sliders",
@@ -113,6 +118,7 @@ const APPETIZERS = [
     name: "Basket of Tater Tots or French Fries",
     price: "$7.99",
     description: "Choose sweet potato fries add $2.",
+    image: basketOfTaterTots,
   },
   {
     name: "Loaded Frots",
@@ -294,6 +300,7 @@ const SOUPS_SALADS = [
     price: "$7.99",
     description:
       "Slow-simmered beef chili with or without beans and hearty spices.",
+    image: beefChili,
   },
   {
     name: "Caesar Salad",
@@ -307,6 +314,7 @@ const SOUPS_SALADS = [
     price: "$13.99",
     description:
       "Chopped romaine lettuce, tomatoes, cucumbers, avocados, bacon, ham, chicken, cheddar, and bleu cheese tossed in ranch dressing.",
+    image: choppedSalad,
   },
   {
     name: "Southwest Salad",
