@@ -18,8 +18,9 @@ import {
 } from "@/data/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
-// TODO: this belongs in @/data/external-links.js alongside
-// openTableReservationLink once that file is editable.
+// TODO: move to @/data/external-links.js (next to openTableReservationLink)
+// once that file is editable — it's duplicated in HeroSection.jsx until
+// then, so update both if the booking URL ever changes.
 const GOLF_SIM_BOOKING_URL =
   "https://clients.uschedule.com/wjsportshomebar/booking";
 
@@ -37,7 +38,8 @@ const PLACES = [
     title: "Golf Sims",
     description:
       "Experience the world's best courses in our high-tech golf simulators.",
-    link: { href: GOLF_SIM_BOOKING_URL, label: "Book a Bay" },
+    link: { href: GOLF_SIM_BOOKING_URL, label: "Book a Sim" },
+    badge: "Book Online",
   },
   {
     // image: "/images/assets/games-entertainment-area.png",
@@ -96,6 +98,28 @@ export default function PlacesToPlaySection() {
                     </div>
                   )}
                   <RoughBorderFrame />
+
+                  {place.badge && (
+                    <span className="absolute left-2 top-3 z-10 -rotate-3 bg-accent px-2.5 py-1 font-heading text-base uppercase tracking-wide text-accent-foreground shadow-[3px_3px_0_rgba(0,0,0,0.9)] lg:text-lg">
+                      {place.badge}
+                    </span>
+                  )}
+
+                  {/* People click photos, so a bookable card's photo books
+                      too. Hidden from the tab order and screen readers —
+                      the button under the description is the accessible
+                      version of the same link, and announcing it twice
+                      would just be noise. */}
+                  {place.link && (
+                    <a
+                      href={place.link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      className="absolute inset-0 z-20"
+                    />
+                  )}
                 </motion.div>
                 <motion.div variants={v(headerVariants)}>
                   <Title>{place.title}</Title>
@@ -108,7 +132,11 @@ export default function PlacesToPlaySection() {
                       href={place.link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-2 inline-flex items-center gap-1 font-heading text-lg uppercase tracking-wide text-accent transition-colors hover:text-accent-hover lg:text-xl"
+                      // Not .btn-cta: that utility's font-family points at
+                      // --font-display, which is never defined, so it
+                      // falls back to the browser sans and overrides
+                      // font-heading.
+                      className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-pill bg-accent px-6 py-2.5 font-heading text-xl uppercase tracking-wide text-accent-foreground transition-colors hover:bg-accent-hover sm:w-auto"
                     >
                       {place.link.label}
                       <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
