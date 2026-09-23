@@ -20,7 +20,7 @@ import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 // TODO: move to @/data/external-links.js (next to openTableReservationLink)
 // once that file is editable — it's duplicated in
-// GolfSimSpotlightSection.jsx until then, so update both if the booking
+// home/FeaturesSection.jsx until then, so update both if the booking
 // URL ever changes.
 const GOLF_SIM_BOOKING_URL =
   "https://clients.uschedule.com/wjsportshomebar/booking";
@@ -40,7 +40,6 @@ const PLACES = [
     description:
       "Experience the world's best courses in our high-tech golf simulators.",
     link: { href: GOLF_SIM_BOOKING_URL, label: "Book a Sim" },
-    badge: "Book Online",
   },
   {
     // image: "/images/assets/games-entertainment-area.png",
@@ -99,12 +98,6 @@ export default function PlacesToPlaySection() {
                     </div>
                   )}
                   <RoughBorderFrame />
-
-                  {place.badge && (
-                    <span className="absolute left-2 top-3 z-10 -rotate-3 bg-accent px-2.5 py-1 font-heading text-base uppercase tracking-wide text-accent-foreground shadow-[3px_3px_0_rgba(0,0,0,0.9)] lg:text-lg">
-                      {place.badge}
-                    </span>
-                  )}
 
                   {/* People click photos, so a bookable card's photo books
                       too. Hidden from the tab order and screen readers —
