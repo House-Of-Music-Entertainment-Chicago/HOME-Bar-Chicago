@@ -112,11 +112,10 @@ function FeaturesSection() {
     // `overflow-x: clip` is the one that permits `overflow-y: visible` —
     // `overflow-x: hidden` forces the other axis to compute to `auto`,
     // which would still clip (and scroll) vertically.
-    // shield-notch-join slides this section up under the hero's chevron so
-    // its background fills the two triangles that clip cuts away, making
-    // the seam read as one continuous surface. It pairs with
-    // .shield-notch-bottom on HeroSection — the two share --shield-notch.
-    <section className="bg-background-alt relative overflow-x-clip shield-notch-join">
+    // No shield-notch-join here any more: GolfSimSpotlightSection now sits
+    // directly under the hero and carries it instead. If that section is
+    // ever removed, put shield-notch-join back on this one.
+    <section className="bg-background-alt relative overflow-x-clip">
       <Container className="relative">
         <div className="flex flex-col items-center justify-center w-full">
           <motion.div

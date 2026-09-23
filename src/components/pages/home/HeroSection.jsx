@@ -13,14 +13,7 @@ import Heading from "@/components/utils/HeadingText";
 import Title from "@/components/utils/TitleText";
 import Container from "@/components/utils/Container";
 import ShieldNotch from "@/components/utils/ShieldNotch";
-import { LandPlot } from "lucide-react";
 import { openTableReservationLink } from "@/data/external-links";
-
-// TODO: move to @/data/external-links.js (next to openTableReservationLink)
-// once that file is editable — it's duplicated in PlacesToPlaySection.jsx
-// until then, so update both if the booking URL ever changes.
-const GOLF_SIM_BOOKING_URL =
-  "https://clients.uschedule.com/wjsportshomebar/booking";
 
 import {
   reducedVariants,
@@ -174,27 +167,6 @@ function HeroSection() {
                 HOME Sports Bar and Entertainment is a premier venue in the
                 northwest suburbs for sports and entertainment.
               </Title>
-            </motion.div>
-
-            {/* Golf sims are the headline activity the client wants front
-                and centre, so booking takes the hero's one CTA slot —
-                the first thing on the site anyone can act on. */}
-            <motion.div
-              variants={v(buttonVariants)}
-              className="mt-2 flex flex-col items-center gap-3 lg:items-start"
-            >
-              <p className="flex items-center gap-2 font-body text-xs font-semibold uppercase tracking-[0.2em] text-foreground drop-shadow-[0_1px_6px_rgba(0,0,0,0.95)] lg:text-sm">
-                <LandPlot className="h-4 w-4 text-accent" aria-hidden="true" />
-                Golf Simulators <span className="text-accent">•</span> Book
-                Online
-              </p>
-              <RibbonButton
-                href={GOLF_SIM_BOOKING_URL}
-                target="_blank"
-                className="text-background"
-              >
-                Book a Golf Sim
-              </RibbonButton>
             </motion.div>
 
             {/* <motion.div variants={v(buttonVariants)}>

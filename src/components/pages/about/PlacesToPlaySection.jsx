@@ -19,8 +19,9 @@ import {
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 // TODO: move to @/data/external-links.js (next to openTableReservationLink)
-// once that file is editable — it's duplicated in HeroSection.jsx until
-// then, so update both if the booking URL ever changes.
+// once that file is editable — it's duplicated in
+// GolfSimSpotlightSection.jsx until then, so update both if the booking
+// URL ever changes.
 const GOLF_SIM_BOOKING_URL =
   "https://clients.uschedule.com/wjsportshomebar/booking";
 

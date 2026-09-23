@@ -1,4 +1,5 @@
 import HeroSection from "@/components/pages/home/HeroSection";
+import GolfSimSpotlightSection from "@/components/pages/home/GolfSimSpotlightSection";
 import FeaturesSection from "@/components/pages/home/FeaturesSection";
 import FeaturedMenuSection from "@/components/pages/home/FeaturedMenuSection";
 import CTASection from "@/components/pages/home/CTASection";
@@ -15,6 +16,7 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+      <GolfSimSpotlightSection />
       <FeaturesSection />
       <FeaturedMenuSection />
       <CTASection />
