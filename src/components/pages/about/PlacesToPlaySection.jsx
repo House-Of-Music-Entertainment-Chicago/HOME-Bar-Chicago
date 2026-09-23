@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import Subheading from "@/components/utils/SubHeadingText";
 import Title from "@/components/utils/TitleText";
 import Text from "@/components/utils/BodyText";
@@ -17,6 +18,11 @@ import {
 } from "@/data/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
+// TODO: this belongs in @/data/external-links.js alongside
+// openTableReservationLink once that file is editable.
+const GOLF_SIM_BOOKING_URL =
+  "https://clients.uschedule.com/wjsportshomebar/booking";
+
 const PLACES = [
   {
     image: "/images/assets/pool-room.png",
@@ -31,6 +37,7 @@ const PLACES = [
     title: "Golf Sims",
     description:
       "Experience the world's best courses in our high-tech golf simulators.",
+    link: { href: GOLF_SIM_BOOKING_URL, label: "Book a Bay" },
   },
   {
     // image: "/images/assets/games-entertainment-area.png",
@@ -96,6 +103,18 @@ export default function PlacesToPlaySection() {
                   <Text className="text-foreground-muted">
                     {place.description}
                   </Text>
+                  {place.link && (
+                    <a
+                      href={place.link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-flex items-center gap-1 font-heading text-lg uppercase tracking-wide text-accent transition-colors hover:text-accent-hover lg:text-xl"
+                    >
+                      {place.link.label}
+                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                      <span className="sr-only">(opens in a new tab)</span>
+                    </a>
+                  )}
                 </motion.div>
               </div>
             ))}
