@@ -28,6 +28,23 @@ export default function GalleryGridSection() {
     [active],
   );
 
+  // The shared 0.08s-per-tile stagger is tuned for a handful of items.
+  // With 100+ photos it would take 8s+ for the last tile to fade in,
+  // leaving empty squares for anyone who scrolls quickly, so the whole
+  // cascade is squeezed into ~1.2s however many photos the filter shows.
+  const gridVariants = useMemo(() => {
+    const { staggerChildren, ...rest } = groupVariants.visible.transition;
+    return {
+      ...groupVariants,
+      visible: {
+        transition: {
+          ...rest,
+          staggerChildren: Math.min(staggerChildren, 1.2 / photos.length),
+        },
+      },
+    };
+  }, [photos.length]);
+
   // Reuses the shared reference-counted lock so the lightbox can't fight
   // the mobile nav over document.body.style.overflow.
   useBodyScrollLock(openIndex !== null);
@@ -95,7 +112,7 @@ export default function GalleryGridSection() {
           key={active}
           initial="hidden"
           animate="visible"
-          variants={v(groupVariants)}
+          variants={v(gridVariants)}
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
         >
           {photos.map((photo, i) => (

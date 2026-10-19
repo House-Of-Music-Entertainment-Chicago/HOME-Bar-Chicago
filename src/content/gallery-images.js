@@ -254,6 +254,317 @@ export const GALLERY_IMAGES = [
     category: "events",
     alt: "The projector screen and wall TVs showing a Cubs game",
   },
+
+  /* ---------------- Bears game watch party ----------------
+     Photos by Daniela Marie Photography. Kept at the end of the list on
+     purpose: the About page preview strip takes the first entries, so
+     appending here adds them to /gallery without changing that strip.
+     Each one is still tagged with the filter that matches what it shows. */
+  {
+    src: "/images/gallery/bears-game/bears-game-01.jpeg",
+    category: "events",
+    alt: "Bears fans gathered around the high-top tables on game day",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-02.jpeg",
+    category: "events",
+    alt: "Fans in Bears gear catching up at the high-tops",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-03.jpeg",
+    category: "events",
+    alt: "A packed main floor for the Bears game",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-04.jpeg",
+    category: "venue",
+    alt: "Bartender in a Bears jersey working the bar under the big screens",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-05.jpeg",
+    category: "events",
+    alt: "Fans settled into the lounge seating to watch the game",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-06.jpeg",
+    category: "events",
+    alt: "The lounge crowd locked in on the Bears game",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-07.jpeg",
+    category: "events",
+    alt: "Game-day pizzas laid out beside the packed lounge",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-08.jpeg",
+    category: "events",
+    alt: "Fans mingling around the lounge with pizzas on the table",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-09.jpeg",
+    category: "events",
+    alt: "The Bears game on the giant stage screens beside the lounge sofas",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-10.jpeg",
+    category: "events",
+    alt: "Fans in orange and navy sharing a meal at the dining tables",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-11.jpeg",
+    category: "events",
+    alt: "Tables full of Bears fans on the main floor",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-12.jpeg",
+    category: "events",
+    alt: "Fans digging into game-day food on the main floor",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-13.jpeg",
+    category: "events",
+    alt: "Friends in Bears gear smiling for the camera at their table",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-14.jpeg",
+    category: "events",
+    alt: "A table of Bears fans posing in front of the Wall of Champions",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-15.jpeg",
+    category: "food",
+    alt: "Our server bringing out a cheeseburger and fries",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-16.jpeg",
+    category: "events",
+    alt: "Fans watching from the lounge with wings and pizza up front",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-17.jpeg",
+    category: "events",
+    alt: "The lounge crowd with platters of game-day food",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-18.jpeg",
+    category: "events",
+    alt: "Bears fans filling the lounge by the stage",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-19.jpeg",
+    category: "play",
+    alt: "A fan in a Bears jersey lining up a shot at the pool table",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-20.jpeg",
+    category: "events",
+    alt: "A group of friends in Bears gear smiling at their table",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-21.jpeg",
+    category: "events",
+    alt: "Friends in Bears jerseys posing at their high-top",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-22.jpeg",
+    category: "food",
+    alt: "Friends sharing a pizza at the bar tables",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-23.jpeg",
+    category: "events",
+    alt: "Fans in Bears jerseys enjoying drinks at their table",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-24.jpeg",
+    category: "play",
+    alt: "Two fans in Bears jerseys getting ready to play pool",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-25.jpeg",
+    category: "events",
+    alt: "Fans packing the lounge and high-tops for the Bears game",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-26.jpeg",
+    category: "events",
+    alt: "A full house on the main floor watching the game",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-27.jpeg",
+    category: "events",
+    alt: "The game on the big screen in the back room",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-28.jpeg",
+    category: "venue",
+    alt: "Close-up of a signed Bears #84 jersey",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-29.jpeg",
+    category: "venue",
+    alt: "A signed #84 Loveland Bears jersey on display",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-30.jpeg",
+    category: "venue",
+    alt: "The fully stocked main bar under the screens",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-31.jpeg",
+    category: "venue",
+    alt: "Bartenders in Bears jerseys working the bar",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-32.jpeg",
+    category: "venue",
+    alt: "Fans lined up at the bar watching the game",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-33.jpeg",
+    category: "food",
+    alt: "Fans sharing pizza at the dining tables",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-34.jpeg",
+    category: "events",
+    alt: "A fan in a Bears jersey celebrating in front of the big screen",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-35.jpeg",
+    category: "events",
+    alt: "A packed dining room of Bears fans watching the game",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-36.jpeg",
+    category: "events",
+    alt: "Fans in Bears orange watching from beneath the Wall of Champions",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-37.jpeg",
+    category: "play",
+    alt: "A fan in a Bears jersey all smiles with a pool cue",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-38.jpeg",
+    category: "play",
+    alt: "A game of pool on the Diamond tables during the Bears game",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-39.jpeg",
+    category: "events",
+    alt: "Fans at the high-tops under the Bear Down banner",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-40.jpeg",
+    category: "venue",
+    alt: "Bartender serving a fan in a Bears jersey",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-41.jpeg",
+    category: "events",
+    alt: "Tables full of fans beneath the Wall of Champions",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-42.jpeg",
+    category: "events",
+    alt: "Fans watching the game in front of the Wall of Champions",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-43.jpeg",
+    category: "events",
+    alt: "Fans packed in at the bar tables under the screens",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-44.jpeg",
+    category: "events",
+    alt: "Fans relaxing on the lounge sofas with pizza and drinks",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-45.jpeg",
+    category: "events",
+    alt: "Fans cheering a big play at the bar tables",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-46.jpeg",
+    category: "events",
+    alt: "Fans on their feet celebrating a Bears play",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-47.jpeg",
+    category: "events",
+    alt: "The crowd cheering in front of the wall of screens",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-48.jpeg",
+    category: "events",
+    alt: "Fans celebrating a Bears score at the bar tables",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-49.jpeg",
+    category: "events",
+    alt: "Fans cheering from the lounge sofas",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-50.jpeg",
+    category: "events",
+    alt: "Fans watching intently beneath the Wall of Champions",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-51.jpeg",
+    category: "drinks",
+    alt: "A tray of orange shots lined up for the crowd",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-52.jpeg",
+    category: "drinks",
+    alt: "A round of orange shots ready to hand out",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-53.jpeg",
+    category: "drinks",
+    alt: "A cocktail on the rocks with a fresh lime wedge",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-54.jpeg",
+    category: "drinks",
+    alt: "A lime cocktail over ice on the bar top",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-55.jpeg",
+    category: "drinks",
+    alt: "A house cocktail served over ice with lime",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-56.jpeg",
+    category: "drinks",
+    alt: "A lime cocktail on ice under the bar lights",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-57.jpeg",
+    category: "drinks",
+    alt: "A shimmering blue cocktail in a coupe glass",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-58.jpeg",
+    category: "drinks",
+    alt: "A sparkling blue coupe cocktail at the bar",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-59.jpeg",
+    category: "drinks",
+    alt: "A glittering blue cocktail served in a coupe",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-60.jpeg",
+    category: "drinks",
+    alt: "A frosted blue coupe cocktail on the bar top",
+  },
+  {
+    src: "/images/gallery/bears-game/bears-game-61.jpeg",
+    category: "drinks",
+    alt: "A blue shimmer cocktail in a stemmed coupe",
+  },
 ];
 
 export default GALLERY_IMAGES;
