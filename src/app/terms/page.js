@@ -1,7 +1,7 @@
 import React from "react";
 import LegalHeroSection from "@/components/pages/legal/LegalHeroSection";
 import LegalDocument from "@/components/pages/legal/LegalDocument";
-import { TERMS_SECTIONS, LAST_UPDATED } from "@/data/legal-terms";
+import { TERMS_SECTIONS, LAST_UPDATED } from "@/content/legal-terms";
 
 export const metadata = {
   title: "Terms & Conditions",

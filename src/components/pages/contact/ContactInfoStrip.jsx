@@ -6,11 +6,11 @@ import { Phone, Mail, Clock, MapPin } from "lucide-react";
 import Container from "@/components/utils/Container";
 
 import { motion } from "framer-motion";
-import { groupVariants, itemVariants } from "@/data/animation-variants";
+import { groupVariants, itemVariants } from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
-import businessInformation from "@/data/business-info";
-import SOCIAL_LINKS from "@/data/social-links";
+import businessInformation from "@/content/business-info";
+import SOCIAL_LINKS from "@/content/social-links";
 
 const CONTACT_INFO = [
   {

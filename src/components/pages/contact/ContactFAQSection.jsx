@@ -9,7 +9,7 @@ import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
-import { groupVariants, headerVariants } from "@/data/animation-variants";
+import { groupVariants, headerVariants } from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const FAQS = [

@@ -4,10 +4,10 @@ import { MapPin, Phone, Mail } from "lucide-react";
 import Container from "@/components/utils/Container";
 import Title from "@/components/utils/TitleText";
 import Text from "@/components/utils/BodyText";
-import businessInformation from "@/data/business-info";
+import businessInformation from "@/content/business-info";
 
 import { motion } from "framer-motion";
-import { groupVariants, itemVariants } from "@/data/animation-variants";
+import { groupVariants, itemVariants } from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 /**

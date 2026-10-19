@@ -9,7 +9,7 @@ import ShieldNotch from "@/components/utils/ShieldNotch";
 import sectionBg1 from "../../../../public/images/assets/section-bg-1.jpg";
 
 import { motion } from "framer-motion";
-import { groupVariants, headerVariants } from "@/data/animation-variants";
+import { groupVariants, headerVariants } from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 /**

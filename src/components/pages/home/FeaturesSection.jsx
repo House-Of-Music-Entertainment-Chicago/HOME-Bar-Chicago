@@ -15,7 +15,7 @@ import {
   GuitarIcon,
   BilliardsIcon,
   TVScreenIcon,
-} from "@/data/features-icons";
+} from "@/content/features-icons";
 import foodBundle from "../../../../public/images/assets/menu/food/food-bundle.jpeg";
 import sports from "../../../../public/images/assets/sports/sports.jpeg";
 import billiards from "../../../../public/images/assets/pool-table.png";
@@ -37,7 +37,7 @@ import {
   buttonVariants,
   groupVariants,
   itemVariants,
-} from "@/data/animation-variants";
+} from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 // TODO: this belongs in @/data/external-links.js alongside
@@ -245,8 +245,8 @@ function FeaturesSection() {
             <motion.div variants={v(headerVariants)}>
               <Title className="max-w-md text-foreground-muted">
                 Play the world&apos;s best courses on our high-tech golf
-                simulators. Grab your crew, pick a course and take your
-                swing, with the bar just steps away.
+                simulators. Grab your crew, pick a course and take your swing,
+                with the bar just steps away.
               </Title>
             </motion.div>
 

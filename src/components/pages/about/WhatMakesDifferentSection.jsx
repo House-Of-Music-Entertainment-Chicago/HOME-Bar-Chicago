@@ -11,14 +11,14 @@ import {
   MusicNoteIcon,
   BurgerIcon,
   CommunityIcon,
-} from "@/data/features-icons";
+} from "@/content/features-icons";
 
 import { motion } from "framer-motion";
 import {
   groupVariants,
   itemVariants,
   headerVariants,
-} from "@/data/animation-variants";
+} from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const DIFFERENTIATORS = [

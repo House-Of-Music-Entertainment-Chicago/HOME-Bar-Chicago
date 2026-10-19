@@ -15,7 +15,7 @@ import {
   groupVariants,
   itemVariants,
   headerVariants,
-} from "@/data/animation-variants";
+} from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 export default function OurStorySection() {

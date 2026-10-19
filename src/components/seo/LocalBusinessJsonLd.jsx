@@ -5,7 +5,7 @@
 // etc.) directly in search, rather than just a blue link. Rendered
 // once in the root layout so it's present on every page.
 
-import { SITE_CONFIG } from "@/data/site-confiig";
+import { SITE_CONFIG } from "@/content/site-confiig";
 
 export default function LocalBusinessJsonLd() {
   const jsonLd = {

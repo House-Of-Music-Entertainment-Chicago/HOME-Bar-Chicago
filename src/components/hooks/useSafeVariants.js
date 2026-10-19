@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import { useReducedMotion } from "framer-motion";
-import { reducedVariants } from "@/data/animation-variants";
+import { reducedVariants } from "@/content/animation-variants";
 
 export function useSafeVariants() {
   const prefersReducedMotion = useReducedMotion();

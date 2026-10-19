@@ -10,7 +10,7 @@ import PaperDivider from "@/components/utils/PaperDivider";
 import AnimatedCounter from "@/components/utils/AnimatedCounter";
 
 import { motion } from "framer-motion";
-import { groupVariants, headerVariants } from "@/data/animation-variants";
+import { groupVariants, headerVariants } from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const STATS = [

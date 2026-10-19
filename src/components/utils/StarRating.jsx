@@ -14,7 +14,7 @@ import {
   reducedVariants,
   groupVariants,
   itemVariants,
-} from "@/data/animation-variants";
+} from "@/content/animation-variants";
 
 export default function StarRating({
   count = 5,

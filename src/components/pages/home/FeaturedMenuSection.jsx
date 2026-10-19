@@ -24,7 +24,7 @@ import {
   buttonVariants,
   groupVariants,
   itemVariants,
-} from "@/data/animation-variants";
+} from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 function MenuItemCard({ image, alt, title, v }) {

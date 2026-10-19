@@ -2,7 +2,7 @@ import React from "react";
 import GalleryHeroSection from "@/components/pages/gallery/GalleryHeroSection";
 import GalleryGridSection from "@/components/pages/gallery/GalleryGridSection";
 import CTASection from "@/components/pages/home/CTASection";
-import { GALLERY_IMAGES } from "@/data/gallery-images";
+import { GALLERY_IMAGES } from "@/content/gallery-images";
 
 export const metadata = {
   title: "Gallery",

@@ -7,7 +7,7 @@ import Footer from "@/components/layout/Footer";
 import BackToTop from "@/components/utils/BackToTopButton";
 
 import LocalBusinessJsonLd from "@/components/seo/LocalBusinessJsonLd";
-import { SITE_CONFIG } from "@/data/site-confiig";
+import { SITE_CONFIG } from "@/content/site-confiig";
 
 export const bebas = Bebas_Neue({
   weight: "400",

@@ -36,7 +36,7 @@ import southwestSalad from "../../../../public/images/assets/menu/food/southwest
 import warmCookieSkillet from "../../../../public/images/assets/menu/food/warm-cookie-skillet.jpeg";
 
 import { motion } from "framer-motion";
-import { groupVariants, headerVariants } from "@/data/animation-variants";
+import { groupVariants, headerVariants } from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const APPETIZERS = [

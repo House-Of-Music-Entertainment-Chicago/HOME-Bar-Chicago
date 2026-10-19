@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
 import logo from "../../../public/images/logo/logo-shield.png";
-import SOCIAL_LINKS from "@/data/social-links";
-import NAV_LINKS from "@/data/nav-links";
+import SOCIAL_LINKS from "@/content/social-links";
+import NAV_LINKS from "@/content/nav-links";
 import NewsletterForm from "../utils/NewsLetterForm";
 import ActiveLink from "../utils/ActiveLink";
-import businessInformation from "@/data/business-info";
+import businessInformation from "@/content/business-info";
 
 export default function Footer() {
   return (

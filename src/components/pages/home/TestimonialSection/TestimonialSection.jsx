@@ -12,7 +12,7 @@ import {
   reducedVariants,
   groupVariants,
   itemVariants,
-} from "@/data/animation-variants";
+} from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const TESTIMONIALS = [

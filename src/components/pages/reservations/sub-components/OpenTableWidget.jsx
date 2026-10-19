@@ -1,7 +1,7 @@
 "use client";
 
 import RibbonButton from "@/components/utils/Ribbonbutton";
-import { openTableReservationLink } from "@/data/external-links";
+import { openTableReservationLink } from "@/content/external-links";
 /**
  * OpenTableWidget
  * ---------------------------------------------------------------

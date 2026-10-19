@@ -1,4 +1,4 @@
-import { SITE_CONFIG } from "@/data/site-confiig";
+import { SITE_CONFIG } from "@/content/site-confiig";
 
 /**
  * TERMS & CONDITIONS CONTENT

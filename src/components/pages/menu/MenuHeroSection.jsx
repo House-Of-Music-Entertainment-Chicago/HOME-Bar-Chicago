@@ -9,7 +9,7 @@ import Container from "@/components/utils/Container";
 import ShieldNotch from "@/components/utils/ShieldNotch";
 
 import { motion } from "framer-motion";
-import { groupVariants, headerVariants } from "@/data/animation-variants";
+import { groupVariants, headerVariants } from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 // import { assets } from "@/lib/assets";
 // NOTE: point HERO_BG and SIGNATURE_BURGER below at your real asset keys

@@ -16,7 +16,7 @@
 // match if you want it — flagging as a known simplification for now.
 
 import { ImageResponse } from "next/og";
-import { SITE_CONFIG } from "@/data/site-confiig";
+import { SITE_CONFIG } from "@/content/site-confiig";
 
 export const runtime = "edge";
 export const size = { width: 1200, height: 630 };

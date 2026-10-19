@@ -1,7 +1,7 @@
 // app/robots.js
 // Served automatically at /robots.txt — this is the file-convention
 // replacement for hand-writing a static robots.txt in /public.
-import { SITE_CONFIG } from "@/data/site-confiig";
+import { SITE_CONFIG } from "@/content/site-confiig";
 
 export default function robots() {
   return {

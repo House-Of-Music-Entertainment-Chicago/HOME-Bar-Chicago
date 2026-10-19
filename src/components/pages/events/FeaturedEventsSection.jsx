@@ -7,7 +7,7 @@ import Container from "@/components/utils/Container";
 import ImagePlaceholder from "@/components/utils/ImagePlaceholder";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import RibbonButton from "@/components/utils/Ribbonbutton";
-import { openTableReservationLink } from "@/data/external-links";
+import { openTableReservationLink } from "@/content/external-links";
 import Image from "next/image";
 
 import { motion } from "framer-motion";
@@ -16,7 +16,7 @@ import {
   itemVariants,
   headerVariants,
   buttonVariants,
-} from "@/data/animation-variants";
+} from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 function buildFeaturedSlots(events, count = 4) {

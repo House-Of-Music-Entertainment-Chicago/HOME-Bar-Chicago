@@ -15,10 +15,10 @@ import {
   itemVariants,
   headerVariants,
   buttonVariants,
-} from "@/data/animation-variants";
+} from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
-import businessInformation from "@/data/business-info";
+import businessInformation from "@/content/business-info";
 
 // Leaflet touches window directly — must be loaded client-only,
 // never during server-side rendering, or it throws.

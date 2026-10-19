@@ -7,7 +7,7 @@ import Text from "@/components/utils/BodyText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import RibbonButton from "@/components/utils/Ribbonbutton";
-import { GALLERY_IMAGES } from "@/data/gallery-images";
+import { GALLERY_IMAGES } from "@/content/gallery-images";
 
 import {
   motion,
@@ -15,7 +15,7 @@ import {
   useTransform,
   useReducedMotion,
 } from "framer-motion";
-import { headerVariants, buttonVariants } from "@/data/animation-variants";
+import { headerVariants, buttonVariants } from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 /* The About hero already renders this photograph full-bleed. Excluding it

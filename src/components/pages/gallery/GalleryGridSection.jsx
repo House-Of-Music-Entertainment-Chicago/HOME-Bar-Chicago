@@ -7,10 +7,10 @@ import Container from "@/components/utils/Container";
 import Title from "@/components/utils/TitleText";
 import Text from "@/components/utils/BodyText";
 import { useBodyScrollLock } from "@/app/hooks/UseBodyScrollLock";
-import { GALLERY_IMAGES, GALLERY_CATEGORIES } from "@/data/gallery-images";
+import { GALLERY_IMAGES, GALLERY_CATEGORIES } from "@/content/gallery-images";
 
 import { motion } from "framer-motion";
-import { groupVariants, itemVariants } from "@/data/animation-variants";
+import { groupVariants, itemVariants } from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 const FILTERS = [{ id: "all", label: "All" }, ...GALLERY_CATEGORIES];

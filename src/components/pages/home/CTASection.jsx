@@ -6,14 +6,14 @@ import Subheading from "@/components/utils/SubHeadingText";
 import sectionBg1 from "../../../../public//images/assets/section-bg-1.jpg"; // TODO: swap for your real photo
 import Container from "@/components/utils/Container";
 import RibbonButton from "@/components/utils/Ribbonbutton";
-import { openTableReservationLink } from "@/data/external-links";
+import { openTableReservationLink } from "@/content/external-links";
 
 import { motion, useReducedMotion } from "framer-motion";
 import {
   reducedVariants,
   itemVariants,
   groupVariants,
-} from "@/data/animation-variants";
+} from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 export default function CTASection() {

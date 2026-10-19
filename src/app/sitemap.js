@@ -3,7 +3,7 @@
 // if any of these pages later gets real dynamic content (e.g. a
 // blog, or individual event pages), extend this by fetching those
 // entries and mapping them in alongside ROUTES below.
-import { SITE_CONFIG } from "@/data/site-confiig";
+import { SITE_CONFIG } from "@/content/site-confiig";
 
 const ROUTES = [
   { path: "", priority: 1.0, changeFrequency: "weekly" },

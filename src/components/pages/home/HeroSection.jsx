@@ -13,7 +13,7 @@ import Heading from "@/components/utils/HeadingText";
 import Title from "@/components/utils/TitleText";
 import Container from "@/components/utils/Container";
 import ShieldNotch from "@/components/utils/ShieldNotch";
-import { openTableReservationLink } from "@/data/external-links";
+import { openTableReservationLink } from "@/content/external-links";
 
 import {
   reducedVariants,
@@ -21,7 +21,7 @@ import {
   itemVariants,
   headerVariants,
   buttonVariants,
-} from "@/data/animation-variants";
+} from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
 /**
