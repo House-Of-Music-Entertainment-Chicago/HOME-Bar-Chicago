@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, ZoomIn, Play } from "lucide-react";
 import Container from "@/components/utils/Container";
 import Title from "@/components/utils/TitleText";
 import Text from "@/components/utils/BodyText";
@@ -27,6 +27,8 @@ export default function GalleryGridSection() {
         : GALLERY_IMAGES.filter((p) => p.category === active),
     [active],
   );
+  const videoCount = photos.filter((p) => p.type === "video").length;
+  const photoCount = photos.length - videoCount;
 
   // The shared 0.08s-per-tile stagger is tuned for a handful of items.
   // With 100+ photos it would take 8s+ for the last tile to fade in,
@@ -62,6 +64,9 @@ export default function GalleryGridSection() {
     if (openIndex === null) return;
     const onKey = (e) => {
       if (e.key === "Escape") close();
+      // A focused <video> uses the arrow keys to seek; let it keep them
+      // instead of also jumping to the next item.
+      else if (e.target instanceof HTMLVideoElement) return;
       else if (e.key === "ArrowRight") step(1);
       else if (e.key === "ArrowLeft") step(-1);
     };
@@ -101,8 +106,10 @@ export default function GalleryGridSection() {
         </div>
 
         <Text className="mb-8 text-center text-foreground-muted">
-          Showing {photos.length}{" "}
-          {photos.length === 1 ? "photograph" : "photographs"}
+          Showing {photoCount}{" "}
+          {photoCount === 1 ? "photograph" : "photographs"}
+          {videoCount > 0 &&
+            ` and ${videoCount} ${videoCount === 1 ? "video" : "videos"}`}
         </Text>
 
         {/* Grid. Uniform squares on purpose: the filter changes the item
@@ -120,19 +127,34 @@ export default function GalleryGridSection() {
               <button
                 type="button"
                 onClick={() => setOpenIndex(i)}
+                aria-label={
+                  photo.type === "video" ? `Play video: ${photo.alt}` : undefined
+                }
                 className="group relative block aspect-square w-full cursor-pointer overflow-hidden rounded-sm"
               >
+                {/* Video tiles show their poster still; no video bytes are
+                    downloaded until the lightbox opens it. */}
                 <Image
-                  src={photo.src}
+                  src={photo.poster ?? photo.src}
                   alt={photo.alt}
                   fill
                   sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-background/0 transition-colors duration-300 group-hover:bg-background/40" />
-                <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <ZoomIn className="h-8 w-8 text-lime drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]" />
-                </span>
+                {photo.type === "video" ? (
+                  // Always visible, not hover-only: it's what tells people
+                  // this tile is a video, and touch screens have no hover.
+                  <span className="absolute inset-0 flex items-center justify-center">
+                    <span className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-lime bg-background/70 text-lime transition-transform duration-300 group-hover:scale-110">
+                      <Play className="ml-1 h-6 w-6 fill-current" />
+                    </span>
+                  </span>
+                ) : (
+                  <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <ZoomIn className="h-8 w-8 text-lime drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]" />
+                  </span>
+                )}
               </button>
             </motion.li>
           ))}
@@ -163,7 +185,7 @@ export default function GalleryGridSection() {
               e.stopPropagation();
               step(-1);
             }}
-            aria-label="Previous photo"
+            aria-label="Previous"
             className="absolute left-2 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-olive/60 text-foreground transition-colors hover:border-lime hover:text-lime sm:left-6"
           >
             <ChevronLeft className="h-6 w-6" />
@@ -175,7 +197,7 @@ export default function GalleryGridSection() {
               e.stopPropagation();
               step(1);
             }}
-            aria-label="Next photo"
+            aria-label="Next"
             className="absolute right-2 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-olive/60 text-foreground transition-colors hover:border-lime hover:text-lime sm:right-6"
           >
             <ChevronRight className="h-6 w-6" />
@@ -192,13 +214,31 @@ export default function GalleryGridSection() {
                   backdrop, so above ~1056px the image stops growing with
                   the window. Declaring 100vw here made Next pick a
                   2048w-class file for a slot that never exceeds 1024px. */}
-              <Image
-                src={open.src}
-                alt={open.alt}
-                fill
-                sizes="(min-width: 1056px) 1024px, calc(100vw - 2rem)"
-                className="object-contain"
-              />
+              {open.type === "video" ? (
+                // key forces a fresh element per item, so stepping away
+                // stops playback instead of the old video carrying on.
+                // autoPlay is fine here: opening the tile was the request
+                // to watch, so this never starts sound unprompted.
+                <video
+                  key={open.src}
+                  src={open.src}
+                  poster={open.poster}
+                  aria-label={open.alt}
+                  controls
+                  autoPlay
+                  playsInline
+                  preload="metadata"
+                  className="h-full w-full object-contain"
+                />
+              ) : (
+                <Image
+                  src={open.src}
+                  alt={open.alt}
+                  fill
+                  sizes="(min-width: 1056px) 1024px, calc(100vw - 2rem)"
+                  className="object-contain"
+                />
+              )}
             </div>
             <figcaption className="text-center">
               <Title className="text-foreground">{open.alt}</Title>

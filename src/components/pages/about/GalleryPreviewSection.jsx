@@ -24,7 +24,11 @@ import { useSafeVariants } from "@/components/hooks/useSafeVariants";
    fold, it also stops a lazy duplicate of the hero image from being
    picked up as a late LCP candidate when the visitor scrolls. */
 const ABOUT_HERO_SRC = "/images/venue/pool-and-tables-area.png";
-const PREVIEW_POOL = GALLERY_IMAGES.filter((p) => p.src !== ABOUT_HERO_SRC);
+// Photos only: the strip renders each entry as an <Image>, which can't
+// display a video file.
+const PREVIEW_POOL = GALLERY_IMAGES.filter(
+  (p) => p.type !== "video" && p.src !== ABOUT_HERO_SRC,
+);
 
 /* Two rows drawn from alternating indices of the shared gallery data, so
    each row mixes venue / play / food / drinks rather than showing one

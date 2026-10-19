@@ -14,7 +14,9 @@ export const metadata = {
 function Gallery() {
   return (
     <>
-      <GalleryHeroSection photoCount={GALLERY_IMAGES.length} />
+      <GalleryHeroSection
+        photoCount={GALLERY_IMAGES.filter((p) => p.type !== "video").length}
+      />
       <GalleryGridSection />
       <CTASection />
     </>

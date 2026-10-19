@@ -25,6 +25,20 @@ export const GALLERY_CATEGORIES = [
 ];
 
 export const GALLERY_IMAGES = [
+  /* ---------------- Videos ----------------
+     An entry with type: "video" plays in the lightbox instead of showing
+     a photo. `src` is the video file and `poster` is the still shown on
+     the grid tile and before playback starts. The About page preview
+     strip skips videos. Listed first so a video leads the gallery rather
+     than sitting below 100+ photos where nobody would scroll to it. */
+  {
+    type: "video",
+    src: "/videos/gallery/bears-vs-eagles-walkthrough.mp4",
+    poster: "/images/gallery/video-posters/bears-vs-eagles-walkthrough.jpg",
+    category: "venue",
+    alt: "A walk through HOME during the Bears vs. Eagles game",
+  },
+
   /* ---------------- The Venue ---------------- */
   {
     src: "/images/venue/bar-counter.png",
