@@ -6,7 +6,7 @@ import Text from "@/components/utils/BodyText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import ShieldNotch from "@/components/utils/ShieldNotch";
-import sectionBg1 from "../../../../public/images/assets/section-bg-1.jpg";
+import sectionBg1 from "../../../../public/images/ui/concrete-texture.jpg";
 
 import { motion } from "framer-motion";
 import { groupVariants, headerVariants } from "@/content/animation-variants";

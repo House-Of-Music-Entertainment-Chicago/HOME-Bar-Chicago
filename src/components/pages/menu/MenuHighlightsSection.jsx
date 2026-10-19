@@ -4,7 +4,7 @@ import Image from "next/image";
 import Container from "@/components/utils/Container";
 import Title from "@/components/utils/TitleText";
 import PennantTag from "@/components/utils/PennantTag";
-import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
+import ribbonLime from "../../../../public/images/ui/ribbon-lime.png";
 
 import { motion } from "framer-motion";
 import {
@@ -18,27 +18,27 @@ const HIGHLIGHTS = [
   {
     label: "Home MVP Burger",
     assetKey: "mvpBurger",
-    src: "/images/assets/menu/food/burger-w-fries.jpeg",
+    src: "/images/menu/food/burger-w-fries.jpeg",
   },
   {
     label: "Buffalo Wings",
     assetKey: "buffaloWings",
-    src: "/images/assets/menu/food/buffalo-wings.jpeg",
+    src: "/images/menu/food/buffalo-wings.jpeg",
   },
   {
     label: "Home Bar Special Pizza",
     assetKey: "specialPizza",
-    src: "/images/assets/menu/food/special-pizza.jpeg",
+    src: "/images/menu/food/special-pizza.jpeg",
   },
   {
     label: "Beers",
     assetKey: "beers",
-    src: "/images/assets/menu/drinks/beer.jpg",
+    src: "/images/menu/drinks/beer.jpg",
   },
   {
     label: "Signature Cocktails",
     assetKey: "signatureCocktails",
-    src: "/images/assets/menu/drinks/drink-2.webp",
+    src: "/images/menu/drinks/drink-2.webp",
   },
 ];
 

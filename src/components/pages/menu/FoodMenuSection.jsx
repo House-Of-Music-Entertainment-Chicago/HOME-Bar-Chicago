@@ -9,31 +9,31 @@ import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import PennantTag from "@/components/utils/PennantTag";
 import MenuItemThumbnail from "@/components/utils/MenuItemThumbnail";
-import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
+import ribbonLime from "../../../../public/images/ui/ribbon-lime.png";
 
-import mozzarellaSticks from "../../../../public/images/assets/menu/food/mozzarella-sticks.jpeg";
-import cheeseQuesadilla from "../../../../public/images/assets/menu/food/cheese-quesadilla.jpeg";
-import chickenWings from "../../../../public/images/assets/menu/food/buffalo-wings.jpeg";
-import chickenSliders from "../../../../public/images/assets/menu/food/chicken-sliders.jpeg";
-import potRoastSliders from "../../../../public/images/assets/menu/food/pot-roast-sliders.jpg";
-import nachos from "../../../../public/images/assets/menu/food/nachos.jpeg";
-import onionRingTower from "../../../../public/images/assets/menu/food/onion-ring-tower.jpeg";
-import basketOfTaterTots from "../../../../public/images/assets/menu/food/basket-of-tater-tots.jpg";
-import loadedFrots from "../../../../public/images/assets/menu/food/loaded-frots.jpeg";
-import spinachArtichokeDip from "../../../../public/images/assets/menu/food/spinach-artichoke-dip.jpeg";
-import specialPizza from "../../../../public/images/assets/menu/food/special-pizza.jpeg";
-import mvpBurger from "../../../../public/images/assets/menu/food/burger-w-fries.jpeg";
-import cornedBeefReuben from "../../../../public/images/assets/menu/food/corned-beef-reuben.jpeg";
-import thePhilly from "../../../../public/images/assets/menu/food/the-philly-sandwich.jpeg";
-import tripleDeckerClub from "../../../../public/images/assets/menu/food/sandwich-w-fries.jpeg";
-import sauteedShrimpBowl from "../../../../public/images/assets/menu/food/rice-w-shrimp.jpeg";
-import macAndCheese from "../../../../public/images/assets/menu/food/mac-and-cheese-short-rib.jpeg";
-import signatureTacos from "../../../../public/images/assets/menu/food/signature-tacos-trio.jpeg";
-import chickenLemonRiceSoup from "../../../../public/images/assets/menu/food/chicken-lemon-rice-soup.jpeg";
-import beefChili from "../../../../public/images/assets/menu/food/beef-chili.jpg";
-import choppedSalad from "../../../../public/images/assets/menu/food/chopped-salad.jpg";
-import southwestSalad from "../../../../public/images/assets/menu/food/southwest-salad.jpeg";
-import warmCookieSkillet from "../../../../public/images/assets/menu/food/warm-cookie-skillet.jpeg";
+import mozzarellaSticks from "../../../../public/images/menu/food/mozzarella-sticks.jpeg";
+import cheeseQuesadilla from "../../../../public/images/menu/food/cheese-quesadilla.jpeg";
+import chickenWings from "../../../../public/images/menu/food/buffalo-wings.jpeg";
+import chickenSliders from "../../../../public/images/menu/food/chicken-sliders.jpeg";
+import potRoastSliders from "../../../../public/images/menu/food/pot-roast-sliders.jpg";
+import nachos from "../../../../public/images/menu/food/nachos.jpeg";
+import onionRingTower from "../../../../public/images/menu/food/onion-ring-tower.jpeg";
+import basketOfTaterTots from "../../../../public/images/menu/food/basket-of-tater-tots.jpg";
+import loadedFrots from "../../../../public/images/menu/food/loaded-frots.jpeg";
+import spinachArtichokeDip from "../../../../public/images/menu/food/spinach-artichoke-dip.jpeg";
+import specialPizza from "../../../../public/images/menu/food/special-pizza.jpeg";
+import mvpBurger from "../../../../public/images/menu/food/burger-w-fries.jpeg";
+import cornedBeefReuben from "../../../../public/images/menu/food/corned-beef-reuben.jpeg";
+import thePhilly from "../../../../public/images/menu/food/the-philly-sandwich.jpeg";
+import tripleDeckerClub from "../../../../public/images/menu/food/sandwich-w-fries.jpeg";
+import sauteedShrimpBowl from "../../../../public/images/menu/food/rice-w-shrimp.jpeg";
+import macAndCheese from "../../../../public/images/menu/food/mac-and-cheese-short-rib.jpeg";
+import signatureTacos from "../../../../public/images/menu/food/signature-tacos-trio.jpeg";
+import chickenLemonRiceSoup from "../../../../public/images/menu/food/chicken-lemon-rice-soup.jpeg";
+import beefChili from "../../../../public/images/menu/food/beef-chili.jpg";
+import choppedSalad from "../../../../public/images/menu/food/chopped-salad.jpg";
+import southwestSalad from "../../../../public/images/menu/food/southwest-salad.jpeg";
+import warmCookieSkillet from "../../../../public/images/menu/food/warm-cookie-skillet.jpeg";
 
 import { motion } from "framer-motion";
 import { groupVariants, headerVariants } from "@/content/animation-variants";
@@ -468,7 +468,7 @@ export default function FoodMenuSection() {
   return (
     <section className="relative bg-background-alt">
       {/* <Image
-        src="/images/assets/section-bg-1.jpg"
+        src="/images/ui/concrete-texture.jpg"
         alt="Concrete background image"
         fill
         sizes="100vw"

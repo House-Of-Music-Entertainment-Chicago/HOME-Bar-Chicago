@@ -23,7 +23,7 @@ import { useSafeVariants } from "@/components/hooks/useSafeVariants";
    asset at a different width — and, because the preview sits below the
    fold, it also stops a lazy duplicate of the hero image from being
    picked up as a late LCP candidate when the visitor scrolls. */
-const ABOUT_HERO_SRC = "/images/assets/pool-and-tables-area.png";
+const ABOUT_HERO_SRC = "/images/venue/pool-and-tables-area.png";
 const PREVIEW_POOL = GALLERY_IMAGES.filter((p) => p.src !== ABOUT_HERO_SRC);
 
 /* Two rows drawn from alternating indices of the shared gallery data, so

@@ -7,7 +7,7 @@ import Title from "@/components/utils/TitleText";
 import Text from "@/components/utils/BodyText";
 import ImagePlaceholder from "@/components/utils/ImagePlaceholder";
 import PennantTag from "@/components/utils/PennantTag";
-import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
+import ribbonLime from "../../../../public/images/ui/ribbon-lime.png";
 import DateBanner from "@/components/utils/DateBanner";
 
 import { motion } from "framer-motion";

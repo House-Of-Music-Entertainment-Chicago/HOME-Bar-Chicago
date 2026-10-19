@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import ribbonLime from "../../../public/images/assets/ribbon-lime.png"; // TODO: swap for your actual photo path
+import ribbonLime from "../../../public/images/ui/ribbon-lime.png"; // TODO: swap for your actual photo path
 
 /**
  * RibbonButton

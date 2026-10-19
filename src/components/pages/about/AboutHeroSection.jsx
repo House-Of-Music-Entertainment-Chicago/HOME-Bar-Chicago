@@ -8,7 +8,7 @@ import Container from "@/components/utils/Container";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import ShieldNotch from "@/components/utils/ShieldNotch";
 import PennantTag from "@/components/utils/PennantTag";
-import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
+import ribbonLime from "../../../../public/images/ui/ribbon-lime.png";
 
 import { motion } from "framer-motion";
 import {
@@ -29,7 +29,7 @@ export default function AboutHeroSection() {
           photograph is the backdrop rather than a framed card, so the
           venue itself sets the tone the moment the page opens. */}
       <Image
-        src="/images/assets/pool-and-tables-area.png"
+        src="/images/venue/pool-and-tables-area.png"
         alt="The main floor at HOME Sports Bar — guests at high-top tables and pool tables under coloured lighting"
         fill
         sizes="100vw"

@@ -11,7 +11,7 @@
 //  * us drop the logo shape in directly.
 //  */
 // const logoIcon = L.icon({
-//   iconUrl: "/images/logo/latest-logo.png", // put the file in /public
+//   iconUrl: "/images/brand/logo.png", // put the file in /public
 //   iconSize: [48, 48], // match your actual image dimensions
 //   iconAnchor: [24, 48], // bottom-center of image = the actual pin point
 //   popupAnchor: [0, -48],
@@ -102,7 +102,7 @@ import "leaflet/dist/leaflet.css";
 // });
 
 const logoIcon = L.icon({
-  iconUrl: "/images/logo/latest-logo.png", // put the file in /public
+  iconUrl: "/images/brand/logo.png", // put the file in /public
   iconSize: [48, 48], // match your actual image dimensions
   iconAnchor: [24, 24], // center of image
   popupAnchor: [0, -48],

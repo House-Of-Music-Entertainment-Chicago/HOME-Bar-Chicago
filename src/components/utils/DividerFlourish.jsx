@@ -4,7 +4,7 @@ export default function DividerFlourish({ className = "" }) {
   return (
     <div className={`relative mx-auto aspect-6/1 w-40 ${className}`}>
       <Image
-        src="/images/assets/flourish.png"
+        src="/images/ui/flourish.png"
         alt="flourish divider"
         fill
         sizes="160px"

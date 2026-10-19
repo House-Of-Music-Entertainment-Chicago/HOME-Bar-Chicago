@@ -46,7 +46,7 @@ export default function TableReservationSection() {
       {/* The lounge photo is the backdrop now rather than a framed card
           beside the copy — same pattern as the home and about heroes. */}
       <Image
-        src="/images/assets/entertainment/reservation-table-image.jpg"
+        src="/images/venue/lounge-and-pool.jpg"
         alt="Lounge seating and pool tables at HOME Sports Bar, ready for guests"
         fill
         sizes="100vw"

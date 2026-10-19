@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
-import logo from "../../../public/images/logo/logo-shield.png";
+import logo from "../../../public/images/brand/logo-shield.png";
 import SOCIAL_LINKS from "@/content/social-links";
 import NAV_LINKS from "@/content/nav-links";
 import NewsletterForm from "../utils/NewsLetterForm";

@@ -19,12 +19,12 @@ import PaperDivider from "@/components/utils/PaperDivider";
 import PennantTag from "@/components/utils/PennantTag";
 import ImagePlaceholder from "@/components/utils/ImagePlaceholder";
 import MenuItemThumbnail from "@/components/utils/MenuItemThumbnail";
-import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
+import ribbonLime from "../../../../public/images/ui/ribbon-lime.png";
 
-import beer from "../../../../public/images/assets/menu/drinks/beer.jpg";
-import margarita from "../../../../public/images/assets/menu/drinks/drink-1.webp";
-import mojito from "../../../../public/images/assets/menu/drinks/drink-2.webp";
-import houseCocktail from "../../../../public/images/assets/menu/drinks/drink-3.jpg";
+import beer from "../../../../public/images/menu/drinks/beer.jpg";
+import margarita from "../../../../public/images/menu/drinks/drink-1.webp";
+import mojito from "../../../../public/images/menu/drinks/drink-2.webp";
+import houseCocktail from "../../../../public/images/menu/drinks/drink-3.jpg";
 
 import { motion } from "framer-motion";
 import {
@@ -295,7 +295,7 @@ export default function DrinksMenuSection() {
     // this section on purpose. The inner cards do their own clipping.
     <section className="relative bg-background-alt">
       {/* <Image
-        src="/images/assets/section-bg-1.jpg"
+        src="/images/ui/concrete-texture.jpg"
         alt="Concrete background image"
         fill
         sizes="100vw"

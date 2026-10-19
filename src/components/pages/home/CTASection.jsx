@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Subheading from "@/components/utils/SubHeadingText";
-import sectionBg1 from "../../../../public//images/assets/section-bg-1.jpg"; // TODO: swap for your real photo
+import sectionBg1 from "../../../../public//images/ui/concrete-texture.jpg"; // TODO: swap for your real photo
 import Container from "@/components/utils/Container";
 import RibbonButton from "@/components/utils/Ribbonbutton";
 import { openTableReservationLink } from "@/content/external-links";

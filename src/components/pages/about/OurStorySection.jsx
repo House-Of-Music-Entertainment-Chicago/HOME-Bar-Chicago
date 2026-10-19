@@ -8,7 +8,7 @@ import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import StackedPhotoCard from "./sub-components/StackedPhotoCard";
 import PaperDivider from "@/components/utils/PaperDivider";
-import sectionBg1 from "../../../../public/images/assets/section-bg-1.jpg";
+import sectionBg1 from "../../../../public/images/ui/concrete-texture.jpg";
 
 import { motion } from "framer-motion";
 import {
@@ -45,7 +45,7 @@ export default function OurStorySection() {
           {/* Left — stacked building photo */}
           <motion.div variants={v(itemVariants)}>
             <StackedPhotoCard
-              image="/images/assets/about-ourstory-image.jpeg"
+              image="/images/entertainment/live-band-crowd.jpeg"
               alt="Home Bar Chicago building interior"
               className="aspect-4/3 w-full"
             />

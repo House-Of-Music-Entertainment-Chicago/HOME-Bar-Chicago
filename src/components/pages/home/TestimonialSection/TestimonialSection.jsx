@@ -2,7 +2,7 @@
 
 import PennantTag from "@/components/utils/PennantTag";
 import TestimonialCard from "./TestimonialCard";
-import ribbonLime from "../../../../../public/images/assets/ribbon-lime.png";
+import ribbonLime from "../../../../../public/images/ui/ribbon-lime.png";
 import Container from "@/components/utils/Container";
 import InstagramEmbed from "./InstagramEmbed";
 

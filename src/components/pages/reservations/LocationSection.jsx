@@ -46,7 +46,7 @@ export default function LocationSection() {
   return (
     <section className="relative bg-background">
       <Image
-        src="/images/assets/section-bg-1.jpg"
+        src="/images/ui/concrete-texture.jpg"
         alt="Concrete background image"
         fill
         sizes="100vw"

@@ -30,7 +30,7 @@ export default function FeaturedEventsSection({ events = [] }) {
   return (
     <section className="relative bg-background">
       <Image
-        src="/images/assets/events-featuredevents-bg.png"
+        src="/images/backgrounds/events-featured.png"
         alt="Concrete background image"
         fill
         sizes="100vw"

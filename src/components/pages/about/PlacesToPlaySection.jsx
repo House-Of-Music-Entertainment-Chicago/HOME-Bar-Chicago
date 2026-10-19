@@ -27,14 +27,14 @@ const GOLF_SIM_BOOKING_URL =
 
 const PLACES = [
   {
-    image: "/images/assets/pool-room.png",
+    image: "/images/venue/pool-room.png",
     alt: "Fast Eddie's Pool Room at Home Bar Chicago — Diamond tables with blue felt beneath a hand-painted mural",
     title: "Billiard Place",
     description:
       "Challenge your friends to a game of pool in our premium billiard area.",
   },
   {
-    image: "/images/assets/entertainment/about-placestoenjoy-golfsims.png", // TODO: real photo of the golf simulator
+    image: "/images/venue/golf-sims.png", // TODO: real photo of the golf simulator
     alt: "Golf simulator at Home Bar Chicago",
     title: "Golf Sims",
     description:
@@ -42,15 +42,15 @@ const PLACES = [
     link: { href: GOLF_SIM_BOOKING_URL, label: "Book a Sim" },
   },
   {
-    // image: "/images/assets/games-entertainment-area.png",
-    image: "/images/assets/entertainment/gallery-image2.jpg",
+    // image: "/images/venue/games-area.png",
+    image: "/images/venue/darts.jpg",
     alt: "Gaming area at Home Bar Chicago — guests at the machines with sports playing on the screens above",
     title: "Games Area",
     description: "Arcade games, table games, and more fun for everyone.",
   },
   {
     image:
-      "/images/assets/entertainment/about-placestoplayenjoy-entertainment-image.png", // TODO: real photo of a live entertainment night
+      "/images/entertainment/live-band.png", // TODO: real photo of a live entertainment night
     alt: "Live entertainment at Home Bar Chicago",
     title: "Entertainment",
     description: "Live music, DJs, and performances that light up your night.",

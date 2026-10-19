@@ -88,7 +88,7 @@ function HeroSection() {
           }
         >
           <Image
-            src="/images/assets/bar-counter.png"
+            src="/images/venue/bar-counter.png"
             alt="Guests gathered at the bar counter under neon lighting inside HOME Sports Bar"
             fill
             sizes="100vw"

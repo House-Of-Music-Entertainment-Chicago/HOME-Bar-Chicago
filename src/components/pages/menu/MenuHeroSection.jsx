@@ -25,7 +25,7 @@ export default function MenuHero() {
           <Image> is wired up and ready; just point `src` at it. */}
       <div className="absolute inset-0">
         <Image
-          src="/images/assets/menu-hero-bg.png" // TODO: swap for your actual hero bg path
+          src="/images/backgrounds/menu-hero.png" // TODO: swap for your actual hero bg path
           alt="Burger, fries and beer from HOME Bar"
           fill
           sizes="100vw"

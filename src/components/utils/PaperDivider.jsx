@@ -1,5 +1,5 @@
 import Image from "next/image";
-import tornPaper from "../../../public/images/assets/divider-1.png";
+import tornPaper from "../../../public/images/ui/paper-divider.png";
 
 /**
  * PaperDivider

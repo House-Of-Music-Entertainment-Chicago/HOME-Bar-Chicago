@@ -5,18 +5,18 @@ import Image from "next/image";
 import Container from "@/components/utils/Container";
 import Title from "@/components/utils/TitleText";
 import Text from "@/components/utils/BodyText";
-import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
+import ribbonLime from "../../../../public/images/ui/ribbon-lime.png";
 import PennantTag from "@/components/utils/PennantTag";
 import RibbonButton from "@/components/utils/Ribbonbutton";
 
-import onionRingTower from "../../../../public/images/assets/menu/food/onion-ring-tower.jpeg";
-import specialPizza from "../../../../public/images/assets/menu/food/special-pizza.jpeg";
-import southwestSalad from "../../../../public/images/assets/menu/food/southwest-salad.jpeg";
-import philly from "../../../../public/images/assets/menu/food/the-philly-sandwich.jpeg";
-import cookieSkillet from "../../../../public/images/assets/menu/food/warm-cookie-skillet.jpeg";
+import onionRingTower from "../../../../public/images/menu/food/onion-ring-tower.jpeg";
+import specialPizza from "../../../../public/images/menu/food/special-pizza.jpeg";
+import southwestSalad from "../../../../public/images/menu/food/southwest-salad.jpeg";
+import philly from "../../../../public/images/menu/food/the-philly-sandwich.jpeg";
+import cookieSkillet from "../../../../public/images/menu/food/warm-cookie-skillet.jpeg";
 
-import beer from "../../../../public/images/assets/menu/drinks/beer.jpg";
-import signatureCocktail from "../../../../public/images/assets/menu/drinks/drink-2.webp";
+import beer from "../../../../public/images/menu/drinks/beer.jpg";
+import signatureCocktail from "../../../../public/images/menu/drinks/drink-2.webp";
 
 import { motion } from "framer-motion";
 import {

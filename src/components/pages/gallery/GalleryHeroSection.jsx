@@ -19,7 +19,7 @@ export default function GalleryHeroSection({ photoCount }) {
     // Shield notch — pairs with shield-notch-join on GalleryGridSection.
     <section className="shield-notch-bottom relative z-10 bg-background">
       <Image
-        src="/images/assets/tables-area.png"
+        src="/images/venue/tables-area.png"
         alt="HOME tables and pool area"
         fill
         sizes="100vw"

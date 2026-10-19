@@ -37,7 +37,7 @@ export default function HostEventSection() {
   return (
     <section className="relative overflow-hidden bg-background">
       <Image
-        src="/images/assets/events-hostevent-bg.png"
+        src="/images/backgrounds/events-host-an-event.png"
         alt="Concrete background image"
         fill
         sizes="100vw"

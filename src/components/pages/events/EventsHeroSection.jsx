@@ -22,7 +22,7 @@ export default function EventsHero() {
                 photograph is the backdrop rather than a framed card, so the
                 venue itself sets the tone the moment the page opens. */}
       <Image
-        src="/images/assets/games-entertainment-area.png"
+        src="/images/venue/games-area.png"
         alt="The main floor at HOME Sports Bar — guests at high-top tables and pool tables under coloured lighting"
         fill
         sizes="100vw"

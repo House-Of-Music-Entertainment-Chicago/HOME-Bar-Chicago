@@ -9,9 +9,9 @@ function DateBanner({ month, day, color = "olive" }) {
       <Image
         src={
           color === "olive"
-            ? "/images/assets/date-banner-olive.png"
+            ? "/images/ui/date-banner-olive.png"
             : color === "orange"
-              ? "/images/assets/date-banner-orange.png"
+              ? "/images/ui/date-banner-orange.png"
               : null
         }
         alt="Olive colored date banner"

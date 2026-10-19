@@ -5,7 +5,7 @@ import ImagePlaceholder from "@/components/utils/ImagePlaceholder";
 import Title from "@/components/utils/TitleText";
 import Text from "@/components/utils/BodyText";
 import PennantTag from "@/components/utils/PennantTag";
-import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
+import ribbonLime from "../../../../public/images/ui/ribbon-lime.png";
 import Container from "@/components/utils/Container";
 import DateBanner from "@/components/utils/DateBanner";
 
@@ -75,7 +75,7 @@ export default function ThisWeekStrip({ events = [] }) {
     // Pulled up under the Events hero's chevron to fill the clipped corners.
     <section className="relative shield-notch-join bg-background-alt">
       <Image
-        src="/images/assets/events-featuredevents-bg.png"
+        src="/images/backgrounds/events-featured.png"
         alt="Concrete background image"
         fill
         sizes="100vw"

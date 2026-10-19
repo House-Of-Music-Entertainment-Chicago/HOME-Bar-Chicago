@@ -8,14 +8,14 @@ import Text from "@/components/utils/BodyText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import RibbonButton from "@/components/utils/Ribbonbutton";
-import sectionBg1 from "../../../../public/images/assets/section-bg-1.jpg";
+import sectionBg1 from "../../../../public/images/ui/concrete-texture.jpg";
 
-import tablesArea from "../../../../public/images/assets/tables-area.png";
-import barCounter from "../../../../public/images/assets/bar-counter.png";
-import barAtmosphere from "../../../../public/images/assets/about-homeexperience-image.png";
-import watchSports from "../../../../public/images/assets/entertainment/watch-sports.jpeg";
-import liveDj from "../../../../public/images/assets/entertainment/live-dj.jpg";
-import liveEntertainment from "../../../../public/images/assets/entertainment/live-entertainment.jpg";
+import tablesArea from "../../../../public/images/venue/tables-area.png";
+import barCounter from "../../../../public/images/venue/bar-counter.png";
+import barAtmosphere from "../../../../public/images/menu/drinks/beer-flights.png";
+import watchSports from "../../../../public/images/entertainment/watch-sports.jpeg";
+import liveDj from "../../../../public/images/entertainment/live-dj.jpg";
+import liveEntertainment from "../../../../public/images/entertainment/live-wrestling.jpg";
 
 import { motion } from "framer-motion";
 import {

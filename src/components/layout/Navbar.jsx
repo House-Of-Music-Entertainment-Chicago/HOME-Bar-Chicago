@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 // filled to transparent — the white *inside* the shield is deliberately
 // kept, so the mark carries its own backing plate instead of letting
 // whatever is behind it show through the badge.
-import logo from "../../../public/images/logo/logo-shield.png";
+import logo from "../../../public/images/brand/logo-shield.png";
 import { useBodyScrollLock } from "@/app/hooks/UseBodyScrollLock";
 import { useActivePath } from "@/components/hooks/useActivePath";
 

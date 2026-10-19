@@ -53,7 +53,7 @@ export default function WhatMakesDifferentSection() {
   return (
     <section className="relative bg-background">
       <Image
-        src="/images/assets/about-whatmakeshome-bg.png"
+        src="/images/backgrounds/about-what-makes-home.png"
         alt="Dark black and white background image with two photos on left and right"
         fill
         sizes="100vw"

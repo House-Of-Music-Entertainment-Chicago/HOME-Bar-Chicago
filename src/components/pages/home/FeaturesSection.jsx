@@ -16,20 +16,20 @@ import {
   BilliardsIcon,
   TVScreenIcon,
 } from "@/content/features-icons";
-import foodBundle from "../../../../public/images/assets/menu/food/food-bundle.jpeg";
-import sports from "../../../../public/images/assets/sports/sports.jpeg";
-import billiards from "../../../../public/images/assets/pool-table.png";
-import drink from "../../../../public/images/assets/menu//drinks/drink-1.webp";
-import entertainment from "../../../../public/images/assets/entertainment/live-entertainment.jpg";
-import watchSports from "../../../../public/images/assets/entertainment/watch-sports.jpeg";
-import liveDj from "../../../../public/images/assets/entertainment/live-dj.jpg";
+import foodBundle from "../../../../public/images/menu/food/food-bundle.jpeg";
+import sports from "../../../../public/images/venue/golf-sim-bays.jpeg";
+import billiards from "../../../../public/images/venue/pool-table.png";
+import drink from "../../../../public/images/menu/drinks/drink-1.webp";
+import entertainment from "../../../../public/images/entertainment/live-wrestling.jpg";
+import watchSports from "../../../../public/images/entertainment/watch-sports.jpeg";
+import liveDj from "../../../../public/images/entertainment/live-dj.jpg";
 import PaperDivider from "@/components/utils/PaperDivider";
 import VirtualTourEmbed from "@/components/utils/VirtualTourEmbed";
 import PennantTag from "@/components/utils/PennantTag";
 import RoughBorderFrame from "@/components/utils/RoughBorderFrame";
-import barCounter from "../../../../public/images/assets/bar-counter.png";
-import ribbonLime from "../../../../public/images/assets/ribbon-lime.png";
-import golfSims from "../../../../public/images/assets/entertainment/about-placestoenjoy-golfsims.png";
+import barCounter from "../../../../public/images/venue/bar-counter.png";
+import ribbonLime from "../../../../public/images/ui/ribbon-lime.png";
+import golfSims from "../../../../public/images/venue/golf-sims.png";
 
 import { motion } from "framer-motion";
 import {
