@@ -7,10 +7,14 @@
  * captions already filled in. After this, the client manages everything
  * from the Wix dashboard.
  *
- *   npm run gallery:migrate -- --check                   read-only: verify the table's field IDs
- *   npm run gallery:migrate                              preview only, changes nothing
- *   npm run gallery:migrate -- --apply --first-album-only  trial: moves one album
- *   npm run gallery:migrate -- --apply                   moves everything
+ *   npm run gallery:check        read-only: verify the table's field IDs
+ *   npm run gallery:preview      preview only, changes nothing
+ *   npm run gallery:trial        moves the first album only
+ *   npm run gallery:migrate-all  moves everything
+ *
+ * One npm script per step, rather than passing flags with `npm run x --
+ * --flag`: Windows PowerShell swallows the `--`, so the flags never reach
+ * the script.
  *
  * Safe to re-run: uploads are remembered in scripts/.gallery-migration.json
  * (gitignored) and albums whose title already exists in Wix are skipped.
@@ -41,7 +45,7 @@ const MIME = {
 
 function connect() {
   if (!process.env.WIX_API_KEY || !process.env.WIX_SITE_ID) {
-    console.error("WIX_API_KEY / WIX_SITE_ID are not set. Run this through `npm run gallery:migrate`.");
+    console.error("WIX_API_KEY / WIX_SITE_ID are not set. Run this through one of the `npm run gallery:*` commands.");
     process.exit(1);
   }
   return createClient({
@@ -127,7 +131,7 @@ for (const a of albums) {
 
 if (!APPLY) {
   console.log("\nPreview only. Nothing was uploaded or created.");
-  console.log("Next: npm run gallery:migrate -- --apply --first-album-only");
+  console.log("Next: npm run gallery:trial");
   process.exit(0);
 }
 
@@ -227,6 +231,6 @@ try {
 
 console.log(
   FIRST_ONLY
-    ? "\nTrial album done. Check it in the Wix dashboard, then run with --apply (without --first-album-only)."
+    ? "\nTrial album done. Check it in the Wix dashboard, then run: npm run gallery:migrate-all"
     : "\nAll albums migrated.",
 );
