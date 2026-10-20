@@ -49,7 +49,10 @@ function toMediaItem(raw, album, index) {
  */
 export function toGalleryAlbums(rows) {
   return rows
-    .filter((row) => row.showOnWebsite !== false && row.title?.trim())
+    // "Hide" rather than "show": a Wix checkbox nobody has touched is
+    // blank, so new albums are visible by default and only a deliberate
+    // tick hides one.
+    .filter((row) => row.hideFromWebsite !== true && row.title?.trim())
     .sort((a, b) => {
       // Numbered albums first, in order; the rest newest first.
       const aHas = typeof a.sortOrder === "number";

@@ -158,7 +158,6 @@ try {
     const created = await wix.items.insert(COLLECTION_ID, {
       title: album.title,
       sortOrder: album.sortOrder,
-      showOnWebsite: true,
       media: mediaItems,
     });
 

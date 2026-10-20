@@ -9,7 +9,7 @@ import { toGalleryAlbums } from "./galleryAlbums";
  *     title          Text           album name, shown as a filter tab
  *     media          Media Gallery  the album's photos and videos; each
  *                                   item's Title is its caption
- *     showOnWebsite  Boolean        unchecking hides the whole album
+ *     hideFromWebsite Boolean       ticking hides the whole album
  *     sortOrder      Number         optional; lower numbers come first
  *
  * Changes reach the site through the /api/revalidate webhook (target
