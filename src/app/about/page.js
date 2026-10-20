@@ -7,6 +7,9 @@ import PlacesToPlaySection from "@/components/pages/about/PlacesToPlaySection";
 import StatsSection from "@/components/pages/about/StatsSection";
 import GallerySection from "@/components/pages/about/GalleryPreviewSection";
 import CTASection from "@/components/pages/home/CTASection";
+import { getGalleryAlbums } from "@/lib/getGalleryAlbums";
+
+export const revalidate = false; // refreshed by the Wix webhook, not a timer
 
 export const metadata = {
   title: "About",
@@ -15,7 +18,12 @@ export const metadata = {
   alternates: { canonical: "/about" },
 };
 
-function About() {
+async function About() {
+  // Same albums as /gallery, so the preview strip shows whatever the client
+  // has published in the Wix dashboard.
+  const albums = await getGalleryAlbums();
+  const galleryItems = albums.flatMap((album) => album.items);
+
   return (
     <>
       <AboutHeroSection />
@@ -24,7 +32,7 @@ function About() {
       <HomeExperienceSection />
       <PlacesToPlaySection />
       <StatsSection />
-      <GallerySection />
+      <GallerySection items={galleryItems} />
       <CTASection />
     </>
   );

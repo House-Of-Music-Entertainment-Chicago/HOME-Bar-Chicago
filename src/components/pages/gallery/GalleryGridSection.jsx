@@ -7,25 +7,38 @@ import Container from "@/components/utils/Container";
 import Title from "@/components/utils/TitleText";
 import Text from "@/components/utils/BodyText";
 import { useBodyScrollLock } from "@/app/hooks/UseBodyScrollLock";
-import { GALLERY_IMAGES, GALLERY_CATEGORIES } from "@/content/gallery-images";
 
 import { motion } from "framer-motion";
 import { groupVariants, itemVariants } from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
-const FILTERS = [{ id: "all", label: "All" }, ...GALLERY_CATEGORIES];
-
-export default function GalleryGridSection() {
+/**
+ * `albums` comes from the Wix CMS (see src/lib/getGalleryAlbums.js). Each
+ * album becomes a filter tab, so a new album the client creates in the
+ * Wix dashboard shows up here as a new tab with no code change.
+ */
+export default function GalleryGridSection({ albums = [] }) {
   const v = useSafeVariants();
   const [active, setActive] = useState("all");
   const [openIndex, setOpenIndex] = useState(null);
 
+  const filters = useMemo(
+    () => [
+      { id: "all", label: "All" },
+      ...albums.map((album) => ({ id: album.id, label: album.title })),
+    ],
+    [albums],
+  );
+  const allItems = useMemo(
+    () => albums.flatMap((album) => album.items),
+    [albums],
+  );
   const photos = useMemo(
     () =>
       active === "all"
-        ? GALLERY_IMAGES
-        : GALLERY_IMAGES.filter((p) => p.category === active),
-    [active],
+        ? allItems
+        : allItems.filter((p) => p.category === active),
+    [active, allItems],
   );
   const videoCount = photos.filter((p) => p.type === "video").length;
   const photoCount = photos.length - videoCount;
@@ -82,7 +95,7 @@ export default function GalleryGridSection() {
       <Container className="relative">
         {/* Filters */}
         <div className="mb-8 flex flex-wrap justify-center gap-2 sm:gap-3">
-          {FILTERS.map((f) => {
+          {filters.map((f) => {
             const isActive = f.id === active;
             return (
               <button
@@ -123,7 +136,9 @@ export default function GalleryGridSection() {
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
         >
           {photos.map((photo, i) => (
-            <motion.li key={photo.src} variants={v(itemVariants)}>
+            // id, not src: the client could put the same photo in two
+            // albums, which would give two tiles the same src.
+            <motion.li key={photo.id} variants={v(itemVariants)}>
               <button
                 type="button"
                 onClick={() => setOpenIndex(i)}
@@ -133,14 +148,20 @@ export default function GalleryGridSection() {
                 className="group relative block aspect-square w-full cursor-pointer overflow-hidden rounded-sm"
               >
                 {/* Video tiles show their poster still; no video bytes are
-                    downloaded until the lightbox opens it. */}
-                <Image
-                  src={photo.poster ?? photo.src}
-                  alt={photo.alt}
-                  fill
-                  sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
+                    downloaded until the lightbox opens it. A video whose
+                    poster didn't resolve gets a plain dark tile with the
+                    play icon rather than handing <Image> a video URL. */}
+                {photo.type === "video" && !photo.poster ? (
+                  <div className="absolute inset-0 bg-surface" />
+                ) : (
+                  <Image
+                    src={photo.type === "video" ? photo.poster : photo.src}
+                    alt={photo.alt}
+                    fill
+                    sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                )}
                 <div className="absolute inset-0 bg-background/0 transition-colors duration-300 group-hover:bg-background/40" />
                 {photo.type === "video" ? (
                   // Always visible, not hover-only: it's what tells people
@@ -219,9 +240,11 @@ export default function GalleryGridSection() {
                 // stops playback instead of the old video carrying on.
                 // autoPlay is fine here: opening the tile was the request
                 // to watch, so this never starts sound unprompted.
+                // Multiple <source>s: if one is missing (a video uploaded
+                // below 720p has no 720p copy), the browser moves on to
+                // the next instead of showing an error.
                 <video
-                  key={open.src}
-                  src={open.src}
+                  key={open.id}
                   poster={open.poster}
                   aria-label={open.alt}
                   controls
@@ -229,7 +252,11 @@ export default function GalleryGridSection() {
                   playsInline
                   preload="metadata"
                   className="h-full w-full object-contain"
-                />
+                >
+                  {(open.sources ?? [open.src]).map((url) => (
+                    <source key={url} src={url} type="video/mp4" />
+                  ))}
+                </video>
               ) : (
                 <Image
                   src={open.src}

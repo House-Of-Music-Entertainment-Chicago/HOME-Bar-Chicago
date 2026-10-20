@@ -1,12 +1,23 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
+// Which pages each Wix automation refreshes. An automation sends
+// { secret, target } in its webhook payload: "events" from the event
+// collections, "gallery" from GalleryAlbums.
+const TARGETS = {
+  events: ["/events"],
+  gallery: ["/gallery", "/about"],
+};
+const ALL_PATHS = [...new Set(Object.values(TARGETS).flat())];
+
 export async function POST(request) {
   try {
     const body = await request.json();
+    const target = body.data?.target;
 
-    console.log("=== REVALIDATE WEBHOOK ===");
-    console.log("Body:", body);
+    // Log the target only. The body carries the shared secret, and
+    // logging it would put it in plain text in the hosting logs.
+    console.log("=== REVALIDATE WEBHOOK ===", { target: target ?? "(none)" });
 
     const secret = body.data?.secret;
 
@@ -22,13 +33,17 @@ export async function POST(request) {
       );
     }
 
-    revalidatePath("/events");
+    // No or unknown target refreshes everything. The existing events
+    // automation predates targets and sends none, and an extra refresh is
+    // cheap, whereas a missed one leaves stale content on the site.
+    const paths = TARGETS[target] ?? ALL_PATHS;
+    paths.forEach((path) => revalidatePath(path));
 
-    console.log("✅ /events revalidated");
+    console.log("✅ revalidated", paths);
 
     return NextResponse.json({
       success: true,
-      revalidated: "/events",
+      revalidated: paths,
     });
   } catch (error) {
     console.error("❌ Revalidation error:", error);

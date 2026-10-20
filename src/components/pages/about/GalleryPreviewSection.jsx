@@ -7,7 +7,6 @@ import Text from "@/components/utils/BodyText";
 import DividerFlourish from "@/components/utils/DividerFlourish";
 import Container from "@/components/utils/Container";
 import RibbonButton from "@/components/utils/Ribbonbutton";
-import { GALLERY_IMAGES } from "@/content/gallery-images";
 
 import {
   motion,
@@ -18,23 +17,18 @@ import {
 import { headerVariants, buttonVariants } from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
-/* The About hero already renders this photograph full-bleed. Excluding it
-   here means the page doesn't fetch a second optimized copy of the same
-   asset at a different width — and, because the preview sits below the
-   fold, it also stops a lazy duplicate of the hero image from being
-   picked up as a late LCP candidate when the visitor scrolls. */
-const ABOUT_HERO_SRC = "/images/venue/pool-and-tables-area.png";
-// Photos only: the strip renders each entry as an <Image>, which can't
-// display a video file.
-const PREVIEW_POOL = GALLERY_IMAGES.filter(
-  (p) => p.type !== "video" && p.src !== ABOUT_HERO_SRC,
-);
-
-/* Two rows drawn from alternating indices of the shared gallery data, so
-   each row mixes venue / play / food / drinks rather than showing one
-   category per row — and so new photos appear here automatically. */
-const ROW_A = PREVIEW_POOL.filter((_, i) => i % 2 === 0).slice(0, 10);
-const ROW_B = PREVIEW_POOL.filter((_, i) => i % 2 === 1).slice(0, 10);
+/* Two rows drawn from alternating indices of the gallery's items (from the
+   Wix CMS, passed in by the About page), so each row mixes albums rather
+   than showing one per row, and new photos appear here automatically.
+   Photos only: the strip renders each entry as an <Image>, which can't
+   display a video file. */
+function splitIntoRows(items) {
+  const photos = items.filter((p) => p.type !== "video");
+  return [
+    photos.filter((_, i) => i % 2 === 0).slice(0, 10),
+    photos.filter((_, i) => i % 2 === 1).slice(0, 10),
+  ];
+}
 
 function PreviewRow({ photos, x, reverse }) {
   return (
@@ -44,7 +38,7 @@ function PreviewRow({ photos, x, reverse }) {
     >
       {photos.map((photo) => (
         <div
-          key={photo.src}
+          key={photo.id}
           className="relative h-36 w-52 shrink-0 overflow-hidden rounded-sm sm:h-44 sm:w-64 lg:h-52 lg:w-76"
         >
           <Image
@@ -60,8 +54,9 @@ function PreviewRow({ photos, x, reverse }) {
   );
 }
 
-export default function GallerySection() {
+export default function GallerySection({ items = [] }) {
   const v = useSafeVariants();
+  const [rowA, rowB] = splitIntoRows(items);
   const sectionRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
 
@@ -102,9 +97,9 @@ export default function GallerySection() {
           gets a scrollbar). Edge mask fades them into the background
           instead of ending on a hard cut. */}
       <div className="marquee-viewport flex w-screen ml-[calc(50%-50vw)] flex-col gap-3 sm:gap-4">
-        <PreviewRow photos={ROW_A} x={prefersReducedMotion ? undefined : xA} />
+        <PreviewRow photos={rowA} x={prefersReducedMotion ? undefined : xA} />
         <PreviewRow
-          photos={ROW_B}
+          photos={rowB}
           x={prefersReducedMotion ? undefined : xB}
           reverse
         />

@@ -2,7 +2,9 @@ import React from "react";
 import GalleryHeroSection from "@/components/pages/gallery/GalleryHeroSection";
 import GalleryGridSection from "@/components/pages/gallery/GalleryGridSection";
 import CTASection from "@/components/pages/home/CTASection";
-import { GALLERY_IMAGES } from "@/content/gallery-images";
+import { getGalleryAlbums } from "@/lib/getGalleryAlbums";
+
+export const revalidate = false; // refreshed by the Wix webhook, not a timer
 
 export const metadata = {
   title: "Gallery",
@@ -11,16 +13,17 @@ export const metadata = {
   alternates: { canonical: "/gallery" },
 };
 
-function Gallery() {
+export default async function Gallery() {
+  const albums = await getGalleryAlbums();
+  const photoCount = albums
+    .flatMap((album) => album.items)
+    .filter((item) => item.type !== "video").length;
+
   return (
     <>
-      <GalleryHeroSection
-        photoCount={GALLERY_IMAGES.filter((p) => p.type !== "video").length}
-      />
-      <GalleryGridSection />
+      <GalleryHeroSection photoCount={photoCount} />
+      <GalleryGridSection albums={albums} />
       <CTASection />
     </>
   );
 }
-
-export default Gallery;
