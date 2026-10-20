@@ -7,6 +7,7 @@
  * captions already filled in. After this, the client manages everything
  * from the Wix dashboard.
  *
+ *   npm run gallery:migrate -- --check                   read-only: verify the table's field IDs
  *   npm run gallery:migrate                              preview only, changes nothing
  *   npm run gallery:migrate -- --apply --first-album-only  trial: moves one album
  *   npm run gallery:migrate -- --apply                   moves everything
@@ -28,6 +29,7 @@ const COLLECTION_ID = "GalleryAlbums";
 const MANIFEST = path.join(ROOT, "scripts", ".gallery-migration.json");
 const APPLY = process.argv.includes("--apply");
 const FIRST_ONLY = process.argv.includes("--first-album-only");
+const CHECK = process.argv.includes("--check");
 
 const MIME = {
   ".jpg": "image/jpeg",
@@ -36,6 +38,60 @@ const MIME = {
   ".webp": "image/webp",
   ".mp4": "video/mp4",
 };
+
+function connect() {
+  if (!process.env.WIX_API_KEY || !process.env.WIX_SITE_ID) {
+    console.error("WIX_API_KEY / WIX_SITE_ID are not set. Run this through `npm run gallery:migrate`.");
+    process.exit(1);
+  }
+  return createClient({
+    modules: { items, files },
+    auth: ApiKeyStrategy({
+      apiKey: process.env.WIX_API_KEY,
+      siteId: process.env.WIX_SITE_ID,
+    }),
+  });
+}
+
+// ---- --check: read-only look at the table's real field IDs ----------------
+// The Wix dashboard doesn't always show Field IDs, so this reads them from
+// an actual row instead. Needs one test row with every field filled in
+// (Wix leaves empty fields out of the data entirely).
+const EXPECTED_FIELDS = {
+  title: "Title (album name)",
+  media: "Media (Media gallery)",
+  hideFromWebsite: "Hide from website (Boolean, ticked)",
+  sortOrder: "Sort order (Number)",
+};
+
+if (CHECK) {
+  const wix = connect();
+  const { items: rows } = await wix.items.query(COLLECTION_ID).limit(10).find();
+  if (!rows.length) {
+    console.log("\nGallery Albums has no rows yet. Add one test row with every field filled in, then re-run.");
+    process.exit(1);
+  }
+  const found = new Set(rows.flatMap((r) => Object.keys(r).filter((k) => !k.startsWith("_"))));
+  console.log(`\nRead ${rows.length} row(s) from ${COLLECTION_ID}. Field IDs:\n`);
+  let allGood = true;
+  for (const [key, label] of Object.entries(EXPECTED_FIELDS)) {
+    const ok = found.has(key);
+    allGood &&= ok;
+    console.log(`  ${ok ? "OK      " : "MISSING "} ${key.padEnd(16)} ${label}`);
+  }
+  const other = [...found].filter((k) => !(k in EXPECTED_FIELDS));
+  if (other.length) console.log(`\n  Other field IDs found: ${other.join(", ")}`);
+
+  const sample = rows.find((r) => Array.isArray(r.media) && r.media.length)?.media[0];
+  if (sample) {
+    const shown = { ...sample, src: typeof sample.src === "string" ? sample.src.slice(0, 50) + "..." : sample.src };
+    console.log("\n  How Wix stores one Media item:\n" + JSON.stringify(shown, null, 2).replace(/^/gm, "    "));
+  } else {
+    console.log("\n  No row has anything in a 'media' field, so its format couldn't be checked.");
+  }
+  console.log(allGood ? "\nAll fields match. Delete the test row, then run the migration." : "\nSome fields don't match. Send this output to your developer.");
+  process.exit(allGood ? 0 : 1);
+}
 
 // ---- build the plan from the current static gallery ----------------------
 const { GALLERY_IMAGES, GALLERY_CATEGORIES } = await import(
@@ -76,18 +132,7 @@ if (!APPLY) {
 }
 
 // ---- talk to Wix -----------------------------------------------------------
-if (!process.env.WIX_API_KEY || !process.env.WIX_SITE_ID) {
-  console.error("WIX_API_KEY / WIX_SITE_ID are not set. Run this through `npm run gallery:migrate`.");
-  process.exit(1);
-}
-
-const wix = createClient({
-  modules: { items, files },
-  auth: ApiKeyStrategy({
-    apiKey: process.env.WIX_API_KEY,
-    siteId: process.env.WIX_SITE_ID,
-  }),
-});
+const wix = connect();
 
 const manifest = fs.existsSync(MANIFEST)
   ? JSON.parse(fs.readFileSync(MANIFEST, "utf8"))
