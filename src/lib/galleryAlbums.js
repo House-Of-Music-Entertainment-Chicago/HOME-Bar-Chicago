@@ -5,42 +5,81 @@ import { resolveImage } from "./wixResolveImage";
  * Turns raw GalleryAlbums rows from the Wix CMS into what the gallery
  * renders. Pure (no Wix connection), so it can be checked against sample
  * data without credentials. getGalleryAlbums.js does the actual query.
+ *
+ * What the Data API actually returns for a Media gallery item, as seen on
+ * the live collection:
+ *
+ *   photo  { type: "image", title, src: { url, width, height, id, filename } }
+ *   video  { type: "video", title, thumbnail: { url, ... },
+ *            src: { url, width, height, posters: [{ url }],
+ *                   resolutions: [{ quality, format, url, width, height }] } }
+ *
+ * The older "wix:image://v1/..." / "wix:video://v1/..." string form is
+ * still handled, in case a field or API version returns that instead.
  */
 
-// Wix transcodes every uploaded video into several sizes. 720p is plenty
-// for the lightbox and a fraction of a phone original's size. A video
-// uploaded below 720p has no 720p copy, so the player falls back through
-// the smaller sizes and finally to the original file.
-const VIDEO_RESOLUTIONS = ["720p", "480p", "360p"];
+const PREFERRED_SHORT_SIDE = 720;
+
+/**
+ * Wix transcodes every uploaded video and names each copy by its height
+ * ("720p" = 720px tall). For a vertical phone video that makes "720p" only
+ * ~406px wide, so pick by the shorter side instead: the smallest copy that
+ * is at least 720px on its short side (1080p for a vertical video, 720p for
+ * a landscape one), then smaller copies, then the original file. The
+ * browser moves down the list if a URL fails.
+ */
+function videoSourcesFromObject(src) {
+  const shortSide = (r) => Math.min(r.width ?? 0, r.height ?? 0);
+  const mp4 = (src.resolutions ?? [])
+    .filter((r) => r.format === "mp4" && r.url && !r.private)
+    .sort((a, b) => shortSide(a) - shortSide(b));
+  const preferred = mp4.findIndex((r) => shortSide(r) >= PREFERRED_SHORT_SIDE);
+  const ordered =
+    preferred === -1
+      ? mp4.reverse() // all small: best available first
+      : [mp4[preferred], ...mp4.slice(0, preferred).reverse()];
+  return [...ordered.map((r) => r.url), src.url].filter(Boolean);
+}
+
+// Fallback for the "wix:video://" string form, where the transcode list
+// isn't included, so try the common sizes and let missing ones fail over.
+function videoSourcesFromUri(uri) {
+  return [
+    ...["720p", "480p", "360p"].map((r) => media.getVideoUrl(uri, r).url),
+    media.getVideoUrl(uri).url,
+  ];
+}
 
 function toMediaItem(raw, album, index) {
-  if (!raw?.src) return null;
+  const src = raw?.src;
+  if (!src) return null;
 
-  const caption =
-    raw.title?.trim() || raw.description?.trim() || album.title;
+  const caption = raw.title?.trim() || raw.description?.trim() || album.title;
   const id = `${album.id}-${index}`;
-  const isVideo = raw.type === "video" || raw.src.startsWith("wix:video://");
+  const isUri = typeof src === "string";
+  const isVideo =
+    raw.type === "video" || (isUri && src.startsWith("wix:video://"));
 
   if (isVideo) {
-    const original = media.getVideoUrl(raw.src);
+    const sources = isUri ? videoSourcesFromUri(src) : videoSourcesFromObject(src);
+    if (!sources.length) return null;
+    const poster = isUri
+      ? resolveImage(raw.thumbnail || media.getVideoUrl(src).thumbnail)
+      : raw.thumbnail?.url || src.posters?.[0]?.url || null;
     return {
       id,
       type: "video",
-      // The first source doubles as the item's identity in the grid.
-      src: media.getVideoUrl(raw.src, VIDEO_RESOLUTIONS[0]).url,
-      sources: [
-        ...VIDEO_RESOLUTIONS.map((r) => media.getVideoUrl(raw.src, r).url),
-        original.url,
-      ],
-      poster: resolveImage(raw.thumbnail || original.thumbnail),
+      src: sources[0], // the first source doubles as the item's identity
+      sources,
+      poster,
       alt: caption,
       category: album.id,
     };
   }
 
-  const src = resolveImage(raw.src);
-  if (!src) return null;
-  return { id, type: "image", src, alt: caption, category: album.id };
+  const url = isUri ? resolveImage(src) : src.url;
+  if (!url) return null;
+  return { id, type: "image", src: url, alt: caption, category: album.id };
 }
 
 /**
