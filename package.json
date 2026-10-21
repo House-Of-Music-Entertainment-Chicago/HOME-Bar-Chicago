@@ -6,11 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "gallery:check": "node --env-file=.env.local scripts/migrate-gallery-to-wix.mjs --check",
-    "gallery:preview": "node --env-file=.env.local scripts/migrate-gallery-to-wix.mjs",
-    "gallery:trial": "node --env-file=.env.local scripts/migrate-gallery-to-wix.mjs --apply --first-album-only",
-    "gallery:migrate-all": "node --env-file=.env.local scripts/migrate-gallery-to-wix.mjs --apply"
+    "lint": "eslint"
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^13.11.1",
@@ -29,7 +25,6 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@wix/media": "^1.0.278",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4"

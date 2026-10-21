@@ -9,7 +9,9 @@ import GallerySection from "@/components/pages/about/GalleryPreviewSection";
 import CTASection from "@/components/pages/home/CTASection";
 import { getGalleryAlbums } from "@/lib/getGalleryAlbums";
 
-export const revalidate = false; // refreshed by the Wix webhook, not a timer
+// Same as /gallery: instant refresh from the Wix webhook, with an hourly
+// safety net in case a webhook is missed (see src/app/gallery/page.js).
+export const revalidate = 3600;
 
 export const metadata = {
   title: "About",

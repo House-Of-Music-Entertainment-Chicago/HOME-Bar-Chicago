@@ -43,6 +43,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# progress file written by scripts/migrate-gallery-to-wix.mjs
-scripts/.gallery-migration.json
