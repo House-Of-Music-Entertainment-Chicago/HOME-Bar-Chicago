@@ -6,16 +6,18 @@ import { resolveImage } from "./wixResolveImage";
  * renders. Pure (no Wix connection), so it can be checked against sample
  * data without credentials. getGalleryAlbums.js does the actual query.
  *
- * What the Data API actually returns for a Media gallery item, as seen on
- * the live collection:
+ * A Media gallery item is stored the way the Wix dashboard saves it, with
+ * `src` as a string:
  *
- *   photo  { type: "image", title, src: { url, width, height, id, filename } }
- *   video  { type: "video", title, thumbnail: { url, ... },
- *            src: { url, width, height, posters: [{ url }],
- *                   resolutions: [{ quality, format, url, width, height }] } }
+ *   photo  { type: "image", title, fileName, settings: { width, height },
+ *            src: "wix:image://v1/<id>/<file>#originWidth=..&originHeight=.." }
+ *   video  { type: "video", title, fileName, settings: { width, height },
+ *            src: "wix:video://v1/<id>/<file>#posterUri=<image id>&posterWidth=.." }
  *
- * The older "wix:image://v1/..." / "wix:video://v1/..." string form is
- * still handled, in case a field or API version returns that instead.
+ * The object form (`src: { url, width, height, resolutions[] }`) is also
+ * read. The original migration script wrongly stored items that way, and
+ * the dashboard can't edit them (scripts/gallery-fix-media.mjs converts
+ * them); it's kept so such an item still renders if one ever appears.
  */
 
 const PREFERRED_SHORT_SIDE = 720;
@@ -41,27 +43,41 @@ function videoSourcesFromObject(src) {
   return [...ordered.map((r) => r.url), src.url].filter(Boolean);
 }
 
-// Fallback for the "wix:video://" string form, where the transcode list
-// isn't included, so try the common sizes and let missing ones fail over.
-function videoSourcesFromUri(uri) {
+// The "wix:video://" string form (what the dashboard saves) carries no
+// transcode list, so guess the sizes and let missing ones fail over. The
+// item's settings hold the video's size: a vertical video starts at 1080p,
+// since its "720p" copy is only ~406px wide.
+function videoSourcesFromUri(uri, settings) {
+  const vertical = (settings?.height ?? 0) > (settings?.width ?? 0);
+  const sizes = vertical ? ["1080p", "720p", "480p", "360p"] : ["720p", "480p", "360p"];
   return [
-    ...["720p", "480p", "360p"].map((r) => media.getVideoUrl(uri, r).url),
+    ...sizes.map((r) => media.getVideoUrl(uri, r).url),
     media.getVideoUrl(uri).url,
   ];
+}
+
+// The dashboard pre-fills each item's Title with its file name
+// ("IMG_4021.jpg"). That isn't a caption, so it falls back like a blank.
+const FILE_NAME = /\.(jpe?g|png|webp|gif|heic|avif|mp4|mov|m4v|webm)$/i;
+
+function captionFor(raw, album) {
+  const title = raw.title?.trim();
+  if (title && !FILE_NAME.test(title) && title !== raw.fileName) return title;
+  return raw.description?.trim() || album.title;
 }
 
 function toMediaItem(raw, album, index) {
   const src = raw?.src;
   if (!src) return null;
 
-  const caption = raw.title?.trim() || raw.description?.trim() || album.title;
+  const caption = captionFor(raw, album);
   const id = `${album.id}-${index}`;
   const isUri = typeof src === "string";
   const isVideo =
     raw.type === "video" || (isUri && src.startsWith("wix:video://"));
 
   if (isVideo) {
-    const sources = isUri ? videoSourcesFromUri(src) : videoSourcesFromObject(src);
+    const sources = isUri ? videoSourcesFromUri(src, raw.settings) : videoSourcesFromObject(src);
     if (!sources.length) return null;
     const poster = isUri
       ? resolveImage(raw.thumbnail || media.getVideoUrl(src).thumbnail)
