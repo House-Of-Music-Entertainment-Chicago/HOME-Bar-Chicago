@@ -66,6 +66,19 @@ function captionFor(raw, album) {
   return raw.description?.trim() || album.title;
 }
 
+// The item's real pixel size, so the grid can reserve its exact shape
+// before the image arrives (no layout shift) and never crop it.
+function dimensionsOf(raw, isUri) {
+  const s = raw.settings;
+  if (s?.width && s?.height) return { width: s.width, height: s.height };
+  if (!isUri && raw.src?.width && raw.src?.height) {
+    return { width: raw.src.width, height: raw.src.height };
+  }
+  const m = isUri && raw.src.match(/originWidth=(\d+)&originHeight=(\d+)/);
+  if (m) return { width: Number(m[1]), height: Number(m[2]) };
+  return { width: 4, height: 3 };
+}
+
 function toMediaItem(raw, album, index) {
   const src = raw?.src;
   if (!src) return null;
@@ -75,6 +88,7 @@ function toMediaItem(raw, album, index) {
   const isUri = typeof src === "string";
   const isVideo =
     raw.type === "video" || (isUri && src.startsWith("wix:video://"));
+  const { width, height } = dimensionsOf(raw, isUri);
 
   if (isVideo) {
     const sources = isUri ? videoSourcesFromUri(src, raw.settings) : videoSourcesFromObject(src);
@@ -88,6 +102,8 @@ function toMediaItem(raw, album, index) {
       src: sources[0], // the first source doubles as the item's identity
       sources,
       poster,
+      width,
+      height,
       alt: caption,
       category: album.id,
     };
@@ -95,7 +111,64 @@ function toMediaItem(raw, album, index) {
 
   const url = isUri ? resolveImage(src) : src.url;
   if (!url) return null;
-  return { id, type: "image", src: url, alt: caption, category: album.id };
+  return { id, type: "image", src: url, width, height, alt: caption, category: album.id };
+}
+
+/**
+ * URL slug from an album title: "Live & Events" -> "live-and-events".
+ * Renaming an album in Wix changes its address; old links then 404.
+ */
+export function slugify(title) {
+  return (
+    title
+      .toLowerCase()
+      .normalize("NFKD")
+      .replace(/[̀-ͯ]/g, "")
+      .replace(/&/g, " and ")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "") || "album"
+  );
+}
+
+// The image an album is represented by: its first photo, else the first
+// video's poster.
+function coverOf(items) {
+  const photo = items.find((i) => i.type === "image");
+  if (photo) return { src: photo.src, width: photo.width, height: photo.height, alt: photo.alt };
+  const video = items.find((i) => i.type === "video" && i.poster);
+  return video ? { src: video.poster, width: video.width, height: video.height, alt: video.alt } : null;
+}
+
+/**
+ * What an album card or "next album" link needs, without the album's full
+ * item list: keeps the gallery index payload small however many photos the
+ * albums hold. `prints` = the cover first, then up to two more photos.
+ */
+export function toAlbumSummary(album) {
+  const pictures = album.items
+    .map((i) =>
+      i.type === "video"
+        ? i.poster && { src: i.poster, width: i.width, height: i.height, alt: i.alt }
+        : { src: i.src, width: i.width, height: i.height, alt: i.alt },
+    )
+    .filter(Boolean);
+  const rest = pictures.filter((p) => p.src !== album.cover?.src);
+  return {
+    slug: album.slug,
+    title: album.title,
+    // Pre-formatted here so client components never import this module,
+    // which would pull the Wix SDK into the browser bundle.
+    countLabel: formatAlbumCount(album),
+    prints: [album.cover, ...rest].filter(Boolean).slice(0, 3),
+  };
+}
+
+/** "14 photos · 1 video" */
+export function formatAlbumCount({ photoCount, videoCount }) {
+  const parts = [];
+  if (photoCount) parts.push(`${photoCount} ${photoCount === 1 ? "photo" : "photos"}`);
+  if (videoCount) parts.push(`${videoCount} ${videoCount === 1 ? "video" : "videos"}`);
+  return parts.join(" · ");
 }
 
 /**
@@ -103,13 +176,15 @@ function toMediaItem(raw, album, index) {
  * separate from the query so it can be checked without a Wix connection.
  */
 export function toGalleryAlbums(rows) {
+  const usedSlugs = new Set();
   return rows
     // "Hide" rather than "show": a Wix checkbox nobody has touched is
     // blank, so new albums are visible by default and only a deliberate
     // tick hides one.
     .filter((row) => row.hideFromWebsite !== true && row.title?.trim())
     .sort((a, b) => {
-      // Numbered albums first, in order; the rest newest first.
+      // Newest first by default. A Sort order number is a manual
+      // override: numbered albums are pinned above the rest, lowest first.
       const aHas = typeof a.sortOrder === "number";
       const bHas = typeof b.sortOrder === "number";
       if (aHas && bHas) return a.sortOrder - b.sortOrder;
@@ -117,11 +192,27 @@ export function toGalleryAlbums(rows) {
       return new Date(b._createdDate) - new Date(a._createdDate);
     })
     .map((row) => {
-      const album = { id: row._id, title: row.title.trim() };
+      const title = row.title.trim();
+      const album = { id: row._id, title };
       const items = (Array.isArray(row.media) ? row.media : [])
         .map((raw, i) => toMediaItem(raw, album, i))
         .filter(Boolean);
-      return { ...album, items };
+      return { ...album, items, createdDate: row._createdDate ?? null };
     })
-    .filter((album) => album.items.length > 0);
+    .filter((album) => album.items.length > 0)
+    .map((album) => {
+      // Two albums with the same title get "-2", "-3"... in display order.
+      const base = slugify(album.title);
+      let slug = base;
+      for (let n = 2; usedSlugs.has(slug); n++) slug = `${base}-${n}`;
+      usedSlugs.add(slug);
+      const videoCount = album.items.filter((i) => i.type === "video").length;
+      return {
+        ...album,
+        slug,
+        cover: coverOf(album.items),
+        photoCount: album.items.length - videoCount,
+        videoCount,
+      };
+    });
 }

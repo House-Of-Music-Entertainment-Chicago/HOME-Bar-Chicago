@@ -1,8 +1,9 @@
 import React from "react";
 import GalleryHeroSection from "@/components/pages/gallery/GalleryHeroSection";
-import GalleryGridSection from "@/components/pages/gallery/GalleryGridSection";
+import AlbumIndexSection from "@/components/pages/gallery/AlbumIndexSection";
 import CTASection from "@/components/pages/home/CTASection";
 import { getGalleryAlbums } from "@/lib/getGalleryAlbums";
+import { toAlbumSummary } from "@/lib/galleryAlbums";
 
 // The Wix webhook (/api/revalidate, target "gallery") refreshes this page
 // the moment the client edits an album. The hourly timer is only a safety
@@ -20,14 +21,12 @@ export const metadata = {
 
 export default async function Gallery() {
   const albums = await getGalleryAlbums();
-  const photoCount = albums
-    .flatMap((album) => album.items)
-    .filter((item) => item.type !== "video").length;
+  const photoCount = albums.reduce((sum, a) => sum + a.photoCount, 0);
 
   return (
     <>
-      <GalleryHeroSection photoCount={photoCount} />
-      <GalleryGridSection albums={albums} />
+      <GalleryHeroSection albumCount={albums.length} photoCount={photoCount} />
+      <AlbumIndexSection albums={albums.map(toAlbumSummary)} />
       <CTASection />
     </>
   );

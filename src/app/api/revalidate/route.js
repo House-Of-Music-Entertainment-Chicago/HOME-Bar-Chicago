@@ -4,11 +4,13 @@ import { NextResponse } from "next/server";
 // Which pages each Wix automation refreshes. An automation sends
 // { secret, target } in its webhook payload: "events" from the event
 // collections, "gallery" from GalleryAlbums.
+// Each entry is [path, type?]. A route pattern like /gallery/[slug] needs
+// type "page" and refreshes every album page at once.
 const TARGETS = {
-  events: ["/events"],
-  gallery: ["/gallery", "/about"],
+  events: [["/events"]],
+  gallery: [["/gallery"], ["/gallery/[slug]", "page"], ["/about"]],
 };
-const ALL_PATHS = [...new Set(Object.values(TARGETS).flat())];
+const ALL_PATHS = Object.values(TARGETS).flat();
 
 export async function POST(request) {
   try {
@@ -37,13 +39,14 @@ export async function POST(request) {
     // automation predates targets and sends none, and an extra refresh is
     // cheap, whereas a missed one leaves stale content on the site.
     const paths = TARGETS[target] ?? ALL_PATHS;
-    paths.forEach((path) => revalidatePath(path));
+    paths.forEach(([path, type]) => revalidatePath(path, type));
+    const revalidated = paths.map(([path]) => path);
 
-    console.log("✅ revalidated", paths);
+    console.log("✅ revalidated", revalidated);
 
     return NextResponse.json({
       success: true,
-      revalidated: paths,
+      revalidated,
     });
   } catch (error) {
     console.error("❌ Revalidation error:", error);

@@ -12,11 +12,11 @@ import { motion } from "framer-motion";
 import { groupVariants, headerVariants } from "@/content/animation-variants";
 import { useSafeVariants } from "@/components/hooks/useSafeVariants";
 
-export default function GalleryHeroSection({ photoCount }) {
+export default function GalleryHeroSection({ albumCount, photoCount }) {
   const v = useSafeVariants();
 
   return (
-    // Shield notch — pairs with shield-notch-join on GalleryGridSection.
+    // Shield notch — pairs with shield-notch-join on AlbumIndexSection.
     <section className="shield-notch-bottom relative z-10 bg-background">
       <Image
         src="/images/venue/tables-area.png"
@@ -60,7 +60,8 @@ export default function GalleryHeroSection({ photoCount }) {
 
           <motion.div variants={v(headerVariants)}>
             <Title className="text-foreground-muted drop-shadow-[0_1px_8px_rgba(0,0,0,0.95)]">
-              {photoCount} photographs from around the venue — the floor, the
+              {albumCount} {albumCount === 1 ? "album" : "albums"} and{" "}
+              {photoCount} photos from around the venue — the floor, the
               food, the drinks, and the nights worth showing up for.
             </Title>
           </motion.div>
